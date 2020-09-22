@@ -20,12 +20,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor 
 @ToString
-public class TransaccionDTO {
+public class ParametroAplicacionDTO {
     private Long id;
+    private String nombre;
+    private String valor;
     private String descripcion;
-    private String lugar;
-    private RolDTO rol;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private Date fechaRegistro;
+    @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    private Date fechaModificacion;
     private boolean estado;
+    
 }

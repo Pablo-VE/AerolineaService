@@ -36,6 +36,7 @@ public class EmpleadoDTO {
     private EmpleadoDTO jefe;
     private UsuarioDTO usuario;
     private boolean estado;
+    private List<TrabajoEmpleadoDTO> trabajosEmpleado;
    
     
 }

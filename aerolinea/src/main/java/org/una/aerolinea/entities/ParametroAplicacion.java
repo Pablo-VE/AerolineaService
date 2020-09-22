@@ -6,10 +6,7 @@
 package org.una.aerolinea.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -35,33 +31,26 @@ import lombok.ToString;
  *
  * @author Pablo-VE
  */
+
 @Entity
-@Table(name = "empleados")
+@Table(name = "parametros_aplicacion")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Empleado implements Serializable {
-
+public class ParametroAplicacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(length = 100)
+    
+    @Column(length = 50)
     private String nombre;
 
-    @Column(length = 25, unique = true)
-    private String cedula;
+    @Column(length = 500, unique = true)
+    private String valor;
     
-    @Column(length = 25)
-    private String telefono;
-    
-    @Column(length = 45)
-    private String direccion;
-
-    
-    //horario
-    //hora marcaje
+    @Column(length = 500)
+    private String descripcion;
     
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -73,28 +62,8 @@ public class Empleado implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "jefe") 
-    private List<Empleado> subempleados= new ArrayList<>();
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado") 
-    private List<TrabajoEmpleado> trabajosEmpleado= new ArrayList<>();
-    
-    @ManyToOne 
-    @JoinColumn(name="empleados_id")
-    private Empleado jefe;
-
-       
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
-    private Usuario usuario;
-    
     @Column
     private boolean estado;
-
-
-    private static final long serialVersionUID = 1L;
-    
-    
     
     @PrePersist
     public void prePersist() {
@@ -106,7 +75,5 @@ public class Empleado implements Serializable {
     public void preUpdate() {
         fechaModificacion = new Date();
     }
-
-    
     
 }

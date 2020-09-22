@@ -8,6 +8,7 @@ package org.una.aerolinea.services;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.Empleado;
 import org.una.aerolinea.repositories.IEmpleadoRepository;
@@ -16,6 +17,8 @@ import org.una.aerolinea.repositories.IEmpleadoRepository;
  *
  * @author Pablo-VE
  */
+
+@Service
 public class EmpleadoServiceImplementation implements IEmpleadoService{
     
     @Autowired
