@@ -46,10 +46,10 @@ public class ParametroAplicacion implements Serializable {
     @Column(length = 50)
     private String nombre;
 
-    @Column(length = 500, unique = true)
+    @Column(length = 100)
     private String valor;
     
-    @Column(length = 500)
+    @Column(length = 200)
     private String descripcion;
     
     @Column(name = "fecha_registro", updatable = false)

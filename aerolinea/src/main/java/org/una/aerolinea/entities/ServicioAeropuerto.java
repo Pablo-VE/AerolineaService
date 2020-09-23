@@ -18,9 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,31 +33,46 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "servicios_aeropuerto")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Usuario implements Serializable{
+public class ServicioAeropuerto implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(length = 100, name = "password_encriptado")
-    private String passwordEncriptado;
+    @Column(length = 20)
+    private String tipo;
     
-    @OneToOne(mappedBy = "usuario")
-    private Empleado empleado;
- 
-    @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
+    @Column(name = "fecha_registro", updatable = false, nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Setter(AccessLevel.NONE)
+    private Date fechaRegistro;
+
+    @Column
+    private float cobro;
+    
+    @Column(name = "estado_cobro")
+    private boolean estadoCobro;
+    
+    @Column
+    private float duracion;
+    
+    @Column(length = 200)
+    private String observaciones;
     
     @Column
     private boolean estado;
-
     
-
+    @ManyToOne 
+    @JoinColumn(name="empleados_id")
+    private Empleado responsable;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioAeropuerto") 
+    private List<Avion> aviones= new ArrayList<>();
+    
     
     
 }

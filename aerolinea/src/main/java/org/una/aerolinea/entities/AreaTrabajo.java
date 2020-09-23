@@ -39,7 +39,7 @@ public class AreaTrabajo implements Serializable{
     @Column(length = 45)
     private String nombre;
 
-    @Column(length = 100, unique = true)
+    @Column(length = 100)
     private String descripcion;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo") 

@@ -14,7 +14,8 @@ import org.una.aerolinea.entities.Transaccion;
  * @author Pablo-VE
  */
 public interface ITransaccionRepository extends JpaRepository<Transaccion, Long>{
-    public List<Transaccion> findByDescripcionContainingIgnoreCase(String nombre);
-    public List<Transaccion> findByLugarContainingIgnoreCase(String nombre);
+    public List<Transaccion> findByDescripcionContainingIgnoreCase(String descripcion);
+    public List<Transaccion> findByLugarContainingIgnoreCase(String lugar);
     public List<Transaccion> findByEstado(boolean estado);
+    public List<Transaccion> findByRol(Long rol);
 }

@@ -22,4 +22,5 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long>{
     public List<Usuario> findByEstado(boolean estado);
     public List<Usuario> findByRol(Long rol);
     
+    
 }

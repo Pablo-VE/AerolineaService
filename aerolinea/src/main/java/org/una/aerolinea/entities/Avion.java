@@ -7,7 +7,6 @@ package org.una.aerolinea.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,17 +17,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -36,31 +28,48 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "aviones")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Usuario implements Serializable{
+public class Avion implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(length = 100, name = "password_encriptado")
-    private String passwordEncriptado;
+    @Column(length = 20, unique = true)
+    private String matricula;
     
-    @OneToOne(mappedBy = "usuario")
-    private Empleado empleado;
- 
+    @Column
+    private int combustible;
+    
+    @Column(name = "tiempo_tierra")
+    private int tiempoTierra;
+    
+    @Column(name = "distancia_recorrida")
+    private float distanciaRecorrida;
+    
+    @Column(length = 50)
+    private String ubicacion;
+       
     @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
+    @JoinColumn(name="servicios_aeropuerto_id")
+    private ServicioAeropuerto servicioAeropuerto;
+    
+    @ManyToOne 
+    @JoinColumn(name="aerolineas_id")
+    private Aerolinea aerolinea;
+    
+    @ManyToOne 
+    @JoinColumn(name="tipos_aviones_id")
+    private TipoAvion tipoAvion;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
+    private List<Vuelo> vuelos= new ArrayList<>();
     
     @Column
     private boolean estado;
-
-    
-
     
     
 }

@@ -6,10 +6,6 @@
 package org.una.aerolinea.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,18 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -36,31 +24,34 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "horarios")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Usuario implements Serializable{
+public class Horario implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "dia_inicio", length = 25, nullable = false)
+    private String diaInicio;
     
-    @Column(length = 100, name = "password_encriptado")
-    private String passwordEncriptado;
+    @Column(name = "hora_inicio", length = 25, nullable = false)
+    private String horaInicio;
     
-    @OneToOne(mappedBy = "usuario")
-    private Empleado empleado;
- 
+    @Column(name = "dia_final", length = 25, nullable = false)
+    private String diaFinal;
+    
+    @Column(name = "hora_final", length = 25, nullable = false)
+    private String horaFinal;
+    
     @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
+    @JoinColumn(name="empleados_id")
+    private Empleado empleado;
     
     @Column
     private boolean estado;
-
-    
-
     
     
 }

@@ -50,7 +50,7 @@ public class Transaccion implements Serializable{
     @JoinColumn(name="roles_id")
     private Rol rol;
     
-    @Column(name = "fecha_registro", updatable = false)
+    @Column(name = "fecha_registro", updatable = false, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;

@@ -23,6 +23,8 @@ public interface ITransaccionService {
     public Optional<List<Transaccion>> findByDescripcionContainingIgnoreCase(String descripcion);
     
     public Optional<List<Transaccion>> findByEstado(boolean estado);
+    
+    public Optional<List<Transaccion>> findByRol(Long rol);
 
     public Transaccion create(Transaccion transaccion);
 

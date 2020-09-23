@@ -6,9 +6,7 @@
 package org.una.aerolinea.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,31 +31,34 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "vuelos")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Usuario implements Serializable{
+public class Vuelo implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(length = 100, name = "password_encriptado")
-    private String passwordEncriptado;
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Setter(AccessLevel.NONE)
+    private Date fecha;
     
-    @OneToOne(mappedBy = "usuario")
-    private Empleado empleado;
- 
     @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
+    @JoinColumn(name="aviones_id", nullable = false)
+    private Avion avion;
+    
+    @ManyToOne 
+    @JoinColumn(name="rutas_id", nullable = false)
+    private Ruta ruta;
     
     @Column
     private boolean estado;
 
-    
-
-    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "alertas_id", referencedColumnName = "id")
+    private Alerta alerta;
     
 }

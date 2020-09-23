@@ -50,7 +50,7 @@ public class Empleado implements Serializable {
     @Column(length = 100)
     private String nombre;
 
-    @Column(length = 25, unique = true)
+    @Column(length = 25, unique = true, nullable = false)
     private String cedula;
     
     @Column(length = 25)
@@ -60,8 +60,14 @@ public class Empleado implements Serializable {
     private String direccion;
 
     
-    //horario
-    //hora marcaje
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado") 
+    private List<Horario> horarios= new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado") 
+    private List<HoraMarcaje> horasMarcajes= new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "responsable") 
+    private List<ServicioAeropuerto> serviciosAeropuerto= new ArrayList<>();
     
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

@@ -35,7 +35,7 @@ public class TrabajoEmpleado implements Serializable{
     private Long id;
     
     @ManyToOne 
-    @JoinColumn(name="empleado_id")
+    @JoinColumn(name="empleados_id")
     private Empleado empleado;
     
     @ManyToOne 

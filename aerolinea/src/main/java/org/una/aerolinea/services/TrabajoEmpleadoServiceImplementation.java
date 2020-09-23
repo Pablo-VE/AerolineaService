@@ -20,7 +20,7 @@ import org.una.aerolinea.repositories.ITrabajoEmpleadoRepository;
 @Service
 public class TrabajoEmpleadoServiceImplementation implements ITrabajoEmpleadoService{
     @Autowired
-    ITrabajoEmpleadoRepository trabajoRepository;
+    private ITrabajoEmpleadoRepository trabajoRepository;
 
     @Override
     @Transactional(readOnly = true)
