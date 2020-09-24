@@ -21,32 +21,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.aerolinea.dto.EmpleadoDTO;
-import org.una.aerolinea.entities.Empleado;
-import org.una.aerolinea.services.IEmpleadoService;
+import org.una.aerolinea.dto.RutaDTO;
+import org.una.aerolinea.entities.Ruta;
+import org.una.aerolinea.services.IRutaService;
 import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
  * @author Pablo-VE
  */
-
 @RestController
-@RequestMapping("/empleados") 
-@Api(tags = {"Empleados"})
-public class EmpleadoController {
-    
+@RequestMapping("/rutas") 
+@Api(tags = {"Rutas"})
+public class RutaController {
     @Autowired
-    private IEmpleadoService empleadoService;
+    private IRutaService rutaService;
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todos los empleados", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de todas las rutas", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findAll();
+            Optional<List<Ruta>> resultadoFound = rutaService.findAll();
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<RutaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RutaDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -57,65 +55,14 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un empleado por su id", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Obtiene una ruta por su id", response = RutaDTO.class, tags = "Rutas")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<Empleado> resultadoFound = empleadoService.findById(id);
+            Optional<Ruta> resultadoFound = rutaService.findById(id);
             if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
+                RutaDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), RutaDTO.class);
                 return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    
-    @GetMapping("/list/cedula/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por cedula", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "term") String term) {
-        try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByCedulaContaining(term);
-            if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/cedula/{term}") 
-    @ApiOperation(value = "Obtiene un empleado por su cedula", response = EmpleadoDTO.class, tags = "Empleados")
-    public ResponseEntity<?> findByCedula(@PathVariable(value = "term") String term) {
-        try {
-
-            Optional<Empleado> resultadoFound = empleadoService.findByCedula(term);
-            if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
-                return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    
-    @GetMapping("/list/nombre/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por nombre", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
-        try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByNombreContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -125,12 +72,60 @@ public class EmpleadoController {
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por estado", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de rutas por estado", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByEstado(term);
+            Optional<List<Ruta>> resultadoFound = rutaService.findByEstado(term);
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<RutaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RutaDTO.class);
+                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/list/distanciaRango/{mas}/{menos}") 
+    @ApiOperation(value = "Obtiene una lista de rutas por rango de distancia", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
+    public ResponseEntity<?> findByDistanciaRango(@PathVariable(value = "mas") float mas, @PathVariable(value = "menos") float menos) {
+        try {
+            Optional<List<Ruta>> resultadoFound = rutaService.findByDistanciaRango(mas, menos);
+            if (resultadoFound.isPresent()) {
+                List<RutaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RutaDTO.class);
+                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/list/origen/{term}") 
+    @ApiOperation(value = "Obtiene una lista de rutas por su origen", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
+    public ResponseEntity<?> findByOrigenAproximate(@PathVariable(value = "term") String term) {
+        try {
+            Optional<List<Ruta>> resultadoFound = rutaService.findByOrigenContainingIgnoreCase(term);
+            if (resultadoFound.isPresent()) {
+                List<RutaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RutaDTO.class);
+                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/list/destino/{term}") 
+    @ApiOperation(value = "Obtiene una lista de rutas por su destino", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
+    public ResponseEntity<?> findByDestinoAproximate(@PathVariable(value = "term") String term) {
+        try {
+            Optional<List<Ruta>> resultadoFound = rutaService.findByDestinoContainingIgnoreCase(term);
+            if (resultadoFound.isPresent()) {
+                List<RutaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RutaDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -143,29 +138,29 @@ public class EmpleadoController {
     
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Crea una ruta", response = RutaDTO.class, tags = "Rutas")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody Empleado empleado) {
+    public ResponseEntity<?> create(@RequestBody Ruta ruta) {
         try {
-            Empleado entityCreated = empleadoService.create(empleado);
-            EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, EmpleadoDTO.class);
+            Ruta entityCreated = rutaService.create(ruta);
+            RutaDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, RutaDTO.class);
             return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    
-    
-    
+
+
+
+
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Modifica una ruta", response = RutaDTO.class, tags = "Rutas")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Empleado entityModified) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Ruta entityModified) {
         try {
-            Optional<Empleado> entityUpdated = empleadoService.update(entityModified, id);
+            Optional<Ruta> entityUpdated = rutaService.update(entityModified, id);
             if (entityUpdated.isPresent()) {
-                EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), EmpleadoDTO.class);
+                RutaDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), RutaDTO.class);
                 return new ResponseEntity<>(resultDto, HttpStatus.OK);
 
             } else {

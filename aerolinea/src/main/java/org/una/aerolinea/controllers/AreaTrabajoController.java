@@ -21,32 +21,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.aerolinea.dto.EmpleadoDTO;
-import org.una.aerolinea.entities.Empleado;
-import org.una.aerolinea.services.IEmpleadoService;
+import org.una.aerolinea.dto.AreaTrabajoDTO;
+import org.una.aerolinea.entities.AreaTrabajo;
+import org.una.aerolinea.services.IAreaTrabajoService;
 import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
  * @author Pablo-VE
  */
-
 @RestController
-@RequestMapping("/empleados") 
-@Api(tags = {"Empleados"})
-public class EmpleadoController {
-    
+@RequestMapping("/areas_trabajos") 
+@Api(tags = {"Areas_Trabajos"})
+public class AreaTrabajoController {
     @Autowired
-    private IEmpleadoService empleadoService;
+    private IAreaTrabajoService areaService;
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todos los empleados", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de todos los areas de trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas_Trabajos")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findAll();
+            Optional<List<AreaTrabajo>> resultadoFound = areaService.findAll();
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<AreaTrabajoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AreaTrabajoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -57,13 +55,13 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un empleado por su id", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Obtiene un area de trabajo por su id", response = AreaTrabajoDTO.class, tags = "Areas_Trabajos")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<Empleado> resultadoFound = empleadoService.findById(id);
+            Optional<AreaTrabajo> resultadoFound = areaService.findById(id);
             if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
+                AreaTrabajoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), AreaTrabajoDTO.class);
                 return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -73,14 +71,13 @@ public class EmpleadoController {
         }
     }
     
-    
-    @GetMapping("/list/cedula/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por cedula", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "term") String term) {
+    @GetMapping("/list/nombre/{term}") 
+    @ApiOperation(value = "Obtiene una lista de areas de trabajo por nombre", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas_Trabajos")
+    public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByCedulaContaining(term);
+            Optional<List<AreaTrabajo>> resultadoFound = areaService.findByNombreContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<AreaTrabajoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AreaTrabajoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -90,31 +87,13 @@ public class EmpleadoController {
         }
     }
     
-    @GetMapping("/cedula/{term}") 
-    @ApiOperation(value = "Obtiene un empleado por su cedula", response = EmpleadoDTO.class, tags = "Empleados")
-    public ResponseEntity<?> findByCedula(@PathVariable(value = "term") String term) {
+    @GetMapping("/list/descripcion/{term}") 
+    @ApiOperation(value = "Obtiene una lista de areas de trabajo por descripcion", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas_Trabajos")
+    public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
-
-            Optional<Empleado> resultadoFound = empleadoService.findByCedula(term);
+            Optional<List<AreaTrabajo>> resultadoFound = areaService.findByDescripcionContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
-                return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    
-    @GetMapping("/list/nombre/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por nombre", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
-        try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByNombreContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<AreaTrabajoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AreaTrabajoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -125,12 +104,12 @@ public class EmpleadoController {
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por estado", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de areas de trabajo por estado", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas_Trabajos")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByEstado(term);
+            Optional<List<AreaTrabajo>> resultadoFound = areaService.findByEstado(term);
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<AreaTrabajoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AreaTrabajoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -140,15 +119,14 @@ public class EmpleadoController {
         }
     }
     
-    
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Crea un area de trabajo", response = AreaTrabajoDTO.class, tags = "Areas_Trabajos")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody Empleado empleado) {
+    public ResponseEntity<?> create(@RequestBody AreaTrabajo area) {
         try {
-            Empleado entityCreated = empleadoService.create(empleado);
-            EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, EmpleadoDTO.class);
+            AreaTrabajo entityCreated = areaService.create(area);
+            AreaTrabajoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, AreaTrabajoDTO.class);
             return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -159,13 +137,13 @@ public class EmpleadoController {
     
     
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Modifica un area de trabajo", response = AreaTrabajoDTO.class, tags = "Areas_Trabajos")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Empleado entityModified) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody AreaTrabajo entityModified) {
         try {
-            Optional<Empleado> entityUpdated = empleadoService.update(entityModified, id);
+            Optional<AreaTrabajo> entityUpdated = areaService.update(entityModified, id);
             if (entityUpdated.isPresent()) {
-                EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), EmpleadoDTO.class);
+                AreaTrabajoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), AreaTrabajoDTO.class);
                 return new ResponseEntity<>(resultDto, HttpStatus.OK);
 
             } else {

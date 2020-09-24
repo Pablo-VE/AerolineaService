@@ -21,32 +21,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.aerolinea.dto.EmpleadoDTO;
-import org.una.aerolinea.entities.Empleado;
-import org.una.aerolinea.services.IEmpleadoService;
+import org.una.aerolinea.dto.TransaccionDTO;
+import org.una.aerolinea.entities.Transaccion;
+import org.una.aerolinea.services.ITransaccionService;
 import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
  * @author Pablo-VE
  */
-
 @RestController
-@RequestMapping("/empleados") 
-@Api(tags = {"Empleados"})
-public class EmpleadoController {
-    
+@RequestMapping("/transacciones") 
+@Api(tags = {"Transacciones"})
+public class TransaccionController {
     @Autowired
-    private IEmpleadoService empleadoService;
+    private ITransaccionService transaccionService;
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todos los empleados", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de todas las transacciones", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findAll();
+            Optional<List<Transaccion>> resultadoFound = transaccionService.findAll();
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<TransaccionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TransaccionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -57,13 +55,13 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un empleado por su id", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Obtiene una transaccion por su id", response = TransaccionDTO.class, tags = "Transacciones")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<Empleado> resultadoFound = empleadoService.findById(id);
+            Optional<Transaccion> resultadoFound = transaccionService.findById(id);
             if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
+                TransaccionDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), TransaccionDTO.class);
                 return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -73,14 +71,13 @@ public class EmpleadoController {
         }
     }
     
-    
-    @GetMapping("/list/cedula/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por cedula", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "term") String term) {
+    @GetMapping("/list/descripcion/{term}") 
+    @ApiOperation(value = "Obtiene una lista de transacciones por descripcion", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByCedulaContaining(term);
+            Optional<List<Transaccion>> resultadoFound = transaccionService.findByDescripcionContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<TransaccionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TransaccionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -90,31 +87,13 @@ public class EmpleadoController {
         }
     }
     
-    @GetMapping("/cedula/{term}") 
-    @ApiOperation(value = "Obtiene un empleado por su cedula", response = EmpleadoDTO.class, tags = "Empleados")
-    public ResponseEntity<?> findByCedula(@PathVariable(value = "term") String term) {
+    @GetMapping("/list/lugar/{term}") 
+    @ApiOperation(value = "Obtiene una lista de transacciones por lugar", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    public ResponseEntity<?> findByLugarAproximate(@PathVariable(value = "term") String term) {
         try {
-
-            Optional<Empleado> resultadoFound = empleadoService.findByCedula(term);
+            Optional<List<Transaccion>> resultadoFound = transaccionService.findByLugarContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
-                return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    
-    @GetMapping("/list/nombre/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por nombre", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
-        try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByNombreContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<TransaccionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TransaccionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -125,12 +104,12 @@ public class EmpleadoController {
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por estado", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de transacciones por estado", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByEstado(term);
+            Optional<List<Transaccion>> resultadoFound = transaccionService.findByEstado(term);
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<TransaccionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TransaccionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -140,15 +119,30 @@ public class EmpleadoController {
         }
     }
     
+    @GetMapping("/list/rol/{term}") 
+    @ApiOperation(value = "Obtiene una lista de transacciones por su rol", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
+    public ResponseEntity<?> findByRol(@PathVariable(value = "term") Long term) {
+        try {
+            Optional<List<Transaccion>> resultadoFound = transaccionService.findByRol(term);
+            if (resultadoFound.isPresent()) {
+                List<TransaccionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TransaccionDTO.class);
+                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Crea una transaccion", response = TransaccionDTO.class, tags = "Transacciones")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody Empleado empleado) {
+    public ResponseEntity<?> create(@RequestBody Transaccion transaccion) {
         try {
-            Empleado entityCreated = empleadoService.create(empleado);
-            EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, EmpleadoDTO.class);
+            Transaccion entityCreated = transaccionService.create(transaccion);
+            TransaccionDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, TransaccionDTO.class);
             return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -159,13 +153,13 @@ public class EmpleadoController {
     
     
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Modifica una transaccion", response = TransaccionDTO.class, tags = "Transacciones")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Empleado entityModified) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Transaccion entityModified) {
         try {
-            Optional<Empleado> entityUpdated = empleadoService.update(entityModified, id);
+            Optional<Transaccion> entityUpdated = transaccionService.update(entityModified, id);
             if (entityUpdated.isPresent()) {
-                EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), EmpleadoDTO.class);
+                TransaccionDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), TransaccionDTO.class);
                 return new ResponseEntity<>(resultDto, HttpStatus.OK);
 
             } else {
@@ -176,5 +170,7 @@ public class EmpleadoController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    
     
 }

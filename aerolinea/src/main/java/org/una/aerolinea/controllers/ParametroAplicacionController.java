@@ -21,32 +21,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.aerolinea.dto.EmpleadoDTO;
-import org.una.aerolinea.entities.Empleado;
-import org.una.aerolinea.services.IEmpleadoService;
+import org.una.aerolinea.dto.ParametroAplicacionDTO;
+import org.una.aerolinea.entities.ParametroAplicacion;
+import org.una.aerolinea.services.IParametroAplicacionService;
 import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
  * @author Pablo-VE
  */
-
 @RestController
-@RequestMapping("/empleados") 
-@Api(tags = {"Empleados"})
-public class EmpleadoController {
-    
+@RequestMapping("/parametros_aplicacion") 
+@Api(tags = {"Parametros_Aplicacion"})
+public class ParametroAplicacionController {
     @Autowired
-    private IEmpleadoService empleadoService;
+    private IParametroAplicacionService parametroService;
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todos los empleados", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de todos los parametros de la aplicacion", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findAll();
+            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findAll();
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -57,13 +55,13 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un empleado por su id", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Obtiene un parametro de la aplicacion por su id", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<Empleado> resultadoFound = empleadoService.findById(id);
+            Optional<ParametroAplicacion> resultadoFound = parametroService.findById(id);
             if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
+                ParametroAplicacionDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), ParametroAplicacionDTO.class);
                 return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -73,14 +71,13 @@ public class EmpleadoController {
         }
     }
     
-    
-    @GetMapping("/list/cedula/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por cedula", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "term") String term) {
+    @GetMapping("/list/nombre/{term}") 
+    @ApiOperation(value = "Obtiene una lista de los parametros de la aplicacion por nombre", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
+    public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByCedulaContaining(term);
+            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findByNombreContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -90,31 +87,13 @@ public class EmpleadoController {
         }
     }
     
-    @GetMapping("/cedula/{term}") 
-    @ApiOperation(value = "Obtiene un empleado por su cedula", response = EmpleadoDTO.class, tags = "Empleados")
-    public ResponseEntity<?> findByCedula(@PathVariable(value = "term") String term) {
+    @GetMapping("/list/descripcion/{term}") 
+    @ApiOperation(value = "Obtiene una lista de los parametros de la aplicacion por descripcion", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
+    public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
-
-            Optional<Empleado> resultadoFound = empleadoService.findByCedula(term);
+            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findByDescripcionContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                EmpleadoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), EmpleadoDTO.class);
-                return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    
-    @GetMapping("/list/nombre/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por nombre", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
-        try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByNombreContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -125,12 +104,12 @@ public class EmpleadoController {
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de empleados por estado", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
+    @ApiOperation(value = "Obtiene una lista de roles por estado", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<Empleado>> resultadoFound = empleadoService.findByEstado(term);
+            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findByEstado(term);
             if (resultadoFound.isPresent()) {
-                List<EmpleadoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), EmpleadoDTO.class);
+                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -140,15 +119,14 @@ public class EmpleadoController {
         }
     }
     
-    
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Crea un parametro de la aplicacion", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody Empleado empleado) {
+    public ResponseEntity<?> create(@RequestBody ParametroAplicacion parametro) {
         try {
-            Empleado entityCreated = empleadoService.create(empleado);
-            EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, EmpleadoDTO.class);
+            ParametroAplicacion entityCreated = parametroService.create(parametro);
+            ParametroAplicacionDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, ParametroAplicacionDTO.class);
             return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -159,13 +137,13 @@ public class EmpleadoController {
     
     
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica un empleado", response = EmpleadoDTO.class, tags = "Empleados")
+    @ApiOperation(value = "Modifica un parametro de la aplicacion", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Empleado entityModified) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ParametroAplicacion entityModified) {
         try {
-            Optional<Empleado> entityUpdated = empleadoService.update(entityModified, id);
+            Optional<ParametroAplicacion> entityUpdated = parametroService.update(entityModified, id);
             if (entityUpdated.isPresent()) {
-                EmpleadoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), EmpleadoDTO.class);
+                ParametroAplicacionDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), ParametroAplicacionDTO.class);
                 return new ResponseEntity<>(resultDto, HttpStatus.OK);
 
             } else {
@@ -176,5 +154,6 @@ public class EmpleadoController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
     
 }
