@@ -17,6 +17,8 @@ public interface IRolService {
     public Optional<List<Rol>> findAll();
 
     public Optional<Rol> findById(Long id);
+    
+    public Optional<Rol> findByNombre(String nombre);
 
     public Optional<List<Rol>> findByNombreContainingIgnoreCase(String nombre);
     

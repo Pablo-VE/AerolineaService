@@ -6,6 +6,7 @@
 package org.una.aerolinea.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,8 +18,9 @@ import org.una.aerolinea.entities.Usuario;
  */
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long>{
     
-    @Query("SELECT u FROM Usuario u LEFT JOIN u.empleado e WHERE u.passwordEncriptado = :password AND e.cedula = :cedula")
-    public Usuario findByCedulaAndPassword(@Param("cedula")String cedula, @Param("password")String password);
+    
+    public Usuario findByCedulaAndPasswordEncriptado(String cedula, String passwordEncriptado);
+    public Optional<Usuario> findByCedula(String cedula);
     public List<Usuario> findByEstado(boolean estado);
     public List<Usuario> findByRol(Long rol);
     

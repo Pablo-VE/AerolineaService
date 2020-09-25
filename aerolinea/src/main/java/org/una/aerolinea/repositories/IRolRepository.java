@@ -15,7 +15,7 @@ import org.una.aerolinea.entities.Rol;
  */
 public interface IRolRepository extends JpaRepository<Rol, Long>{
     public List<Rol> findByNombreContainingIgnoreCase(String nombre);
-    public List<Rol> findByDescripcionContainingIgnoreCase(String nombre);
+    public List<Rol> findByDescripcionContainingIgnoreCase(String descripcion);
     public List<Rol> findByEstado(boolean estado);
-    
+    public Rol findByNombre(String nombre); 
 }

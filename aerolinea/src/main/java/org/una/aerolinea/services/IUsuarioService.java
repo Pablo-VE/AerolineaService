@@ -7,6 +7,7 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
+import org.una.aerolinea.dto.AuthenticationRequest;
 import org.una.aerolinea.entities.Usuario;
 
 /**
@@ -18,6 +19,8 @@ public interface IUsuarioService {
     
     public Optional<List<Usuario>> findByEstado(boolean estado);
     
+    public Optional<Usuario> findByCedula(String cedula);
+    
     public Optional<List<Usuario>> findByRol(Long rol);
 
     public Optional<Usuario> findById(Long id);
@@ -25,4 +28,6 @@ public interface IUsuarioService {
     public Usuario create(Usuario usuario);
 
     public Optional<Usuario> update(Usuario usuario, Long id);
+    
+    public String login(AuthenticationRequest authenticationRequest);
 }

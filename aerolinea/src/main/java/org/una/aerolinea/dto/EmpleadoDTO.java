@@ -34,7 +34,7 @@ public class EmpleadoDTO {
     private Date fechaModificacion; 
     private List<EmpleadoDTO> subempleados;
     private EmpleadoDTO jefe;
-    private UsuarioDTO usuario;
+   // private UsuarioDTO usuario;
     private boolean estado;
     private List<TrabajoEmpleadoDTO> trabajosEmpleado;
     private List<HorarioDTO> horarios;

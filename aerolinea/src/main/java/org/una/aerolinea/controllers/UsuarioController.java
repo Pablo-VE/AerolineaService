@@ -9,9 +9,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.una.aerolinea.dto.AuthenticationRequest;
+import org.una.aerolinea.dto.AuthenticationResponse;
 import org.una.aerolinea.dto.UsuarioDTO;
 import org.una.aerolinea.entities.Usuario;
 import org.una.aerolinea.services.IUsuarioService;
@@ -139,5 +143,33 @@ public class UsuarioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    
+    @PostMapping("/login")
+    @ResponseBody
+    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDTO.class, tags = "Seguridad")
+    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity("La información no esta bien formada o no coincide con el formato esperado", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+            String token = usuarioService.login(authenticationRequest);
+            Optional<Usuario> usu = usuarioService.findByCedula(authenticationRequest.getCedula());
+          
+            UsuarioDTO usuario = MapperUtils.DtoFromEntity(usu.get(), UsuarioDTO.class);
+            if (!token.isBlank()) {
+                authenticationResponse.setJwt(token);
+                authenticationResponse.setUsuario(usuario);
+                return new ResponseEntity(authenticationResponse, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Credenciales invalidos", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     
 }

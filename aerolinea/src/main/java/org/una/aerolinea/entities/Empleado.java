@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -90,9 +91,8 @@ public class Empleado implements Serializable {
     private Empleado jefe;
 
        
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
-    private Usuario usuario;
+//    @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Usuario usuario;
     
     @Column
     private boolean estado;

@@ -48,8 +48,8 @@ public class Rol implements Serializable{
     private boolean estado;
 
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol") 
-    private List<Usuario> usuarios = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol") 
+//    private List<Usuario> usuarios = new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol") 
     private List<Transaccion> transacciones = new ArrayList<>();

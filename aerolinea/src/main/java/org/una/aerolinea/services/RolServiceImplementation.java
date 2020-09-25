@@ -33,6 +33,12 @@ public class RolServiceImplementation implements IRolService {
     public Optional<Rol> findById(Long id) {
         return rolRepositoy.findById(id);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Rol> findByNombre(String nombre) {
+        return Optional.ofNullable(rolRepositoy.findByNombre(nombre));
+    }
 
     @Override
     @Transactional(readOnly = true)

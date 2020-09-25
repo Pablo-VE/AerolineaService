@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,8 +50,13 @@ public class Usuario implements Serializable{
     @Column(length = 100, name = "password_encriptado")
     private String passwordEncriptado;
     
-    @OneToOne(mappedBy = "usuario")
+    @Column(length = 25, unique = true, nullable = false)
+    private String cedula;
+        
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "empleados_id", referencedColumnName = "id")
     private Empleado empleado;
+    
  
     @ManyToOne 
     @JoinColumn(name="roles_id")
