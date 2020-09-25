@@ -8,6 +8,7 @@ package org.una.aerolinea.services;
 import java.util.List;
 import java.util.Optional;
 import org.una.aerolinea.dto.AuthenticationRequest;
+import org.una.aerolinea.dto.AuthenticationResponse;
 import org.una.aerolinea.entities.Usuario;
 
 /**
@@ -29,5 +30,5 @@ public interface IUsuarioService {
 
     public Optional<Usuario> update(Usuario usuario, Long id);
     
-    public String login(AuthenticationRequest authenticationRequest);
+    public AuthenticationResponse login(AuthenticationRequest authenticationRequest);
 }

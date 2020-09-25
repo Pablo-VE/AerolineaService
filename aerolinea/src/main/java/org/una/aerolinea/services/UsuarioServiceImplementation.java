@@ -21,12 +21,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.dto.AuthenticationRequest;
+import org.una.aerolinea.dto.AuthenticationResponse;
+import org.una.aerolinea.dto.UsuarioDTO;
 import org.una.aerolinea.entities.Empleado;
 import org.una.aerolinea.entities.Usuario;
 import org.una.aerolinea.jwt.JwtProvider;
 import org.una.aerolinea.repositories.IEmpleadoRepository;
 import org.una.aerolinea.repositories.IUsuarioRepository;
+import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
@@ -112,14 +116,38 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
 
     }
     
+//    @Override
+//    public String login(AuthenticationRequest authenticationRequest) {
+//
+//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        return jwtProvider.generateToken(authenticationRequest);
+// 
+//    }
+    
     @Override
-    public String login(AuthenticationRequest authenticationRequest) {
+    @Transactional(readOnly = true)
+    public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtProvider.generateToken(authenticationRequest);
- 
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+
+        Optional<Usuario> usuario = findByCedula(authenticationRequest.getCedula());
+
+        if (usuario.isPresent()) {
+            authenticationResponse.setJwt(jwtProvider.generateToken(authenticationRequest));
+            UsuarioDTO usuarioDto = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
+            authenticationResponse.setUsuario(usuarioDto);
+
+            return authenticationResponse;
+        } else {
+            return null;
+        }
+
     }
+
+    
 
     
 }
