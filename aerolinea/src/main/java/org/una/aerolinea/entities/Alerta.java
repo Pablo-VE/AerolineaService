@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,8 +50,8 @@ public class Alerta implements Serializable{
     @Column(length = 200)
     private String descripcion;
     
-//    @OneToOne(mappedBy = "alerta", fetch = FetchType.LAZY)
-//    private Vuelo vuelo;
+    @OneToOne(mappedBy = "alerta")
+    private Vuelo vuelo;
     
     @PrePersist
     public void prePersist() {

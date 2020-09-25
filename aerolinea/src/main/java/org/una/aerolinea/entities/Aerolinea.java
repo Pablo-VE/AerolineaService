@@ -42,8 +42,8 @@ public class Aerolinea implements Serializable{
     @Column(length = 100)
     private String responsable;
     
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aerolinea") 
-//    private List<Avion> aviones= new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aerolinea") 
+    private List<Avion> aviones= new ArrayList<>();
     
     @Column
     private boolean estado;

@@ -45,7 +45,7 @@ public class TipoAvion implements Serializable{
     @Column
     private boolean estado;
     
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvion") 
-//    private List<Avion> aviones= new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvion") 
+    private List<Avion> aviones= new ArrayList<>();
     
 }
