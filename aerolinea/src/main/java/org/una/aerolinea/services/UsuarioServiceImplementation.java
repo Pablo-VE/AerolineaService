@@ -116,38 +116,4 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
 
     }
     
-//    @Override
-//    public String login(AuthenticationRequest authenticationRequest) {
-//
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return jwtProvider.generateToken(authenticationRequest);
-// 
-//    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
-
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-
-        Optional<Usuario> usuario = findByCedula(authenticationRequest.getCedula());
-
-        if (usuario.isPresent()) {
-            authenticationResponse.setJwt(jwtProvider.generateToken(authenticationRequest));
-            UsuarioDTO usuarioDto = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
-            authenticationResponse.setUsuario(usuarioDto);
-
-            return authenticationResponse;
-        } else {
-            return null;
-        }
-
-    }
-
-    
-
-    
 }

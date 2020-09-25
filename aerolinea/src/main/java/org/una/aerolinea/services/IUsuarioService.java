@@ -30,5 +30,5 @@ public interface IUsuarioService {
 
     public Optional<Usuario> update(Usuario usuario, Long id);
     
-    public AuthenticationResponse login(AuthenticationRequest authenticationRequest);
+    
 }

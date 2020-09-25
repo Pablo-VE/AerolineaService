@@ -33,39 +33,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
     
-    /*@Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(
-                        RequestHandlerSelectors
-                                .basePackage("org.una.aerolinea.controllers"))
-                .paths(PathSelectors.regex("/.*"))
-                .build()
-                .apiInfo(apiInfo())
-                .tags(new Tag("Seguridad", "Metodos de seguridad"),
-                        new Tag("Usuarios", "Manejo de usuarios"),
-                        new Tag("Empleados", "Manejo de empleados"),
-                        new Tag("Roles", "Manejo de roles"),
-                        new Tag("Transacciones", "Manejo de transacciones"),
-                        new Tag("Trabajos_Empleados", "Manejo de los trabajos de los empleados"),
-                        new Tag("Areas_Trabajos", "Manejo de areas de trabajos"),
-                        new Tag("Parametros_Aplicacion", "Manejo de parametros de la aplicacion"),
-                        new Tag("Horarios", "Manejo de horarios de los empleados"),
-                        new Tag("Horas_Marcajes", "Manejo de las horas de marcaje de los empleados"),
-                        new Tag("Servicios_Aeropuerto", "Manejo de los servicios que ofrece el aeropuerto"),
-                        new Tag("Aviones", "Manejo de los aviones"),
-                        new Tag("Aerolineas", "Manejo de las aerolineas del aeropuerto"),
-                        new Tag("Tipos_Aviones", "Manejo de los tipos de aviones"),
-                        new Tag("Vuelos", "Manejo de los vuelos que ofrece el aeropuerto"),
-                        new Tag("Alertas", "Manejo de las alertas que pueden surgir en una solicitud de vuelo"),
-                        new Tag("Rutas", "Manejo de las rutas que se ofrecen para los vuelos")
-                        
-                );
-
-    }*/
-    
-    
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -104,7 +71,8 @@ public class SwaggerConfiguration {
                         new Tag("Tipos_Aviones", "Manejo de los tipos de aviones"),
                         new Tag("Vuelos", "Manejo de los vuelos que ofrece el aeropuerto"),
                         new Tag("Alertas", "Manejo de las alertas que pueden surgir en una solicitud de vuelo"),
-                        new Tag("Rutas", "Manejo de las rutas que se ofrecen para los vuelos")
+                        new Tag("Rutas", "Manejo de las rutas que se ofrecen para los vuelos"),
+                        new Tag("Autenticacion", "Metodo para autenticarse en la aplicacion")
                 );
 
     }
