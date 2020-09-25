@@ -26,9 +26,11 @@ import org.una.aerolinea.dto.AuthenticationRequest;
 import org.una.aerolinea.dto.AuthenticationResponse;
 import org.una.aerolinea.dto.UsuarioDTO;
 import org.una.aerolinea.entities.Empleado;
+import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.entities.Usuario;
 import org.una.aerolinea.jwt.JwtProvider;
 import org.una.aerolinea.repositories.IEmpleadoRepository;
+import org.una.aerolinea.repositories.IRolRepository;
 import org.una.aerolinea.repositories.IUsuarioRepository;
 import org.una.aerolinea.utils.MapperUtils;
 
@@ -100,14 +102,19 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         }
     }
     
+    @Autowired
+    private IRolRepository rolRepository;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        List<Rol> roless = rolRepository.findByEstado(true);
         Optional<Usuario> usuarioBuscado = usuarioRepository.findByCedula(username);
         if (usuarioBuscado.isPresent()) {
             Usuario usuario = usuarioBuscado.get();
             List<GrantedAuthority> roles = new ArrayList<>();
-            roles.add(new SimpleGrantedAuthority("ADMIN"));
+            for(int i=0; i<roless.size(); i++){
+                roles.add(new SimpleGrantedAuthority(roless.get(i).getNombre()));
+            }
             UserDetails userDetails = new User(usuario.getCedula(), usuario.getPasswordEncriptado(), roles);
             return userDetails;
         } else {
