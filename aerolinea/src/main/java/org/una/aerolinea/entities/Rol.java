@@ -51,6 +51,6 @@ public class Rol implements Serializable{
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol") 
 //    private List<Usuario> usuarios = new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol") 
-    private List<Transaccion> transacciones = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol") 
+//    private List<Transaccion> transacciones = new ArrayList<>();
 }

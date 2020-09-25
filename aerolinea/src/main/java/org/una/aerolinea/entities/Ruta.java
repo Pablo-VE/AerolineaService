@@ -48,8 +48,8 @@ public class Ruta implements Serializable{
     @Column
     private boolean estado;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ruta") 
-    private List<Vuelo> vuelos= new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ruta") 
+//    private List<Vuelo> vuelos= new ArrayList<>();
     
     
 }

@@ -80,11 +80,11 @@ public class Empleado implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "jefe") 
-    private List<Empleado> subempleados= new ArrayList<>();
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado") 
-    private List<TrabajoEmpleado> trabajosEmpleado= new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "jefe") 
+//    private List<Empleado> subempleados= new ArrayList<>();
+//    
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado") 
+//    private List<TrabajoEmpleado> trabajosEmpleado= new ArrayList<>();
     
     @ManyToOne 
     @JoinColumn(name="empleados_id")
