@@ -24,7 +24,6 @@ public class AvionDTO {
     private String matricula;
     private String ubicacion;
     private AerolineaDTO aerolinea;
-    private ServicioBrindadoAeropuertoDTO servicioAeropuerto;
     private TipoAvionDTO tipoAvion;
     private boolean estado;
     
