@@ -65,7 +65,8 @@ public class Usuario implements Serializable{
     @Column
     private boolean estado;
 
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
+    private List<Transaccion> transacciones = new ArrayList<>();
 
     
     

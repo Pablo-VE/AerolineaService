@@ -24,7 +24,8 @@ public class TransaccionDTO {
     private Long id;
     private String descripcion;
     private String lugar;
-    private RolDTO rol;
+    private String rol;
+    private UsuarioDTO usuario;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private Date fechaRegistro;
     private boolean estado;

@@ -23,7 +23,5 @@ public class RolDTO {
     private Long id;
     private String nombre;
     private String descripcion;
-    //private List<UsuarioDTO> usuarios;
-    private List<TransaccionDTO> transacciones;
     private boolean estado;
 }

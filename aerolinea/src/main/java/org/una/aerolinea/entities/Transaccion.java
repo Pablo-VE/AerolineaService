@@ -46,9 +46,12 @@ public class Transaccion implements Serializable{
     @Column(length = 100)
     private String lugar;
     
+    @Column(length = 10)
+    private String rol;
+    
     @ManyToOne 
-    @JoinColumn(name="roles_id")
-    private Rol rol;
+    @JoinColumn(name="usuarios_id")
+    private Usuario usuario;
     
     @Column(name = "fecha_registro", updatable = false, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
