@@ -77,8 +77,9 @@ public class ServicioBrindadoAeropuerto implements Serializable{
     @JoinColumn(name="responsable")
     private Empleado responsable;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioAeropuerto") 
-    private List<Avion> aviones= new ArrayList<>();
+    @ManyToOne 
+    @JoinColumn(name="aviones_id")
+    private Avion avion;
     
     @ManyToOne 
     @JoinColumn(name="tipos_servicios_aeropuerto_id")

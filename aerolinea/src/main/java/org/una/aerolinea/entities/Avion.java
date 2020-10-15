@@ -52,11 +52,10 @@ public class Avion implements Serializable{
     
     @Column(length = 50)
     private String ubicacion;
-       
-    @ManyToOne 
-    @JoinColumn(name="servicios_aeropuerto_id")
-    private ServicioBrindadoAeropuerto servicioAeropuerto;
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
+    private List<ServicioBrindadoAeropuerto> serviciosBrindadosAeropuerto= new ArrayList<>();
+       
     @ManyToOne 
     @JoinColumn(name="aerolineas_id")
     private Aerolinea aerolinea;

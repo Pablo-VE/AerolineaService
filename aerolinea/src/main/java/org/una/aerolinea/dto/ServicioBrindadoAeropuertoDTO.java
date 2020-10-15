@@ -34,5 +34,6 @@ public class ServicioBrindadoAeropuertoDTO {
     private String observaciones;
     private boolean estado;
     private EmpleadoDTO responsable;
+    private AvionDTO avion;
     
 }
