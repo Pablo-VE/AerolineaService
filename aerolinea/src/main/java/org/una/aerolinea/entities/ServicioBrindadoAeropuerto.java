@@ -80,6 +80,10 @@ public class ServicioBrindadoAeropuerto implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioAeropuerto") 
     private List<Avion> aviones= new ArrayList<>();
     
+    @ManyToOne 
+    @JoinColumn(name="tipos_servicios_aeropuerto_id")
+    private TipoServicioAeropuerto tipoServicioAeropuerto;
+    
     
     @PrePersist
     public void prePersist() {

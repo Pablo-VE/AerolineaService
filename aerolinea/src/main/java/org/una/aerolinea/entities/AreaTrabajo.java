@@ -45,6 +45,9 @@ public class AreaTrabajo implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo") 
     private List<TrabajoEmpleado> trabajosEmpleado= new ArrayList<>();
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo") 
+    private List<TipoServicioAeropuerto> tipoServicioAeropuerto= new ArrayList<>();
+    
     @Column
     private boolean estado;
     
