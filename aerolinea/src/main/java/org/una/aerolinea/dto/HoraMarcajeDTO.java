@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString
 public class HoraMarcajeDTO {
     private Long id;
-    private String tipo;
+    private int tipo;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private Date fechaRegistro;
     private EmpleadoDTO empleado;

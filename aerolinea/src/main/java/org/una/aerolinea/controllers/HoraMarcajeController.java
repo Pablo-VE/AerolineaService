@@ -73,9 +73,9 @@ public class HoraMarcajeController {
     
     @GetMapping("/list/tipo/{term}") 
     @ApiOperation(value = "Obtiene una lista de horas de marcaje por tipo", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Horas_Marcajes")
-    public ResponseEntity<?> findByTipoAproximate(@PathVariable(value = "term") String term) {
+    public ResponseEntity<?> findByTipoAproximate(@PathVariable(value = "term") int term) {
         try {
-            Optional<List<HoraMarcaje>> resultadoFound = marcajeService.findByTipoContainingIgnoreCase(term);
+            Optional<List<HoraMarcaje>> resultadoFound = marcajeService.findByTipo(term);
             if (resultadoFound.isPresent()) {
                 List<HoraMarcajeDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), HoraMarcajeDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);

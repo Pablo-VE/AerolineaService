@@ -42,8 +42,8 @@ public class HoraMarcajeServiceImplementation implements IHoraMarcajeService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<HoraMarcaje>> findByTipoContainingIgnoreCase(String tipo) {
-        return Optional.ofNullable(horaMarcajeRepository.findByTipoContainingIgnoreCase(tipo));
+    public Optional<List<HoraMarcaje>> findByTipo(int tipo) {
+        return Optional.ofNullable(horaMarcajeRepository.findByTipo(tipo));
     }
 
     @Override

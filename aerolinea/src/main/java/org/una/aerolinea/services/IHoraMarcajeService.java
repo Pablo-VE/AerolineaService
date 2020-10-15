@@ -20,7 +20,7 @@ public interface IHoraMarcajeService {
     
     public Optional<List<HoraMarcaje>> findByEmpleado(Long empleado);
 
-    public Optional<List<HoraMarcaje>> findByTipoContainingIgnoreCase(String tipo);
+    public Optional<List<HoraMarcaje>> findByTipo(int tipo);
     
     public Optional<List<HoraMarcaje>> findByEstado(boolean estado);
     

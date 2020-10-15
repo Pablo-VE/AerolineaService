@@ -16,6 +16,6 @@ import org.una.aerolinea.entities.HoraMarcaje;
 public interface IHoraMarcajeRepository extends JpaRepository<HoraMarcaje, Long>{
     public List<HoraMarcaje> findByEstado(boolean estado);
     public List<HoraMarcaje> findByEmpleado(Long empleado);
-    public List<HoraMarcaje> findByTipoContainingIgnoreCase(String tipo);
+    public List<HoraMarcaje> findByTipo(int tipo);
     
 }
