@@ -25,6 +25,5 @@ public class RutaDTO {
     private String origen;
     private String destino;
     private boolean estado;
-    private List<VueloDTO> vuelos;
     
 }

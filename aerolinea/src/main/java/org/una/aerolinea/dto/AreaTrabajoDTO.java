@@ -23,7 +23,6 @@ public class AreaTrabajoDTO {
     private Long id;
     private String nombre;
     private String descripcion;
-    private List<TrabajoEmpleadoDTO> trabajosEmpleado;
     private boolean estado;
     
 }

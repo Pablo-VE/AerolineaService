@@ -87,21 +87,18 @@ public class Empleado implements Serializable {
     private List<TrabajoEmpleado> trabajosEmpleado= new ArrayList<>();
     
     @ManyToOne 
-    @JoinColumn(name="empleados_id")
+    @JoinColumn(name="jefe")
     private Empleado jefe;
 
        
-//    @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Usuario usuario;
+    @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Usuario usuario;
     
     @Column
     private boolean estado;
 
-
     private static final long serialVersionUID = 1L;
-    
-    
-    
+
     @PrePersist
     public void prePersist() {
         fechaRegistro = new Date();
@@ -113,6 +110,4 @@ public class Empleado implements Serializable {
         fechaModificacion = new Date();
     }
 
-    
-    
 }

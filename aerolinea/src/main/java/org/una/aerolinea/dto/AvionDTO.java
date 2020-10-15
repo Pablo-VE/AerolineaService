@@ -22,14 +22,9 @@ import lombok.ToString;
 public class AvionDTO {
     private Long id;
     private String matricula;
-    private int combustible;
-    private int tiempoTierra;
-    private float distanciaRecorrida;
     private String ubicacion;
     private AerolineaDTO aerolinea;
-    private ServicioBrindadoAeropuertoDTO servicioAeropuerto;
     private TipoAvionDTO tipoAvion;
-    private List<VueloDTO> vuelos;
     private boolean estado;
     
 }
