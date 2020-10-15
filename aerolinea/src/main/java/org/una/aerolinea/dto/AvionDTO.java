@@ -28,7 +28,6 @@ public class AvionDTO {
     private String ubicacion;
     private AerolineaDTO aerolinea;
     private TipoAvionDTO tipoAvion;
-    private List<VueloDTO> vuelos;
     private boolean estado;
     
 }

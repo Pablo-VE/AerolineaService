@@ -39,7 +39,7 @@ public class Aerolinea implements Serializable{
     @Column(length = 50)
     private String nombre;
     
-    @Column(length = 100)
+    @Column(length = 50)
     private String responsable;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aerolinea") 
