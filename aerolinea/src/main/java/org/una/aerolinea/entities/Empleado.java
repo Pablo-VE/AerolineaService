@@ -97,11 +97,8 @@ public class Empleado implements Serializable {
     @Column
     private boolean estado;
 
-
     private static final long serialVersionUID = 1L;
-    
-    
-    
+
     @PrePersist
     public void prePersist() {
         fechaRegistro = new Date();
@@ -113,6 +110,4 @@ public class Empleado implements Serializable {
         fechaModificacion = new Date();
     }
 
-    
-    
 }

@@ -40,16 +40,7 @@ public class Avion implements Serializable{
     
     @Column(length = 20, unique = true)
     private String matricula;
-    
-    @Column
-    private int combustible;
-    
-    @Column(name = "tiempo_tierra")
-    private int tiempoTierra;
-    
-    @Column(name = "distancia_recorrida")
-    private float distanciaRecorrida;
-    
+
     @Column(length = 50)
     private String ubicacion;
        
@@ -70,6 +61,4 @@ public class Avion implements Serializable{
     
     @Column
     private boolean estado;
-    
-    
 }
