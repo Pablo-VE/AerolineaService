@@ -57,7 +57,7 @@ public class Empleado implements Serializable {
     @Column(length = 25)
     private String telefono;
     
-    @Column(length = 45)
+    @Column(length = 250)
     private String direccion;
 
     

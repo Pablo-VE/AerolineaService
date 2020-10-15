@@ -34,16 +34,16 @@ public class Horario implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dia_inicio", length = 25, nullable = false)
-    private String diaInicio;
+    @Column(name = "dia_inicio", nullable = false)
+    private int diaInicio;
     
-    @Column(name = "hora_inicio", length = 25, nullable = false)
+    @Column(name = "hora_inicio", length = 10, nullable = false)
     private String horaInicio;
     
-    @Column(name = "dia_final", length = 25, nullable = false)
-    private String diaFinal;
+    @Column(name = "dia_final", nullable = false)
+    private int diaFinal;
     
-    @Column(name = "hora_final", length = 25, nullable = false)
+    @Column(name = "hora_final", length = 10, nullable = false)
     private String horaFinal;
     
     @ManyToOne 

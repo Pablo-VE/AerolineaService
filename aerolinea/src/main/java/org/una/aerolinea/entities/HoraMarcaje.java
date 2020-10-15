@@ -40,8 +40,8 @@ public class HoraMarcaje implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(length = 25)
-    private String tipo;
+    @Column
+    private int tipo;
 
     
     @Column(name = "fecha_registro", updatable = false, nullable = false)
