@@ -27,7 +27,7 @@ public class AvionDTO {
     private float distanciaRecorrida;
     private String ubicacion;
     private AerolineaDTO aerolinea;
-    private ServicioAeropuertoDTO servicioAeropuerto;
+    private ServicioBrindadoAeropuertoDTO servicioAeropuerto;
     private TipoAvionDTO tipoAvion;
     private List<VueloDTO> vuelos;
     private boolean estado;

@@ -6,18 +6,12 @@
 package org.una.aerolinea.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,45 +27,35 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "servicios_aeropuerto")
+@Table(name = "tipos_servicios_aeropuerto")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ServicioAeropuerto implements Serializable{
+public class TipoServicioAeropuerto implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(length = 20)
-    private String tipo;
+    @Column(length = 50)
+    private String nombre;
+    
+    @Column(length = 200)
+    private String descripcion;
+    
+    @Column
+    private boolean estado;
     
     @Column(name = "fecha_registro", updatable = false, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.NONE)
     private Date fechaRegistro;
-
-    @Column
-    private float cobro;
     
-    @Column(name = "estado_cobro")
-    private boolean estadoCobro;
+    @Column(name = "fecha_modificacion", updatable = false, nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Setter(AccessLevel.NONE)
+    private Date fechaModificacion;
     
-    @Column
-    private float duracion;
-    
-    @Column(length = 200)
-    private String observaciones;
-    
-    @Column
-    private boolean estado;
-    
-    @ManyToOne 
-    @JoinColumn(name="empleados_id")
-    private Empleado responsable;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioAeropuerto") 
-    private List<Avion> aviones= new ArrayList<>();
     
     
     

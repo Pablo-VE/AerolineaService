@@ -55,7 +55,7 @@ public class Avion implements Serializable{
        
     @ManyToOne 
     @JoinColumn(name="servicios_aeropuerto_id")
-    private ServicioAeropuerto servicioAeropuerto;
+    private ServicioBrindadoAeropuerto servicioAeropuerto;
     
     @ManyToOne 
     @JoinColumn(name="aerolineas_id")

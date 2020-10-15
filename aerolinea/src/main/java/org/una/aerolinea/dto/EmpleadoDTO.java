@@ -39,6 +39,6 @@ public class EmpleadoDTO {
     private List<TrabajoEmpleadoDTO> trabajosEmpleado;
     private List<HorarioDTO> horarios;
     private List<HoraMarcajeDTO> horasMarcajes;
-    private List<ServicioAeropuertoDTO> serviciosAeropuerto;
+    private List<ServicioBrindadoAeropuertoDTO> serviciosAeropuerto;
     
 }

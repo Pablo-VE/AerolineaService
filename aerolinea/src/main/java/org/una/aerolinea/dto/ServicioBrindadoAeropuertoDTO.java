@@ -7,6 +7,7 @@ package org.una.aerolinea.dto;
 
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbDateFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor 
 @ToString
-public class ServicioAeropuertoDTO {
+public class ServicioBrindadoAeropuertoDTO {
     private Long id;
     private String tipo;
-    private Date fechaRegistro;
+    @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    private java.util.Date fechaRegistro;
+    @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    private java.util.Date fechaModificacion;
     private float cobro;
     private float estadoCobro;
     private float duracion;
