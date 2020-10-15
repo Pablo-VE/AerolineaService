@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -60,5 +62,15 @@ public class Vuelo implements Serializable{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "alertas_id", referencedColumnName = "id")
     private Alerta alerta;
+    
+    @PrePersist
+    public void prePersist() {
+        fecha= new Date();
+    }
+    
+    @PreUpdate
+    public void preUpdate() {
+        fecha = new Date();   
+    }  
     
 }

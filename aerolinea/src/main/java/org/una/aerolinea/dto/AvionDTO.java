@@ -29,7 +29,6 @@ public class AvionDTO {
     private AerolineaDTO aerolinea;
     private ServicioBrindadoAeropuertoDTO servicioAeropuerto;
     private TipoAvionDTO tipoAvion;
-    private List<VueloDTO> vuelos;
     private boolean estado;
     
 }

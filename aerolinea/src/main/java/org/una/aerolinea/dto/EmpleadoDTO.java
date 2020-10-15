@@ -31,14 +31,14 @@ public class EmpleadoDTO {
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private Date fechaRegistro; 
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-    private Date fechaModificacion; 
-    private List<EmpleadoDTO> subempleados;
+    private Date fechaModificacion;
     private EmpleadoDTO jefe;
    // private UsuarioDTO usuario;
     private boolean estado;
-    private List<TrabajoEmpleadoDTO> trabajosEmpleado;
-    private List<HorarioDTO> horarios;
-    private List<HoraMarcajeDTO> horasMarcajes;
-    private List<ServicioBrindadoAeropuertoDTO> serviciosAeropuerto;
+    // private List<EmpleadoDTO> subempleados;
+    //private List<TrabajoEmpleadoDTO> trabajosEmpleado;
+    //private List<HorarioDTO> horarios;
+    //private List<HoraMarcajeDTO> horasMarcajes;
+    //private List<ServicioBrindadoAeropuertoDTO> serviciosAeropuerto;
     
 }

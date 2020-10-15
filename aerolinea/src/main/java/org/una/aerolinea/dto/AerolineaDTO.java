@@ -27,7 +27,6 @@ public class AerolineaDTO {
     private Long id;
     private String nombre;
     private String responsable; 
-    private List<AvionDTO> aviones;
     private boolean estado;
     
 }

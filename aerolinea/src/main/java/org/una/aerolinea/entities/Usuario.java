@@ -67,7 +67,4 @@ public class Usuario implements Serializable{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario") 
     private List<Transaccion> transacciones = new ArrayList<>();
-
-    
-    
 }

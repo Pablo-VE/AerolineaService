@@ -25,6 +25,5 @@ public class TipoAvionDTO {
     private String nombre;
     private float distanciaRecomendada;
     private boolean estado;
-    private List<AvionDTO> aviones;
     
 }
