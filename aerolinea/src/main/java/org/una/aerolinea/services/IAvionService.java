@@ -22,8 +22,6 @@ public interface IAvionService {
 
     public Optional<List<Avion>> findByMatriculaContainingIgnoreCase(String matricula);
     
-    public Optional<List<Avion>> findByUbicacionContainingIgnoreCase(String ubicacion);
-    
     public Optional<List<Avion>> findByEstado(boolean estado);
     
     public Optional<List<Avion>> findByAerolinea(Long aerolinea);

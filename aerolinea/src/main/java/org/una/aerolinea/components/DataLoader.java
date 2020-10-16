@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.una.aerolinea.entities.Empleado;
 import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.entities.Usuario;
+import org.una.aerolinea.loaders.Roles;
 import org.una.aerolinea.services.IEmpleadoService;
 import org.una.aerolinea.services.IRolService;
 import org.una.aerolinea.services.IUsuarioService;
@@ -84,4 +85,13 @@ public class DataLoader implements ApplicationRunner{
         }
 
     }
+        private void createPermisos() {
+        for (Roles rol : Roles.values()) {
+            Rol nuevoRol = new Rol();
+            nuevoRol.setNombre(rol.getNombre());
+           // nuevoPermiso.setDescripcion(rol.name());
+            rolService.create(nuevoRol);
+        } 
+    }
+
 }

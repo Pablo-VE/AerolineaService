@@ -48,12 +48,6 @@ public class AvionServiceImplementation implements IAvionService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Avion>> findByUbicacionContainingIgnoreCase(String ubicacion) {
-        return Optional.ofNullable(avionRepository.findByUbicacionContainingIgnoreCase(ubicacion));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Optional<List<Avion>> findByEstado(boolean estado) {
         return Optional.ofNullable(avionRepository.findByEstado(estado));
     }

@@ -40,9 +40,6 @@ public class Avion implements Serializable{
     
     @Column(length = 20, unique = true)
     private String matricula;
-
-    @Column(length = 50)
-    private String ubicacion;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
     private List<ServicioBrindadoAeropuerto> serviciosBrindadosAeropuerto= new ArrayList<>();
@@ -57,6 +54,9 @@ public class Avion implements Serializable{
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
     private List<Vuelo> vuelos= new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
+    private List<AvionEstado> avionesEstado= new ArrayList<>();
     
     @Column
     private boolean estado;

@@ -105,21 +105,6 @@ public class AvionController {
         }
     }
     
-    @GetMapping("/list/ubicacion/{term}") 
-    @ApiOperation(value = "Obtiene una lista de aviones por ubicacion", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    public ResponseEntity<?> findByUbicacionAproximate(@PathVariable(value = "term") String term) {
-        try {
-            Optional<List<Avion>> resultadoFound = avionService.findByUbicacionContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<AvionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AvionDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de aviones por estado", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
