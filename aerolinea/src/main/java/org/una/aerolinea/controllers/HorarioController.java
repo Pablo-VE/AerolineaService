@@ -37,7 +37,7 @@ public class HorarioController {
     @Autowired
     private IHorarioService horarioService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los horarios", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
     public @ResponseBody
     ResponseEntity<?> findAll() {

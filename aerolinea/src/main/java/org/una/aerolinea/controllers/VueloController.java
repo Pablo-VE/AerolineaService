@@ -39,7 +39,7 @@ public class VueloController {
     @Autowired
     private IVueloService vueloService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los vuelos", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
     public @ResponseBody
     ResponseEntity<?> findAll() {

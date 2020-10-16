@@ -30,6 +30,7 @@ public class AvionEstadoDTO {
     private java.util.Date fechaRegistro;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private java.util.Date fechaModificacion;
+    private AvionDTO avion;
 
     
 }

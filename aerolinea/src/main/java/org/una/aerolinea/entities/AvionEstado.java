@@ -45,7 +45,7 @@ public class AvionEstado implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "combustible")
+    @Column
     private int combustible;
     
     @Column(name = "distancia_recorrida")

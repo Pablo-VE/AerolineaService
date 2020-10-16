@@ -38,7 +38,7 @@ public class TrabajoEmpleadoController {
     private ITrabajoEmpleadoService trabajoService;
     
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los trabajos de los empleados", response = TrabajoEmpleadoDTO.class, responseContainer = "List", tags = "Trabajos_Empleados")
     public @ResponseBody
     ResponseEntity<?> findAll() {

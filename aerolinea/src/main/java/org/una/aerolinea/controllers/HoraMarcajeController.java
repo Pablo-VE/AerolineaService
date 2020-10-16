@@ -37,7 +37,7 @@ public class HoraMarcajeController {
     @Autowired
     private IHoraMarcajeService marcajeService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos las horas de marcaje", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Horas_Marcajes")
     public @ResponseBody
     ResponseEntity<?> findAll() {

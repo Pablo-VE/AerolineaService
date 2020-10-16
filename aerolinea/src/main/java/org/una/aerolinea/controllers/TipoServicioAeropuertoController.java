@@ -38,7 +38,7 @@ public class TipoServicioAeropuertoController {
 @Autowired
 private ITipoServicioAeropuertoService tipoServiAeroService;
 
-   @GetMapping() 
+   @GetMapping("/") 
    @ApiOperation(value = "Obtiene una lista de todos los tipos de servicios del aeropuerto", response = TipoServicioAeropuertoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
    public @ResponseBody
    ResponseEntity<?> findAll() {

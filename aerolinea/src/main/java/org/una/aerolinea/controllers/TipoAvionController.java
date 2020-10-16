@@ -37,7 +37,7 @@ public class TipoAvionController {
     @Autowired
     private ITipoAvionService tipoService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los tipos de aviones", response = TipoAvionDTO.class, responseContainer = "List", tags = "Tipos_Aviones")
     public @ResponseBody
     ResponseEntity<?> findAll() {

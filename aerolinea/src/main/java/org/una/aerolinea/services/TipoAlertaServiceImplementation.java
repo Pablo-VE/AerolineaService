@@ -47,12 +47,6 @@ public class TipoAlertaServiceImplementation implements ITipoAlertaService{
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<TipoAlerta> findByVuelo(Long vuelo) {
-        return Optional.ofNullable(alertaRepository.findByVuelo(vuelo));
-    }
-
-    @Override
     @Transactional
     public TipoAlerta create(TipoAlerta alerta) {
         return alertaRepository.save(alerta);

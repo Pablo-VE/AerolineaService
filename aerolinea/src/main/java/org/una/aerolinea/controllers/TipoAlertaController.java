@@ -37,7 +37,7 @@ public class TipoAlertaController {
     @Autowired
     private ITipoAlertaService alertaService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las alertas", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
     public @ResponseBody
     ResponseEntity<?> findAll() {
@@ -78,22 +78,6 @@ public class TipoAlertaController {
             Optional<List<TipoAlerta>> resultadoFound = alertaService.findByEstado(term);
             if (resultadoFound.isPresent()) {
                 List<TipoAlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoAlertaDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    @GetMapping("/vuelo/{term}") 
-    @ApiOperation(value = "Obtiene una alerta por vuelo", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
-    public ResponseEntity<?> findByVuelo(@PathVariable(value = "term") Long term) {
-        try {
-            Optional<TipoAlerta> resultadoFound = alertaService.findByVuelo(term);
-            if (resultadoFound.isPresent()) {
-                TipoAlertaDTO resultadoDTO = MapperUtils.DtoFromEntity(resultadoFound.get(), TipoAlertaDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -37,7 +37,7 @@ public class AreaTrabajoController {
     @Autowired
     private IAreaTrabajoService areaService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los areas de trabajo", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas_Trabajos")
     public @ResponseBody
     ResponseEntity<?> findAll() {

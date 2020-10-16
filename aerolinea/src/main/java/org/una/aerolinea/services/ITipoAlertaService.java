@@ -21,8 +21,6 @@ public interface ITipoAlertaService {
     public Optional<List<TipoAlerta>> findByDescripcionContainingIgnoreCase(String descripcion);
     
     public Optional<List<TipoAlerta>> findByEstado(boolean estado);
-    
-    public Optional<TipoAlerta> findByVuelo(Long vuelo);
 
     public TipoAlerta create(TipoAlerta alerta);
 

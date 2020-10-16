@@ -42,7 +42,7 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los usuarios", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     public @ResponseBody
     ResponseEntity<?> findAll() {

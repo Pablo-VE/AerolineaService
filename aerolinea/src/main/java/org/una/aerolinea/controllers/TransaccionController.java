@@ -37,7 +37,7 @@ public class TransaccionController {
     @Autowired
     private ITransaccionService transaccionService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las transacciones", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
     public @ResponseBody
     ResponseEntity<?> findAll() {

@@ -37,7 +37,7 @@ public class ParametroAplicacionController {
     @Autowired
     private IParametroAplicacionService parametroService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los parametros de la aplicacion", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
     public @ResponseBody
     ResponseEntity<?> findAll() {

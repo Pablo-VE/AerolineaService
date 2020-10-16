@@ -39,7 +39,7 @@ public class EmpleadoController {
     @Autowired
     private IEmpleadoService empleadoService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los empleados", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
     public @ResponseBody
     ResponseEntity<?> findAll() {

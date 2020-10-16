@@ -38,7 +38,7 @@ public class AvionEstadoController {
 @Autowired
 private IAvionEstadoService avionEstadoService;
     
-   @GetMapping() 
+   @GetMapping("/") 
    @ApiOperation(value = "Obtiene una lista de todos estados de los aviones", response = AvionEstadoDTO.class, responseContainer = "List", tags = "Aviones_Estados")
    public @ResponseBody
    ResponseEntity<?> findAll() {

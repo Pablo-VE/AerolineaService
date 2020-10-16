@@ -37,7 +37,7 @@ public class RutaController {
     @Autowired
     private IRutaService rutaService;
     
-    @GetMapping() 
+    @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las rutas", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
     public @ResponseBody
     ResponseEntity<?> findAll() {
