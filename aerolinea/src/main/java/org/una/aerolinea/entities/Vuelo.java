@@ -60,8 +60,8 @@ public class Vuelo implements Serializable{
     private boolean estado;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "alertas_id", referencedColumnName = "id")
-    private Alerta alerta;
+    @JoinColumn(name = "tipos_alertas_id", referencedColumnName = "id")
+    private TipoAlerta tipoAlerta;
     
     @PrePersist
     public void prePersist() {

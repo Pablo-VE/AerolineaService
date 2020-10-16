@@ -27,6 +27,6 @@ public class VueloDTO {
     private AvionDTO avion;
     private boolean estado;
     private RutaDTO ruta;
-    private AlertaDTO alerta;
+    private TipoAlertaDTO tipoAlerta;
     
 }

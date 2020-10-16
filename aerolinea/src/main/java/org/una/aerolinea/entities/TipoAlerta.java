@@ -29,12 +29,12 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "alertas")
+@Table(name = "tipos_alertas")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Alerta implements Serializable{
+public class TipoAlerta implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,7 +50,7 @@ public class Alerta implements Serializable{
     @Column(length = 200)
     private String descripcion;
     
-    @OneToOne(mappedBy = "alerta")
+    @OneToOne(mappedBy = "tipoAlerta")
     private Vuelo vuelo;
     
     @PrePersist

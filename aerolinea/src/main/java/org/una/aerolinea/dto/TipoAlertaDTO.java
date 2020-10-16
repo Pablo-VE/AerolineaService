@@ -12,7 +12,7 @@ import javax.json.bind.annotation.JsonbDateFormat;
  *
  * @author Pablo-VE
  */
-public class AlertaDTO {
+public class TipoAlertaDTO {
     private Long id;
     private boolean estado;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
