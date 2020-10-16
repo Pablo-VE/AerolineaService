@@ -15,7 +15,6 @@ import org.una.aerolinea.entities.TipoAlerta;
  */
 public interface ITipoAlertaRepository extends JpaRepository<TipoAlerta, Long>{
     public List<TipoAlerta> findByEstado(boolean estado);
-    public TipoAlerta findByVuelo(Long vuelo);
     public List<TipoAlerta> findByDescripcionContainingIgnoreCase(String descripcion);
     
 }

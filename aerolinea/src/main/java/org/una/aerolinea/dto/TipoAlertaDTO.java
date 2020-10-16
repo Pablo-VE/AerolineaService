@@ -7,17 +7,25 @@ package org.una.aerolinea.dto;
 
 import java.util.Date;
 import javax.json.bind.annotation.JsonbDateFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  *
  * @author Pablo-VE
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor 
+@ToString
 public class TipoAlertaDTO {
     private Long id;
     private boolean estado;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private Date fecha;
     private String descripcion;
-    private VueloDTO vuelo;
+    
     
 }
