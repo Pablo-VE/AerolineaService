@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.aerolinea.dto.AlertaDTO;
-import org.una.aerolinea.entities.Alerta;
-import org.una.aerolinea.services.IAlertaService;
+import org.una.aerolinea.dto.TipoAlertaDTO;
+import org.una.aerolinea.entities.TipoAlerta;
 import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.services.ITipoAlertaService;
 
 /**
  *
@@ -33,18 +33,18 @@ import org.una.aerolinea.utils.MapperUtils;
 @RestController
 @RequestMapping("/alertas") 
 @Api(tags = {"Alertas"})
-public class AlertaController {
+public class TipoAlertaController {
     @Autowired
-    private IAlertaService alertaService;
+    private ITipoAlertaService alertaService;
     
     @GetMapping() 
-    @ApiOperation(value = "Obtiene una lista de todas las alertas", response = AlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de todas las alertas", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<Alerta>> resultadoFound = alertaService.findAll();
+            Optional<List<TipoAlerta>> resultadoFound = alertaService.findAll();
             if (resultadoFound.isPresent()) {
-                List<AlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AlertaDTO.class);
+                List<TipoAlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoAlertaDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -55,13 +55,13 @@ public class AlertaController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene una alerta por su id", response = AlertaDTO.class, tags = "Alertas")
+    @ApiOperation(value = "Obtiene una alerta por su id", response = TipoAlertaDTO.class, tags = "Alertas")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<Alerta> resultadoFound = alertaService.findById(id);
+            Optional<TipoAlerta> resultadoFound = alertaService.findById(id);
             if (resultadoFound.isPresent()) {
-                AlertaDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), AlertaDTO.class);
+                TipoAlertaDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), TipoAlertaDTO.class);
                 return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -72,12 +72,12 @@ public class AlertaController {
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de alertas por estado", response = AlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de alertas por estado", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<Alerta>> resultadoFound = alertaService.findByEstado(term);
+            Optional<List<TipoAlerta>> resultadoFound = alertaService.findByEstado(term);
             if (resultadoFound.isPresent()) {
-                List<AlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AlertaDTO.class);
+                List<TipoAlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoAlertaDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -88,12 +88,12 @@ public class AlertaController {
     }
     
     @GetMapping("/vuelo/{term}") 
-    @ApiOperation(value = "Obtiene una alerta por vuelo", response = AlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @ApiOperation(value = "Obtiene una alerta por vuelo", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
     public ResponseEntity<?> findByVuelo(@PathVariable(value = "term") Long term) {
         try {
-            Optional<Alerta> resultadoFound = alertaService.findByVuelo(term);
+            Optional<TipoAlerta> resultadoFound = alertaService.findByVuelo(term);
             if (resultadoFound.isPresent()) {
-                AlertaDTO resultadoDTO = MapperUtils.DtoFromEntity(resultadoFound.get(), AlertaDTO.class);
+                TipoAlertaDTO resultadoDTO = MapperUtils.DtoFromEntity(resultadoFound.get(), TipoAlertaDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -105,12 +105,12 @@ public class AlertaController {
     
     
     @GetMapping("/list/descripcion/{term}") 
-    @ApiOperation(value = "Obtiene una lista de alertas por descripcion", response = AlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de alertas por descripcion", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<Alerta>> resultadoFound = alertaService.findByDescripcionContainingIgnoreCase(term);
+            Optional<List<TipoAlerta>> resultadoFound = alertaService.findByDescripcionContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                List<AlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), AlertaDTO.class);
+                List<TipoAlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoAlertaDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -122,12 +122,12 @@ public class AlertaController {
     
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea una alerta", response = AlertaDTO.class, tags = "Alertas")
+    @ApiOperation(value = "Crea una alerta", response = TipoAlertaDTO.class, tags = "Alertas")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody Alerta alerta) {
+    public ResponseEntity<?> create(@RequestBody TipoAlerta alerta) {
         try {
-            Alerta entityCreated = alertaService.create(alerta);
-            AlertaDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, AlertaDTO.class);
+            TipoAlerta entityCreated = alertaService.create(alerta);
+            TipoAlertaDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, TipoAlertaDTO.class);
             return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -138,13 +138,13 @@ public class AlertaController {
 
 
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica una alerta", response = AlertaDTO.class, tags = "Alertas")
+    @ApiOperation(value = "Modifica una alerta", response = TipoAlertaDTO.class, tags = "Alertas")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Alerta entityModified) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoAlerta entityModified) {
         try {
-            Optional<Alerta> entityUpdated = alertaService.update(entityModified, id);
+            Optional<TipoAlerta> entityUpdated = alertaService.update(entityModified, id);
             if (entityUpdated.isPresent()) {
-                AlertaDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), AlertaDTO.class);
+                TipoAlertaDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), TipoAlertaDTO.class);
                 return new ResponseEntity<>(resultDto, HttpStatus.OK);
 
             } else {

@@ -7,15 +7,14 @@ package org.una.aerolinea.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.una.aerolinea.entities.Alerta;
+import org.una.aerolinea.entities.TipoAlerta;
 
 /**
  *
  * @author Pablo-VE
  */
-public interface IAlertaRepository extends JpaRepository<Alerta, Long>{
-    public List<Alerta> findByEstado(boolean estado);
-    public Alerta findByVuelo(Long vuelo);
-    public List<Alerta> findByDescripcionContainingIgnoreCase(String descripcion);
+public interface ITipoAlertaRepository extends JpaRepository<TipoAlerta, Long>{
+    public List<TipoAlerta> findByEstado(boolean estado);
+    public List<TipoAlerta> findByDescripcionContainingIgnoreCase(String descripcion);
     
 }

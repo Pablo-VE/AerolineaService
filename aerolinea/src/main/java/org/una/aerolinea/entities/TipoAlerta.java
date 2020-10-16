@@ -15,12 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,43 +33,35 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "vuelos")
+@Table(name = "tipos_alertas")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Vuelo implements Serializable{
+public class TipoAlerta implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
+    @Column
+    private boolean estado;
+    
+    @Column(updatable = false, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.NONE)
     private Date fecha;
     
-    @ManyToOne 
-    @JoinColumn(name="aviones_id", nullable = false)
-    private Avion avion;
+    @Column(length = 200)
+    private String descripcion;
     
-    @ManyToOne 
-    @JoinColumn(name="rutas_id", nullable = false)
-    private Ruta ruta;
     
-    @Column
-    private boolean estado;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vuelo") 
-    private List<AlertaGenerada> alertasGeneradas = new ArrayList<>();
     
     @PrePersist
     public void prePersist() {
-        fecha= new Date();
+        fecha = new Date();
     }
     
-    @PreUpdate
-    public void preUpdate() {
-        fecha = new Date();   
-    }  
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAlerta") 
+    private List<AlertaGenerada> alertasGeneradas = new ArrayList<>();
     
 }
