@@ -74,7 +74,8 @@ public class SwaggerConfiguration {
                         new Tag("Rutas", "Manejo de las rutas que se ofrecen para los vuelos"),
                         new Tag("Autenticacion", "Metodo para autenticarse en la aplicacion"),
                         new Tag("Tipos_Servicios_Aeropuerto", "Manejo de los tipos de servicios que ofrece el aeropuerto"),
-                         new Tag("Aviones_Estados", "Manejo de los estados actuales de los aviones")
+                        new Tag("Aviones_Estados", "Manejo de los estados actuales de los aviones"),
+                        new Tag("Alertas_Generadas", "Manejo de las alertas generas de los aviones")
                 );
 
     }
