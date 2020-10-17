@@ -62,37 +62,44 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
 
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<Usuario>> findAll() {
         return Optional.ofNullable(usuarioRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<Usuario>> findByEstado(boolean estado) {
         return Optional.ofNullable(usuarioRepository.findByEstado(estado));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<Usuario>> findByRol(Long rol) {
         return Optional.ofNullable(usuarioRepository.findByRol(rol));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Usuario> findById(Long id) {
         return usuarioRepository.findById(id);
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Optional<Usuario> findByCedula(String cedula) {
         return usuarioRepository.findByCedula(cedula);
     }
 
     @Override
+    @Transactional 
     public Usuario create(Usuario usuario) {
         encriptarPassword(usuario);
         return usuarioRepository.save(usuario);
     }
 
     @Override
+    @Transactional
     public Optional<Usuario> update(Usuario usuario, Long id) {
         if (usuarioRepository.findById(id).isPresent()) {
             
@@ -106,6 +113,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     private IRolRepository rolRepository;
     
     @Override
+    @Transactional 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<Rol> roless = rolRepository.findByEstado(true);
         Optional<Usuario> usuarioBuscado = usuarioRepository.findByCedula(username);

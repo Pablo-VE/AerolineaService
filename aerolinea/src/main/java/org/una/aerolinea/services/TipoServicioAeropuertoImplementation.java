@@ -54,13 +54,13 @@ public class TipoServicioAeropuertoImplementation implements ITipoServicioAeropu
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public TipoServicioAeropuerto create(TipoServicioAeropuerto tipoServicioAeropuerto) {
         return tipoServicioAeroRepository.save(tipoServicioAeropuerto);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<TipoServicioAeropuerto> update(TipoServicioAeropuerto tipoServicioAeropuerto, Long id) {
         if(tipoServicioAeroRepository.findById(id).isPresent()){
             return Optional.ofNullable(tipoServicioAeroRepository.save(tipoServicioAeropuerto));

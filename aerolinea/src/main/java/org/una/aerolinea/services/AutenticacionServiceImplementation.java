@@ -31,7 +31,7 @@ public class AutenticacionServiceImplementation implements IAutenticacionService
     @Autowired
     private AuthenticationManager authenticationManager;
     
-     @Autowired
+    @Autowired
     private JwtProvider jwtProvider;
      
     @Autowired
