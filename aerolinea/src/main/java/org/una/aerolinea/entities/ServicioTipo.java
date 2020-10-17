@@ -36,12 +36,12 @@ import lombok.ToString;
  */
 
 @Entity
-@Table(name = "tipos_servicios_aeropuerto")
+@Table(name = "servicios_tipos")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TipoServicioAeropuerto implements Serializable {
+public class ServicioTipo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -69,8 +69,8 @@ public class TipoServicioAeropuerto implements Serializable {
     @JoinColumn(name="areas_trabajos_id")
     private AreaTrabajo areaTrabajo;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoServicioAeropuerto") 
-    private List<ServicioBrindadoAeropuerto> servicioBrindadoAeropuerto= new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioTipo") 
+    private List<ServicioRegistrado> serviciosRegistrados= new ArrayList<>();
     
     @PrePersist
     public void prePersist() {

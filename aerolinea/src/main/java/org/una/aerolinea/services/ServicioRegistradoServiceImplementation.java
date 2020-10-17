@@ -10,63 +10,63 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.una.aerolinea.entities.ServicioBrindadoAeropuerto;
-import org.una.aerolinea.repositories.IServicioBrindadoAeropuertoRepository;
+import org.una.aerolinea.entities.ServicioRegistrado;
+import org.una.aerolinea.repositories.IServicioRegistradoRepository;
 
 /**
  *
  * @author Pablo-VE
  */
 @Service
-public class ServicioBrindadoAeropuertoServiceImplementation implements IServicioBrindadoAeropuertoService{
+public class ServicioRegistradoServiceImplementation implements IServicioRegistradoService{
     @Autowired
-    private IServicioBrindadoAeropuertoRepository servicioRepository;
+    private IServicioRegistradoRepository servicioRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioBrindadoAeropuerto>> findAll() {
+    public Optional<List<ServicioRegistrado>> findAll() {
         return Optional.ofNullable(servicioRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ServicioBrindadoAeropuerto> findById(Long id) {
+    public Optional<ServicioRegistrado> findById(Long id) {
         return servicioRepository.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioBrindadoAeropuerto>> findByCobroRango(float cobroMas, float cobroMenos) {
+    public Optional<List<ServicioRegistrado>> findByCobroRango(float cobroMas, float cobroMenos) {
         return Optional.ofNullable(servicioRepository.findByCobroRango(cobroMas, cobroMenos));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioBrindadoAeropuerto>> findByTipoContainingIgnoreCase(String tipo) {
+    public Optional<List<ServicioRegistrado>> findByTipoContainingIgnoreCase(String tipo) {
         return Optional.ofNullable(servicioRepository.findByTipoContainingIgnoreCase(tipo));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioBrindadoAeropuerto>> findByEstadoCobro(boolean estadoCobro) {
+    public Optional<List<ServicioRegistrado>> findByEstadoCobro(boolean estadoCobro) {
         return Optional.ofNullable(servicioRepository.findByEstadoCobro(estadoCobro));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioBrindadoAeropuerto>> findByEstado(boolean estado) {
+    public Optional<List<ServicioRegistrado>> findByEstado(boolean estado) {
         return Optional.ofNullable(servicioRepository.findByEstado(estado));
     }
 
     @Override
     @Transactional
-    public ServicioBrindadoAeropuerto create(ServicioBrindadoAeropuerto servicioAeropuerto) {
+    public ServicioRegistrado create(ServicioRegistrado servicioAeropuerto) {
         return servicioRepository.save(servicioAeropuerto);
     }
 
     @Override
     @Transactional
-    public Optional<ServicioBrindadoAeropuerto> update(ServicioBrindadoAeropuerto servicioAeropuerto, Long id) {
+    public Optional<ServicioRegistrado> update(ServicioRegistrado servicioAeropuerto, Long id) {
         if(servicioRepository.findById(id).isPresent()){
             return Optional.ofNullable(servicioRepository.save(servicioAeropuerto));
         }else{

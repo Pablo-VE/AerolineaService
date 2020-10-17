@@ -21,9 +21,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor 
 @ToString
-public class ServicioBrindadoAeropuertoDTO {
+public class ServicioRegistradoDTO {
     private Long id;
-    private TipoServicioAeropuertoDTO tipoServicioAeropuerto;
+    private ServicioTipoDTO servicioTipo;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private java.util.Date fechaRegistro;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")

@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.aerolinea.services.ITipoServicioAeropuertoService;
 import org.una.aerolinea.utils.MapperUtils;
-import org.una.aerolinea.dto.TipoServicioAeropuertoDTO;
-import org.una.aerolinea.entities.TipoServicioAeropuerto;
+import org.una.aerolinea.dto.ServicioTipoDTO;
+import org.una.aerolinea.entities.ServicioTipo;
+import org.una.aerolinea.services.IServicioTipoService;
 
 /**
  *
@@ -33,19 +33,19 @@ import org.una.aerolinea.entities.TipoServicioAeropuerto;
 @RestController
 @RequestMapping("/tipos_servicios_aeropuerto") 
 @Api(tags = {"Tipos_Servicios_Aeropuerto"})
-public class TipoServicioAeropuertoController {
+public class ServicioTipoController {
       
 @Autowired
-private ITipoServicioAeropuertoService tipoServiAeroService;
+private IServicioTipoService tipoServiAeroService;
 
    @GetMapping("/") 
-   @ApiOperation(value = "Obtiene una lista de todos los tipos de servicios del aeropuerto", response = TipoServicioAeropuertoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
+   @ApiOperation(value = "Obtiene una lista de todos los tipos de servicios del aeropuerto", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
    public @ResponseBody
    ResponseEntity<?> findAll() {
        try {
-           Optional<List<TipoServicioAeropuerto>> resultadoFound = tipoServiAeroService.findAll();
+           Optional<List<ServicioTipo>> resultadoFound = tipoServiAeroService.findAll();
            if (resultadoFound.isPresent()) {
-               List<TipoServicioAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoServicioAeropuertoDTO.class);
+               List<ServicioTipoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioTipoDTO.class);
                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
            } else {
                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -56,13 +56,13 @@ private ITipoServicioAeropuertoService tipoServiAeroService;
    }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un tipo de servicio del aeropuerto por su id", response = TipoServicioAeropuertoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene un tipo de servicio del aeropuerto por su id", response = ServicioTipoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<TipoServicioAeropuerto> resultadoFound = tipoServiAeroService.findById(id);
+            Optional<ServicioTipo> resultadoFound = tipoServiAeroService.findById(id);
             if (resultadoFound.isPresent()) {
-                TipoServicioAeropuertoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), TipoServicioAeropuertoDTO.class);
+                ServicioTipoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), ServicioTipoDTO.class);
                 return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -73,12 +73,12 @@ private ITipoServicioAeropuertoService tipoServiAeroService;
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de los tipos de servicios del aeropuerto por estado", response = TipoServicioAeropuertoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de los tipos de servicios del aeropuerto por estado", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<TipoServicioAeropuerto>> resultadoFound = tipoServiAeroService.findByEstado(term);
+            Optional<List<ServicioTipo>> resultadoFound = tipoServiAeroService.findByEstado(term);
             if (resultadoFound.isPresent()) {
-                List<TipoServicioAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoServicioAeropuertoDTO.class);
+                List<ServicioTipoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioTipoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -89,12 +89,12 @@ private ITipoServicioAeropuertoService tipoServiAeroService;
     }
     
         @GetMapping("/list/descripcion/{descripcion}") 
-    @ApiOperation(value = "Obtiene una lista de tipos de servicios del aeropuerto por su descripcion", response = TipoServicioAeropuertoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de tipos de servicios del aeropuerto por su descripcion", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
     public ResponseEntity<?> findByDistanciaRango(@PathVariable(value = "descripcion") String descripcion) {
         try {
-            Optional<List<TipoServicioAeropuerto>> resultadoFound = tipoServiAeroService.findByDescripcion(descripcion);
+            Optional<List<ServicioTipo>> resultadoFound = tipoServiAeroService.findByDescripcion(descripcion);
             if (resultadoFound.isPresent()) {
-                List<TipoServicioAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoServicioAeropuertoDTO.class);
+                List<ServicioTipoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioTipoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -105,12 +105,12 @@ private ITipoServicioAeropuertoService tipoServiAeroService;
     }
     
     @GetMapping("/list/nombre/{term}") 
-    @ApiOperation(value = "Obtiene una lista de tipos de aviones por su nombre", response = TipoServicioAeropuertoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de tipos de aviones por su nombre", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<TipoServicioAeropuerto>> resultadoFound = tipoServiAeroService.findByNombreContainingIgnoreCase(term);
+            Optional<List<ServicioTipo>> resultadoFound = tipoServiAeroService.findByNombreContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                List<TipoServicioAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoServicioAeropuertoDTO.class);
+                List<ServicioTipoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioTipoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -123,12 +123,12 @@ private ITipoServicioAeropuertoService tipoServiAeroService;
        
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un tipo de servicio del aeropuerto", response = TipoServicioAeropuertoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
+    @ApiOperation(value = "Crea un tipo de servicio del aeropuerto", response = ServicioTipoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody TipoServicioAeropuerto tipoServicioAeropuerto) {
+    public ResponseEntity<?> create(@RequestBody ServicioTipo tipoServicioAeropuerto) {
         try {
-            TipoServicioAeropuerto entityCreated = tipoServiAeroService.create(tipoServicioAeropuerto);
-            TipoServicioAeropuertoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, TipoServicioAeropuertoDTO.class);
+            ServicioTipo entityCreated = tipoServiAeroService.create(tipoServicioAeropuerto);
+            ServicioTipoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, ServicioTipoDTO.class);
             return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -136,13 +136,13 @@ private ITipoServicioAeropuertoService tipoServiAeroService;
     }
     
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica un tipo de servicio del aeropuerto", response = TipoServicioAeropuertoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
+    @ApiOperation(value = "Modifica un tipo de servicio del aeropuerto", response = ServicioTipoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoServicioAeropuerto entityModified) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ServicioTipo entityModified) {
         try {
-            Optional<TipoServicioAeropuerto> entityUpdated = tipoServiAeroService.update(entityModified, id);
+            Optional<ServicioTipo> entityUpdated = tipoServiAeroService.update(entityModified, id);
             if (entityUpdated.isPresent()) {
-                TipoServicioAeropuertoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), TipoServicioAeropuertoDTO.class);
+                ServicioTipoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), ServicioTipoDTO.class);
                 return new ResponseEntity<>(resultDto, HttpStatus.OK);
 
             } else {

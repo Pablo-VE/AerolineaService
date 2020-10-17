@@ -10,58 +10,58 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.una.aerolinea.entities.TipoServicioAeropuerto;
-import org.una.aerolinea.repositories.ITipoServicioAeropuertoRepository;
+import org.una.aerolinea.entities.ServicioTipo;
+import org.una.aerolinea.repositories.IServicioTipoRepository;
 
 /**
  *
  * @author Luis
  */
 @Service
-public class TipoServicioAeropuertoImplementation implements ITipoServicioAeropuertoService{
+public class ServicioTipoImplementation implements IServicioTipoService{
    
     @Autowired
-    private ITipoServicioAeropuertoRepository tipoServicioAeroRepository;
+    private IServicioTipoRepository tipoServicioAeroRepository;
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoServicioAeropuerto>> findAll() {
+    public Optional<List<ServicioTipo>> findAll() {
         return Optional.ofNullable(tipoServicioAeroRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<TipoServicioAeropuerto> findById(Long id) {
+    public Optional<ServicioTipo> findById(Long id) {
         return tipoServicioAeroRepository.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoServicioAeropuerto>> findByNombreContainingIgnoreCase(String nombre) {
+    public Optional<List<ServicioTipo>> findByNombreContainingIgnoreCase(String nombre) {
         return Optional.ofNullable(tipoServicioAeroRepository.findByNombreContainingIgnoreCase(nombre));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoServicioAeropuerto>> findByEstado(boolean estado) {
+    public Optional<List<ServicioTipo>> findByEstado(boolean estado) {
         return Optional.ofNullable(tipoServicioAeroRepository.findByEstado(estado));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoServicioAeropuerto>> findByDescripcion(String descripcion) {
+    public Optional<List<ServicioTipo>> findByDescripcion(String descripcion) {
         return Optional.ofNullable(tipoServicioAeroRepository.findByDescripcion(descripcion));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public TipoServicioAeropuerto create(TipoServicioAeropuerto tipoServicioAeropuerto) {
+    public ServicioTipo create(ServicioTipo tipoServicioAeropuerto) {
         return tipoServicioAeroRepository.save(tipoServicioAeropuerto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<TipoServicioAeropuerto> update(TipoServicioAeropuerto tipoServicioAeropuerto, Long id) {
+    public Optional<ServicioTipo> update(ServicioTipo tipoServicioAeropuerto, Long id) {
         if(tipoServicioAeroRepository.findById(id).isPresent()){
             return Optional.ofNullable(tipoServicioAeroRepository.save(tipoServicioAeropuerto));
         }else{

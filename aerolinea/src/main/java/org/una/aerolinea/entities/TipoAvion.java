@@ -36,7 +36,7 @@ public class TipoAvion implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(length = 25)
+    @Column(length = 50)
     private String nombre;
     
     @Column(name = "distancia_recomendada")

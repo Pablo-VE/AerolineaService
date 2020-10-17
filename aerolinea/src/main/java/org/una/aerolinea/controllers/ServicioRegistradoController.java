@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.aerolinea.dto.ServicioBrindadoAeropuertoDTO;
-import org.una.aerolinea.entities.ServicioBrindadoAeropuerto;
+import org.una.aerolinea.dto.ServicioRegistradoDTO;
+import org.una.aerolinea.entities.ServicioRegistrado;
 import org.una.aerolinea.utils.MapperUtils;
-import org.una.aerolinea.services.IServicioBrindadoAeropuertoService;
+import org.una.aerolinea.services.IServicioRegistradoService;
 
 /**
  *
@@ -33,18 +33,18 @@ import org.una.aerolinea.services.IServicioBrindadoAeropuertoService;
 @RestController
 @RequestMapping("/servicios_aeropuerto") 
 @Api(tags = {"Servicios_Aeropuerto"})
-public class ServicioBrindadoAeropuertoController {
+public class ServicioRegistradoController {
     @Autowired
-    private IServicioBrindadoAeropuertoService servicioService;
+    private IServicioRegistradoService servicioService;
     
     @GetMapping("/") 
-    @ApiOperation(value = "Obtiene una lista de todos los servicios del aeropuerto", response = ServicioBrindadoAeropuertoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de todos los servicios del aeropuerto", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<ServicioBrindadoAeropuerto>> resultadoFound = servicioService.findAll();
+            Optional<List<ServicioRegistrado>> resultadoFound = servicioService.findAll();
             if (resultadoFound.isPresent()) {
-                List<ServicioBrindadoAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioBrindadoAeropuertoDTO.class);
+                List<ServicioRegistradoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioRegistradoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -55,13 +55,13 @@ public class ServicioBrindadoAeropuertoController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un servicio del aeropuerto por su id", response = ServicioBrindadoAeropuertoDTO.class, tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene un servicio del aeropuerto por su id", response = ServicioRegistradoDTO.class, tags = "Servicios_Aeropuerto")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
 
-            Optional<ServicioBrindadoAeropuerto> resultadoFound = servicioService.findById(id);
+            Optional<ServicioRegistrado> resultadoFound = servicioService.findById(id);
             if (resultadoFound.isPresent()) {
-                ServicioBrindadoAeropuertoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), ServicioBrindadoAeropuertoDTO.class);
+                ServicioRegistradoDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), ServicioRegistradoDTO.class);
                 return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -72,12 +72,12 @@ public class ServicioBrindadoAeropuertoController {
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de los servicios del aeropuerto por estado", response = ServicioBrindadoAeropuertoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de los servicios del aeropuerto por estado", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<ServicioBrindadoAeropuerto>> resultadoFound = servicioService.findByEstado(term);
+            Optional<List<ServicioRegistrado>> resultadoFound = servicioService.findByEstado(term);
             if (resultadoFound.isPresent()) {
-                List<ServicioBrindadoAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioBrindadoAeropuertoDTO.class);
+                List<ServicioRegistradoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioRegistradoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -88,12 +88,12 @@ public class ServicioBrindadoAeropuertoController {
     }
     
     @GetMapping("/list/estadoCobro/{term}") 
-    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por estado de cobro", response = ServicioBrindadoAeropuertoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por estado de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
     public ResponseEntity<?> findByEstadoCobro(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<ServicioBrindadoAeropuerto>> resultadoFound = servicioService.findByEstadoCobro(term);
+            Optional<List<ServicioRegistrado>> resultadoFound = servicioService.findByEstadoCobro(term);
             if (resultadoFound.isPresent()) {
-                List<ServicioBrindadoAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioBrindadoAeropuertoDTO.class);
+                List<ServicioRegistradoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioRegistradoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -104,12 +104,12 @@ public class ServicioBrindadoAeropuertoController {
     }
     
     @GetMapping("/list/cobroRango/{mas}/{menos}") 
-    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por un rango de cobro", response = ServicioBrindadoAeropuertoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por un rango de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
     public ResponseEntity<?> findByCobroRango(@PathVariable(value = "mas") float mas, @PathVariable(value = "menos") float menos) {
         try {
-            Optional<List<ServicioBrindadoAeropuerto>> resultadoFound = servicioService.findByCobroRango(mas, menos);
+            Optional<List<ServicioRegistrado>> resultadoFound = servicioService.findByCobroRango(mas, menos);
             if (resultadoFound.isPresent()) {
-                List<ServicioBrindadoAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioBrindadoAeropuertoDTO.class);
+                List<ServicioRegistradoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioRegistradoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -120,12 +120,12 @@ public class ServicioBrindadoAeropuertoController {
     }
     
     @GetMapping("/list/tipo/{term}") 
-    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por el tipo", response = ServicioBrindadoAeropuertoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por el tipo", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
     public ResponseEntity<?> findByTipoAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<ServicioBrindadoAeropuerto>> resultadoFound = servicioService.findByTipoContainingIgnoreCase(term);
+            Optional<List<ServicioRegistrado>> resultadoFound = servicioService.findByTipoContainingIgnoreCase(term);
             if (resultadoFound.isPresent()) {
-                List<ServicioBrindadoAeropuertoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioBrindadoAeropuertoDTO.class);
+                List<ServicioRegistradoDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ServicioRegistradoDTO.class);
                 return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -137,12 +137,12 @@ public class ServicioBrindadoAeropuertoController {
     
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un servicio del aeropuerto", response = ServicioBrindadoAeropuertoDTO.class, tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Crea un servicio del aeropuerto", response = ServicioRegistradoDTO.class, tags = "Servicios_Aeropuerto")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody ServicioBrindadoAeropuerto servicio) {
+    public ResponseEntity<?> create(@RequestBody ServicioRegistrado servicio) {
         try {
-            ServicioBrindadoAeropuerto entityCreated = servicioService.create(servicio);
-            ServicioBrindadoAeropuertoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, ServicioBrindadoAeropuertoDTO.class);
+            ServicioRegistrado entityCreated = servicioService.create(servicio);
+            ServicioRegistradoDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, ServicioRegistradoDTO.class);
             return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -153,13 +153,13 @@ public class ServicioBrindadoAeropuertoController {
     
     
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica un servicio del aeropuerto", response = ServicioBrindadoAeropuertoDTO.class, tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Modifica un servicio del aeropuerto", response = ServicioRegistradoDTO.class, tags = "Servicios_Aeropuerto")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ServicioBrindadoAeropuerto entityModified) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ServicioRegistrado entityModified) {
         try {
-            Optional<ServicioBrindadoAeropuerto> entityUpdated = servicioService.update(entityModified, id);
+            Optional<ServicioRegistrado> entityUpdated = servicioService.update(entityModified, id);
             if (entityUpdated.isPresent()) {
-                ServicioBrindadoAeropuertoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), ServicioBrindadoAeropuertoDTO.class);
+                ServicioRegistradoDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), ServicioRegistradoDTO.class);
                 return new ResponseEntity<>(resultDto, HttpStatus.OK);
 
             } else {

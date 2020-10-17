@@ -35,12 +35,12 @@ import lombok.ToString;
  * @author Jeffry
  */
 @Entity
-@Table(name = "aviones_estados")
+@Table(name = "bitacoras_aviones")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AvionEstado implements Serializable {
+public class BitacoraAvion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

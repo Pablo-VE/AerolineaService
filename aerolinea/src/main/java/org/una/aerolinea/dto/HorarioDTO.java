@@ -5,9 +5,7 @@
  */
 package org.una.aerolinea.dto;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,9 +22,9 @@ import lombok.ToString;
 public class HorarioDTO {
     private Long id;
     private int diaInicio;
-    private String horaInicio;
+    private Date horaInicio;
     private int diaFinal;
-    private String horaFinal;
+    private Date horaFinal;
     private EmpleadoDTO empleado;
     private boolean estado;
     

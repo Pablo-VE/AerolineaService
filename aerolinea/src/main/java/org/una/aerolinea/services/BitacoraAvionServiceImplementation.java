@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.aerolinea.entities.AvionEstado;
-import org.una.aerolinea.repositories.IAvionEstadoRepository;
+import org.una.aerolinea.entities.BitacoraAvion;
+import org.una.aerolinea.repositories.IBitacoraAvionRepository;
  
 
 /**
@@ -18,53 +18,53 @@ import org.una.aerolinea.repositories.IAvionEstadoRepository;
  * @author Luis
  */
 @Service
-public class AvionEstadoServiceImplementation implements IAvionEstadoService{
+public class BitacoraAvionServiceImplementation implements IBitacoraAvionService{
 
     @Autowired
-    private IAvionEstadoRepository avionEstadoRepository;
+    private IBitacoraAvionRepository avionEstadoRepository;
     
     @Override
-    public Optional<List<AvionEstado>> findAll() {
+    public Optional<List<BitacoraAvion>> findAll() {
         return Optional.ofNullable(avionEstadoRepository.findAll());
     }
 
     @Override
-    public Optional<AvionEstado> findById(Long id) {
+    public Optional<BitacoraAvion> findById(Long id) {
         return avionEstadoRepository.findById(id);
     }
 
     @Override
-    public Optional<List<AvionEstado>> findByCombustible(int combustible) {
+    public Optional<List<BitacoraAvion>> findByCombustible(int combustible) {
         return Optional.ofNullable(avionEstadoRepository.findByCombustible(combustible));
     }
 
     @Override
-    public Optional<List<AvionEstado>> findByDistanciaRecorrida(int distanciaRec) {
+    public Optional<List<BitacoraAvion>> findByDistanciaRecorrida(int distanciaRec) {
         return Optional.ofNullable(avionEstadoRepository.findByDistanciaRecorrida(distanciaRec));
     }
 
     @Override
-    public Optional<List<AvionEstado>> findByEstado(boolean estado) {
+    public Optional<List<BitacoraAvion>> findByEstado(boolean estado) {
         return Optional.ofNullable(avionEstadoRepository.findByEstado(estado));
     }
 
     @Override
-    public Optional<List<AvionEstado>> findByTiempoTierra(int tiempoTierra) {
+    public Optional<List<BitacoraAvion>> findByTiempoTierra(int tiempoTierra) {
         return Optional.ofNullable(avionEstadoRepository.findByTiempoTierra(tiempoTierra));
     }
 
     @Override
-    public Optional<List<AvionEstado>> findByUbicacionContainingIgnoreCase(String ubicacion) {
+    public Optional<List<BitacoraAvion>> findByUbicacionContainingIgnoreCase(String ubicacion) {
         return Optional.ofNullable(avionEstadoRepository.findByUbicacionContainingIgnoreCase(ubicacion));
     }
 
     @Override
-    public AvionEstado create(AvionEstado avionEstado) {
+    public BitacoraAvion create(BitacoraAvion avionEstado) {
         return avionEstadoRepository.save(avionEstado);
     }
 
     @Override
-    public Optional<AvionEstado> update(AvionEstado avionEstado, Long id) {
+    public Optional<BitacoraAvion> update(BitacoraAvion avionEstado, Long id) {
         if(avionEstadoRepository.findById(id).isPresent()){
             return Optional.ofNullable(avionEstadoRepository.save(avionEstado));
         }else{

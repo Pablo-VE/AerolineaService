@@ -35,12 +35,12 @@ import lombok.ToString;
  * @author Pablo-VE
  */
 @Entity
-@Table(name = "servicios_brindados_aeropuerto")
+@Table(name = "servicios_registrados")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ServicioBrindadoAeropuerto implements Serializable{
+public class ServicioRegistrado implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -82,8 +82,8 @@ public class ServicioBrindadoAeropuerto implements Serializable{
     private Avion avion;
     
     @ManyToOne 
-    @JoinColumn(name="tipos_servicios_aeropuerto_id")
-    private TipoServicioAeropuerto tipoServicioAeropuerto;
+    @JoinColumn(name="servicios_tipos_id")
+    private ServicioTipo servicioTipo;
     
     
     @PrePersist

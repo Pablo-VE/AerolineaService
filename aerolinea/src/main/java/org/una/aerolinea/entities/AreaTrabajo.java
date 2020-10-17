@@ -36,17 +36,17 @@ public class AreaTrabajo implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 45)
+    @Column(length = 50)
     private String nombre;
 
-    @Column(length = 100)
+    @Column(length = 200)
     private String descripcion;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo") 
     private List<TrabajoEmpleado> trabajosEmpleado= new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaTrabajo") 
-    private List<TipoServicioAeropuerto> tipoServicioAeropuerto= new ArrayList<>();
+    private List<ServicioTipo> servicioTipos= new ArrayList<>();
     
     @Column
     private boolean estado;

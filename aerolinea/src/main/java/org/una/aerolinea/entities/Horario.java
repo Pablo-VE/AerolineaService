@@ -6,6 +6,7 @@
 package org.una.aerolinea.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,9 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -37,14 +42,22 @@ public class Horario implements Serializable{
     @Column(name = "dia_inicio", nullable = false)
     private int diaInicio;
     
-    @Column(name = "hora_inicio", length = 10, nullable = false)
-    private String horaInicio;
+    
+    @Column(name = "hora_inicio", nullable = false)
+    @Temporal(TemporalType.TIME)
+    @Setter(AccessLevel.NONE)
+    private Date horaInicio;
     
     @Column(name = "dia_final", nullable = false)
     private int diaFinal;
     
-    @Column(name = "hora_final", length = 10, nullable = false)
-    private String horaFinal;
+  
+    
+    
+    @Column(name = "hora_final", nullable = false)
+    @Temporal(TemporalType.TIME)
+    @Setter(AccessLevel.NONE)
+    private Date horaFinal;
     
     @ManyToOne 
     @JoinColumn(name="empleados_id")

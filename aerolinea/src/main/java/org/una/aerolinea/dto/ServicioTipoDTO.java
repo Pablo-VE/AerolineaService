@@ -13,24 +13,20 @@ import lombok.ToString;
 
 /**
  *
- * @author Luis
+ * @author Pablo-VE
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor 
 @ToString
-public class AvionEstadoDTO {
-    private Long id;
-    private float distanciaRecorrida;
-    private String ubicacion;
-    private int tiempoTierra;
-    private int combustible;
+public class ServicioTipoDTO {
+    Long id;
+    private String nombre;
+    private String descripcion;
     private boolean estado;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private java.util.Date fechaRegistro;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private java.util.Date fechaModificacion;
-    private AvionDTO avion;
-
-    
+    private AreaTrabajoDTO areaTrabajo;
 }

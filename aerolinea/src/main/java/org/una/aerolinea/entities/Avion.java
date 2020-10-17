@@ -38,11 +38,11 @@ public class Avion implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(length = 20, unique = true)
+    @Column(length = 10, unique = true)
     private String matricula;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
-    private List<ServicioBrindadoAeropuerto> serviciosBrindadosAeropuerto= new ArrayList<>();
+    private List<ServicioRegistrado> serviciosRegistrados= new ArrayList<>();
        
     @ManyToOne 
     @JoinColumn(name="aerolineas_id")
@@ -56,7 +56,7 @@ public class Avion implements Serializable{
     private List<Vuelo> vuelos= new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avion") 
-    private List<AvionEstado> avionesEstado= new ArrayList<>();
+    private List<BitacoraAvion> avionesEstado= new ArrayList<>();
     
     @Column
     private boolean estado;

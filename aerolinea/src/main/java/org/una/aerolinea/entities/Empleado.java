@@ -48,13 +48,13 @@ public class Empleado implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100)
+    @Column(length = 50)
     private String nombre;
 
-    @Column(length = 25, unique = true, nullable = false)
+    @Column(length = 15, unique = true, nullable = false)
     private String cedula;
     
-    @Column(length = 25)
+    @Column(length = 10)
     private String telefono;
     
     @Column(length = 250)
@@ -68,7 +68,7 @@ public class Empleado implements Serializable {
     private List<HoraMarcaje> horasMarcajes= new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "responsable") 
-    private List<ServicioBrindadoAeropuerto> serviciosAeropuerto= new ArrayList<>();
+    private List<ServicioRegistrado> serviciosRegistrados= new ArrayList<>();
     
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
