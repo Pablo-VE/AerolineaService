@@ -54,8 +54,8 @@ public class TransaccionServiceImplementation implements ITransaccionService {
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Transaccion>> findByRol(Long rol) {
-        return Optional.ofNullable(transaccionRepository.findByRol(rol));
+    public Optional<List<Transaccion>> findByRol(String rol) {
+        return Optional.ofNullable(transaccionRepository.findByRolContainingIgnoreCase(rol));
     }
 
     @Override

@@ -121,7 +121,7 @@ public class TransaccionController {
     
     @GetMapping("/list/rol/{term}") 
     @ApiOperation(value = "Obtiene una lista de transacciones por su rol", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    public ResponseEntity<?> findByRol(@PathVariable(value = "term") Long term) {
+    public ResponseEntity<?> findByRol(@PathVariable(value = "term") String term) {
         try {
             Optional<List<Transaccion>> resultadoFound = transaccionService.findByRol(term);
             if (resultadoFound.isPresent()) {

@@ -24,7 +24,7 @@ public interface ITransaccionService {
     
     public Optional<List<Transaccion>> findByEstado(boolean estado);
     
-    public Optional<List<Transaccion>> findByRol(Long rol);
+    public Optional<List<Transaccion>> findByRol(String rol);
 
     public Transaccion create(Transaccion transaccion);
 
