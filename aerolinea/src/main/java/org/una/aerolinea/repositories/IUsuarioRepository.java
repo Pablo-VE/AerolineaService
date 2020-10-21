@@ -22,7 +22,9 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long>{
     public Usuario findByCedulaAndPasswordEncriptado(String cedula, String passwordEncriptado);
     public Optional<Usuario> findByCedula(String cedula);
     public List<Usuario> findByEstado(boolean estado);
-    public List<Usuario> findByRol(Long rol);
+    
+    @Query("SELECT u FROM Usuario u LEFT JOIN u.rol r WHERE r.id = :rolID")
+    public List<Usuario> findByRol(@Param("rolID")Long rol);
     
     
 }
