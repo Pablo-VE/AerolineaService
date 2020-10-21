@@ -103,6 +103,22 @@ public class HoraMarcajeController {
         }
     }
     
+    @GetMapping("/list/empleado/{term}") 
+    @ApiOperation(value = "Obtiene una lista de horas de marcaje por estado", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Horas_Marcajes")
+    public ResponseEntity<?> findByEmpleado(@PathVariable(value = "term") Long term) {
+        try {
+            Optional<List<HoraMarcaje>> resultadoFound = marcajeService.findByEmpleado(term);
+            if (resultadoFound.isPresent()) {
+                List<HoraMarcajeDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), HoraMarcajeDTO.class);
+                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una hora de marcaje", response = HoraMarcajeDTO.class, tags = "Horas_Marcajes")

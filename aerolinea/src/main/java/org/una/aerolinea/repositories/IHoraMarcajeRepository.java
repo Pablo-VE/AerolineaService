@@ -7,6 +7,8 @@ package org.una.aerolinea.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.una.aerolinea.entities.HoraMarcaje;
 
 /**
@@ -15,7 +17,9 @@ import org.una.aerolinea.entities.HoraMarcaje;
  */
 public interface IHoraMarcajeRepository extends JpaRepository<HoraMarcaje, Long>{
     public List<HoraMarcaje> findByEstado(boolean estado);
-    public List<HoraMarcaje> findByEmpleado(Long empleado);
+    
+    @Query("SELECT u FROM HoraMarcaje u LEFT JOIN u.empleado r WHERE r.id = :empleadoID")
+    public List<HoraMarcaje> findByEmpleado(@Param("empleadoID")Long empleado);
     public List<HoraMarcaje> findByTipo(int tipo);
     
 }
