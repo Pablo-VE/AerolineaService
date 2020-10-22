@@ -14,7 +14,7 @@ import org.una.aerolinea.entities.Avion;
  * @author Pablo-VE
  */
 public interface IAvionRepository extends JpaRepository<Avion, Long>{
-    public Avion findByMatricula(String matricula);
+    public List<Avion> findByMatricula(String matricula);
     public List<Avion> findByMatriculaContainingIgnoreCase(String matricula);
     public List<Avion> findByEstado(boolean estado);
     public List<Avion> findByAerolinea(Long aerolinea);

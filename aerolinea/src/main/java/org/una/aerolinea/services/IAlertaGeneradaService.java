@@ -7,7 +7,7 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.AlertaGenerada;
+import org.una.aerolinea.dto.AlertaGeneradaDTO;
 
 /**
  *
@@ -15,19 +15,19 @@ import org.una.aerolinea.entities.AlertaGenerada;
  */
 public interface IAlertaGeneradaService {
     
-    public Optional<List<AlertaGenerada>> findAll();
+    public Optional<List<AlertaGeneradaDTO>> findAll();
 
-    public Optional<AlertaGenerada> findById(Long id);
+    public Optional<AlertaGeneradaDTO> findById(Long id);
 
-    public Optional<List<AlertaGenerada>> findByAutorizacion(String autorizacion);
+    public Optional<List<AlertaGeneradaDTO>> findByAutorizacion(String autorizacion);
     
-    public Optional<List<AlertaGenerada>> findByEstado(boolean estado);
+    public Optional<List<AlertaGeneradaDTO>> findByEstado(boolean estado);
         
-    public Optional<List<AlertaGenerada>> findByTipoAlerta(Long tipoAlerta);
+    public Optional<List<AlertaGeneradaDTO>> findByTipoAlerta(Long tipoAlerta);
     
-    public Optional<List<AlertaGenerada>> findByVuelo(Long vuelo);
+    public Optional<List<AlertaGeneradaDTO>> findByVuelo(Long vuelo);
 
-    public AlertaGenerada create(AlertaGenerada alertaGenerada);
+    public AlertaGeneradaDTO create(AlertaGeneradaDTO alertaGenerada);
 
-    public Optional<AlertaGenerada> update(AlertaGenerada alertaGenerada, Long id);
+    public Optional<AlertaGeneradaDTO> update(AlertaGeneradaDTO alertaGenerada, Long id);
 }

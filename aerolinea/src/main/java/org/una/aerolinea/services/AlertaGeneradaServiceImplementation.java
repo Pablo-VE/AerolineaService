@@ -11,7 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.AlertaGenerada;
+import org.una.aerolinea.dto.AlertaGeneradaDTO;
+import org.una.aerolinea.dto.RolDTO;
+import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.repositories.IAlertaGeneradaRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -25,56 +30,61 @@ public class AlertaGeneradaServiceImplementation implements IAlertaGeneradaServi
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AlertaGenerada>> findAll() {
-        return Optional.ofNullable(alertaGeneradaRepository.findAll());
+    public Optional<List<AlertaGeneradaDTO>> findAll() {
+        return ServiceConvertionHelper.findList(alertaGeneradaRepository.findAll(), AlertaGeneradaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<AlertaGenerada> findById(Long id) {
-        return alertaGeneradaRepository.findById(id);
+    public Optional<AlertaGeneradaDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(alertaGeneradaRepository.findById(id), AlertaGeneradaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AlertaGenerada>> findByAutorizacion(String autorizacion) {
-        return Optional.ofNullable(alertaGeneradaRepository.findByAutorizacion(autorizacion));
+    public Optional<List<AlertaGeneradaDTO>> findByAutorizacion(String autorizacion) {
+        return ServiceConvertionHelper.findList(alertaGeneradaRepository.findByAutorizacion(autorizacion), AlertaGeneradaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AlertaGenerada>> findByEstado(boolean estado) {
-        return Optional.ofNullable(alertaGeneradaRepository.findByEstado(estado));
+    public Optional<List<AlertaGeneradaDTO>> findByEstado(boolean estado) {
+         return ServiceConvertionHelper.findList(alertaGeneradaRepository.findByEstado(estado), AlertaGeneradaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AlertaGenerada>> findByTipoAlerta(Long tipoAlerta) {
-        return Optional.ofNullable(alertaGeneradaRepository.findByTipoAlertaSQL(tipoAlerta));
+    public Optional<List<AlertaGeneradaDTO>> findByTipoAlerta(Long tipoAlerta) {
+         return ServiceConvertionHelper.findList(alertaGeneradaRepository.findByTipoAlertaSQL(tipoAlerta), AlertaGeneradaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AlertaGenerada>> findByVuelo(Long vuelo) {
-        return Optional.ofNullable(alertaGeneradaRepository.findByVueloSQL(vuelo));
+    public Optional<List<AlertaGeneradaDTO>> findByVuelo(Long vuelo) {
+         return ServiceConvertionHelper.findList(alertaGeneradaRepository.findByVueloSQL(vuelo), AlertaGeneradaDTO.class);
     }
 
     @Override
     @Transactional
-    public AlertaGenerada create(AlertaGenerada alertaGenerada) {
-        return alertaGeneradaRepository.save(alertaGenerada);
+    public AlertaGeneradaDTO create(AlertaGeneradaDTO alertaGenerada) {
+        AlertaGenerada alerta = MapperUtils.EntityFromDto(alertaGenerada, AlertaGenerada.class);
+        alerta = alertaGeneradaRepository.save(alerta);
+        return MapperUtils.DtoFromEntity(alerta, AlertaGeneradaDTO.class);
     }
 
 
     @Override
     @Transactional
-    public Optional<AlertaGenerada> update(AlertaGenerada alertaGenerada, Long id) {
-        if(alertaGeneradaRepository.findById(id).isPresent()){
-            return Optional.ofNullable(alertaGeneradaRepository.save(alertaGenerada));
-        }else{
+    public Optional<AlertaGeneradaDTO> update(AlertaGeneradaDTO alertaGenerada, Long id) {
+        if (alertaGeneradaRepository.findById(id).isPresent()) {
+            AlertaGenerada alerta = MapperUtils.EntityFromDto(alertaGenerada, AlertaGenerada.class);
+            alerta = alertaGeneradaRepository.save(alerta);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(alerta, AlertaGeneradaDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
+    
     
     
     
