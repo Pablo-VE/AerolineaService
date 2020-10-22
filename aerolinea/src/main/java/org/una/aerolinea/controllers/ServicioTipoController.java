@@ -88,9 +88,9 @@ private IServicioTipoService tipoServiAeroService;
         }
     }
     
-        @GetMapping("/list/descripcion/{descripcion}") 
+    @GetMapping("/list/descripcion/{descripcion}") 
     @ApiOperation(value = "Obtiene una lista de tipos de servicios del aeropuerto por su descripcion", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
-    public ResponseEntity<?> findByDistanciaRango(@PathVariable(value = "descripcion") String descripcion) {
+    public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "descripcion") String descripcion) {
         try {
             Optional<List<ServicioTipo>> resultadoFound = tipoServiAeroService.findByDescripcion(descripcion);
             if (resultadoFound.isPresent()) {
