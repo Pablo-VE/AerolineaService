@@ -15,6 +15,10 @@ import org.una.aerolinea.entities.TrabajoEmpleado;
  */
 public interface ITrabajoEmpleadoRepository extends JpaRepository<TrabajoEmpleado, Long>{
     public List<TrabajoEmpleado> findByEstado(boolean estado);
+    
+    
     public List<TrabajoEmpleado> findByEmpleado(Long empleado);
+    
+    
     public List<TrabajoEmpleado> findByAreaTrabajo(Long areaTrabajo);
 }

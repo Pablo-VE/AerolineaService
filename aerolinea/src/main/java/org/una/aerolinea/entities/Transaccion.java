@@ -47,7 +47,7 @@ public class Transaccion implements Serializable{
     @Column(length = 100)
     private String lugar;
     
-    @Column(length = 10)
+    @Column(length = 50)
     private String rol;
     
     @ManyToOne 
