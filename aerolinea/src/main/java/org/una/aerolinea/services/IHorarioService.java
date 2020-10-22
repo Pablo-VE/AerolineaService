@@ -7,25 +7,25 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.Horario;
+import org.una.aerolinea.dto.HorarioDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IHorarioService {
-    public Optional<List<Horario>> findAll();
+    public Optional<List<HorarioDTO>> findAll();
     
-    public Optional<List<Horario>> findByEstado(boolean estado);
+    public Optional<List<HorarioDTO>> findByEstado(boolean estado);
     
-    public Optional<List<Horario>> findByEmpleado(Long empleado);
+    public Optional<List<HorarioDTO>> findByEmpleado(Long empleado);
     
-    public Optional<List<Horario>> findByEmpleadoAndEstado(Long empleado, boolean estado);
+    public Optional<List<HorarioDTO>> findByEmpleadoAndEstado(Long empleado, boolean estado);
 
-    public Optional<Horario> findById(Long id);
+    public Optional<HorarioDTO> findById(Long id);
 
-    public Horario create(Horario horario);
+    public HorarioDTO create(HorarioDTO horario);
 
-    public Optional<Horario> update(Horario horario, Long id);
+    public Optional<HorarioDTO> update(HorarioDTO horario, Long id);
     
 }

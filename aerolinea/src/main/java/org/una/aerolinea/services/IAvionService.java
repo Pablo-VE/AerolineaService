@@ -7,29 +7,29 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.Avion;
+import org.una.aerolinea.dto.AvionDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IAvionService {
-    public Optional<List<Avion>> findAll();
+    public Optional<List<AvionDTO>> findAll();
 
-    public Optional<Avion> findById(Long id);
+    public Optional<AvionDTO> findById(Long id);
     
-    public Optional<Avion> findByMatricula(String matricula);
+    public Optional<List<AvionDTO>> findByMatricula(String matricula);
 
-    public Optional<List<Avion>> findByMatriculaContainingIgnoreCase(String matricula);
+    public Optional<List<AvionDTO>> findByMatriculaContainingIgnoreCase(String matricula);
     
-    public Optional<List<Avion>> findByEstado(boolean estado);
+    public Optional<List<AvionDTO>> findByEstado(boolean estado);
     
-    public Optional<List<Avion>> findByAerolinea(Long aerolinea);
+    public Optional<List<AvionDTO>> findByAerolinea(Long aerolinea);
     
-    public Optional<List<Avion>> findByTipoAvion(Long tipoAvion);
+    public Optional<List<AvionDTO>> findByTipoAvion(Long tipoAvion);
 
-    public Avion create(Avion avion);
+    public AvionDTO create(AvionDTO avion);
 
-    public Optional<Avion> update(Avion avion, Long id);
+    public Optional<AvionDTO> update(AvionDTO avion, Long id);
     
 }

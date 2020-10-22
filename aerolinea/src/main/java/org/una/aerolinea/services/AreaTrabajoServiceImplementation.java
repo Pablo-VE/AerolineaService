@@ -10,8 +10,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.una.aerolinea.dto.AreaTrabajoDTO;
 import org.una.aerolinea.entities.AreaTrabajo;
+import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.repositories.IAreaTrabajoRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,48 +28,50 @@ public class AreaTrabajoServiceImplementation implements IAreaTrabajoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AreaTrabajo>> findAll() {
-        return Optional.ofNullable(atrabajoRepository.findAll());
+    public Optional<List<AreaTrabajoDTO>> findAll() {
+        return ServiceConvertionHelper.findList(atrabajoRepository.findAll(), AreaTrabajoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<AreaTrabajo> findById(Long id) {
-        return atrabajoRepository.findById(id);
+    public Optional<AreaTrabajoDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(atrabajoRepository.findById(id), AreaTrabajoDTO.class);
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<AreaTrabajoDTO>> findByNombreContainingIgnoreCase(String nombre) {
+        return ServiceConvertionHelper.findList(atrabajoRepository.findByNombreContainingIgnoreCase(nombre), AreaTrabajoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AreaTrabajo>> findByNombreContainingIgnoreCase(String nombre) {
-        return Optional.ofNullable(atrabajoRepository.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<AreaTrabajoDTO>> findByDescripcionContainingIgnoreCase(String descripcion) {
+         return ServiceConvertionHelper.findList(atrabajoRepository.findByDescripcionContainingIgnoreCase(descripcion), AreaTrabajoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AreaTrabajo>> findByDescripcionContainingIgnoreCase(String descripcion) {
-        return Optional.ofNullable(atrabajoRepository.findByDescripcionContainingIgnoreCase(descripcion));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<List<AreaTrabajo>> findByEstado(boolean estado) {
-        return Optional.ofNullable(atrabajoRepository.findByEstado(estado));
+    public Optional<List<AreaTrabajoDTO>> findByEstado(boolean estado) {
+         return ServiceConvertionHelper.findList(atrabajoRepository.findByEstado(estado), AreaTrabajoDTO.class);
     }
 
     @Override
     @Transactional
-    public AreaTrabajo create(AreaTrabajo areaTrabajo) {
-        return atrabajoRepository.save(areaTrabajo);
+    public AreaTrabajoDTO create(AreaTrabajoDTO areaTrabajo) {
+        AreaTrabajo areaT = MapperUtils.EntityFromDto(areaTrabajo, AreaTrabajo.class);
+        areaT = atrabajoRepository.save(areaT);
+        return MapperUtils.DtoFromEntity(areaT, AreaTrabajoDTO.class);
     }
-
+    
     @Override
     @Transactional
-    public Optional<AreaTrabajo> update(AreaTrabajo areaTrabajo, Long id) {
+    public Optional<AreaTrabajoDTO> update(AreaTrabajoDTO areaTrabajo, Long id) {
         if (atrabajoRepository.findById(id).isPresent()) {
-            
-            return Optional.ofNullable(atrabajoRepository.save(areaTrabajo));
+            AreaTrabajo areaT = MapperUtils.EntityFromDto(areaTrabajo, AreaTrabajo.class);
+            areaT = atrabajoRepository.save(areaT);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(areaT, AreaTrabajoDTO.class));
         } else {
             return null;
-        }
+        } 
     }
 }

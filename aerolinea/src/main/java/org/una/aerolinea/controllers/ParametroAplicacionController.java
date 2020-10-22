@@ -12,6 +12,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,85 +39,61 @@ public class ParametroAplicacionController {
     @Autowired
     private IParametroAplicacionService parametroService;
     
+    final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
+    
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los parametros de la aplicacion", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
+    @PreAuthorize("hasAuthority('gestor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findAll();
-            if (resultadoFound.isPresent()) {
-                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(parametroService.findAll(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un parametro de la aplicacion por su id", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
-
-            Optional<ParametroAplicacion> resultadoFound = parametroService.findById(id);
-            if (resultadoFound.isPresent()) {
-                ParametroAplicacionDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), ParametroAplicacionDTO.class);
-                return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(parametroService.findById(id), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de los parametros de la aplicacion por nombre", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findByNombreContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(parametroService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de los parametros de la aplicacion por descripcion", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findByDescripcionContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(parametroService.findByDescripcionContainingIgnoreCase(term), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por estado", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<ParametroAplicacion>> resultadoFound = parametroService.findByEstado(term);
-            if (resultadoFound.isPresent()) {
-                List<ParametroAplicacionDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), ParametroAplicacionDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(parametroService.findByEstado(term), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -123,35 +101,37 @@ public class ParametroAplicacionController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un parametro de la aplicacion", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody ParametroAplicacion parametro) {
-        try {
-            ParametroAplicacion entityCreated = parametroService.create(parametro);
-            ParametroAplicacionDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, ParametroAplicacionDTO.class);
-            return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> create(@RequestBody ParametroAplicacionDTO parametros,  BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity(parametroService.create(parametros), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+        return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
-    
-    
-    
     
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un parametro de la aplicacion", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ParametroAplicacion entityModified) {
-        try {
-            Optional<ParametroAplicacion> entityUpdated = parametroService.update(entityModified, id);
-            if (entityUpdated.isPresent()) {
-                ParametroAplicacionDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), ParametroAplicacionDTO.class);
-                return new ResponseEntity<>(resultDto, HttpStatus.OK);
-
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ParametroAplicacionDTO parametrosModified, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                Optional<ParametroAplicacionDTO> parametrosUpdated = parametroService.update(parametrosModified, id);
+                if (parametrosUpdated.isPresent()) {
+                    return new ResponseEntity(parametrosUpdated, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                }
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
     

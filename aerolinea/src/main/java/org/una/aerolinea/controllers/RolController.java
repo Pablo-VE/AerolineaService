@@ -103,10 +103,10 @@ public class RolController {
     @ApiOperation(value = "Crea un rol", response = RolDTO.class, tags = "Roles")
     @ResponseBody
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> create(@RequestBody RolDTO tramites,  BindingResult bindingResult) {
+    public ResponseEntity<?> create(@RequestBody RolDTO roles,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
-                return new ResponseEntity(rolService.create(tramites), HttpStatus.CREATED);
+                return new ResponseEntity(rolService.create(roles), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -120,10 +120,10 @@ public class RolController {
     @ApiOperation(value = "Modifica un rol", response = RolDTO.class, tags = "Roles")
     @ResponseBody
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody RolDTO tramitesModified, BindingResult bindingResult) {
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody RolDTO rolModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
-                Optional<RolDTO> tramiteRegUpdated = rolService.update(tramitesModified, id);
+                Optional<RolDTO> tramiteRegUpdated = rolService.update(rolModified, id);
                 if (tramiteRegUpdated.isPresent()) {
                     return new ResponseEntity(tramiteRegUpdated, HttpStatus.OK);
                 } else {

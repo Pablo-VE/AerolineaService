@@ -7,7 +7,7 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.BitacoraAvion;
+import org.una.aerolinea.dto.BitacoraAvionDTO;
 
 /**
  *
@@ -15,22 +15,22 @@ import org.una.aerolinea.entities.BitacoraAvion;
  */
 public interface IBitacoraAvionService {
     
-    public Optional<List<BitacoraAvion>> findAll();
+    public Optional<List<BitacoraAvionDTO>> findAll();
  
-    public Optional<BitacoraAvion> findById(Long id);
+    public Optional<BitacoraAvionDTO> findById(Long id);
 
-    public Optional<List<BitacoraAvion>> findByCombustible(int combustible);
+    public Optional<List<BitacoraAvionDTO>> findByCombustible(int combustible);
     
-    public Optional<List<BitacoraAvion>> findByDistanciaRecorrida(int distanciaRec);
+    public Optional<List<BitacoraAvionDTO>> findByDistanciaRecorrida(int distanciaRec);
     
-    public Optional<List<BitacoraAvion>> findByEstado(boolean estado);
+    public Optional<List<BitacoraAvionDTO>> findByEstado(boolean estado);
     
-    public Optional<List<BitacoraAvion>> findByTiempoTierra(int tiempoTierra);
+    public Optional<List<BitacoraAvionDTO>> findByTiempoTierra(int tiempoTierra);
     
-    public Optional<List<BitacoraAvion>> findByUbicacionContainingIgnoreCase(String ubicacion);
+    public Optional<List<BitacoraAvionDTO>> findByUbicacionContainingIgnoreCase(String ubicacion);
 
-    public BitacoraAvion create(BitacoraAvion avionEstado);
+    public BitacoraAvionDTO create(BitacoraAvionDTO avionEstado);
 
-    public Optional<BitacoraAvion> update(BitacoraAvion avionEstado, Long id);
+    public Optional<BitacoraAvionDTO> update(BitacoraAvionDTO avionEstado, Long id);
 
 }

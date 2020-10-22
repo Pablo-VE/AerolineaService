@@ -10,9 +10,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.una.aerolinea.entities.BitacoraAvion;
+import org.una.aerolinea.dto.BitacoraAvionDTO;
 import org.una.aerolinea.repositories.IBitacoraAvionRepository;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.una.aerolinea.dto.RolDTO;
+import org.una.aerolinea.entities.Rol;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 
 
@@ -28,60 +33,64 @@ public class BitacoraAvionServiceImplementation implements IBitacoraAvionService
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<BitacoraAvion>> findAll() {
-	return Optional.ofNullable(bitacoraAvionRepository.findAll());
+    public Optional<List<BitacoraAvionDTO>> findAll() {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findAll(), BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<BitacoraAvion> findById(Long id) {
-	return bitacoraAvionRepository.findById(id);
+    public Optional<BitacoraAvionDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(bitacoraAvionRepository.findById(id), BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<BitacoraAvion>> findByCombustible(int combustible) {
-	return Optional.ofNullable(bitacoraAvionRepository.findByCombustible(combustible));
+    public Optional<List<BitacoraAvionDTO>> findByCombustible(int combustible) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByCombustible(combustible), BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<BitacoraAvion>> findByDistanciaRecorrida(int distanciaRec) {
-	return Optional.ofNullable(bitacoraAvionRepository.findByDistanciaRecorrida(distanciaRec));
+    public Optional<List<BitacoraAvionDTO>> findByDistanciaRecorrida(int distanciaRec) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByDistanciaRecorrida(distanciaRec), BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<BitacoraAvion>> findByEstado(boolean estado) {
-	return Optional.ofNullable(bitacoraAvionRepository.findByEstado(estado));
+    public Optional<List<BitacoraAvionDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByEstado(estado), BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<BitacoraAvion>> findByTiempoTierra(int tiempoTierra) {
-	return Optional.ofNullable(bitacoraAvionRepository.findByTiempoTierra(tiempoTierra));
+    public Optional<List<BitacoraAvionDTO>> findByTiempoTierra(int tiempoTierra) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByTiempoTierra(tiempoTierra), BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<BitacoraAvion>> findByUbicacionContainingIgnoreCase(String ubicacion) {
-	return Optional.ofNullable(bitacoraAvionRepository.findByUbicacionContainingIgnoreCase(ubicacion));
+    public Optional<List<BitacoraAvionDTO>> findByUbicacionContainingIgnoreCase(String ubicacion) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByUbicacionContainingIgnoreCase(ubicacion), BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional
-    public BitacoraAvion create(BitacoraAvion avionEstado) {
-	return bitacoraAvionRepository.save(avionEstado);
+    public BitacoraAvionDTO create(BitacoraAvionDTO avionEstado) {
+        BitacoraAvion bitacoraAvion = MapperUtils.EntityFromDto(avionEstado, BitacoraAvion.class);
+        bitacoraAvion = bitacoraAvionRepository.save(bitacoraAvion);
+        return MapperUtils.DtoFromEntity(bitacoraAvion, BitacoraAvionDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<BitacoraAvion> update(BitacoraAvion avionEstado, Long id) {
-	if(bitacoraAvionRepository.findById(id).isPresent()){
-            return Optional.ofNullable(bitacoraAvionRepository.save(avionEstado));
-        }else{
+    public Optional<BitacoraAvionDTO> update(BitacoraAvionDTO avionEstado, Long id) {
+        if (bitacoraAvionRepository.findById(id).isPresent()) {
+            BitacoraAvion bitacoraAvion = MapperUtils.EntityFromDto(avionEstado, BitacoraAvion.class);
+            bitacoraAvion = bitacoraAvionRepository.save(bitacoraAvion);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(bitacoraAvion, BitacoraAvionDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
     
 }

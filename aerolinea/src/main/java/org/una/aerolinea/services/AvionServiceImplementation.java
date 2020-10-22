@@ -10,8 +10,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.una.aerolinea.dto.AvionDTO;
 import org.una.aerolinea.entities.Avion;
 import org.una.aerolinea.repositories.IAvionRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,62 +27,64 @@ public class AvionServiceImplementation implements IAvionService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Avion>> findAll() {
-        return Optional.ofNullable(avionRepository.findAll());
+    public Optional<List<AvionDTO>> findAll() {
+        return ServiceConvertionHelper.findList(avionRepository.findAll(), AvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Avion> findById(Long id) {
-        return avionRepository.findById(id);
+    public Optional<AvionDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(avionRepository.findById(id), AvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Avion> findByMatricula(String matricula) {
-        return Optional.ofNullable(avionRepository.findByMatricula(matricula));
+    public Optional<List<AvionDTO>> findByMatricula(String matricula) {
+        return ServiceConvertionHelper.findList(avionRepository.findByMatricula(matricula), AvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Avion>> findByMatriculaContainingIgnoreCase(String matricula) {
-        return Optional.ofNullable(avionRepository.findByMatriculaContainingIgnoreCase(matricula));
+    public Optional<List<AvionDTO>> findByMatriculaContainingIgnoreCase(String matricula) {
+        return ServiceConvertionHelper.findList(avionRepository.findByMatriculaContainingIgnoreCase(matricula), AvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Avion>> findByEstado(boolean estado) {
-        return Optional.ofNullable(avionRepository.findByEstado(estado));
+    public Optional<List<AvionDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(avionRepository.findByEstado(estado), AvionDTO.class);
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Avion>> findByAerolinea(Long aerolinea) {
-        return Optional.ofNullable(avionRepository.findByAerolinea(aerolinea));
+    public Optional<List<AvionDTO>> findByAerolinea(Long aerolinea) {
+        return ServiceConvertionHelper.findList(avionRepository.findByAerolinea(aerolinea), AvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Avion>> findByTipoAvion(Long tipoAvion) {
-        return Optional.ofNullable(avionRepository.findByTipoAvion(tipoAvion));
+    public Optional<List<AvionDTO>> findByTipoAvion(Long tipoAvion) {
+        return ServiceConvertionHelper.findList(avionRepository.findByTipoAvion(tipoAvion), AvionDTO.class);
     }
 
     @Override
     @Transactional
-    public Avion create(Avion avion) {
-        return avionRepository.save(avion);
+    public AvionDTO create(AvionDTO avion) {
+        Avion avio = MapperUtils.EntityFromDto(avion, Avion.class);
+        avio = avionRepository.save(avio);
+        return MapperUtils.DtoFromEntity(avio, AvionDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Avion> update(Avion avion, Long id) {
-        if(avionRepository.findById(id).isPresent()){
-            return Optional.ofNullable(avionRepository.save(avion));
-        }else{
+    public Optional<AvionDTO> update(AvionDTO avion, Long id) {
+        if (avionRepository.findById(id).isPresent()) {
+            Avion avio = MapperUtils.EntityFromDto(avion, Avion.class);
+            avio = avionRepository.save(avio);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(avio, AvionDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
-
-    
-    
+   
 }

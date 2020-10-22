@@ -7,27 +7,27 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.Empleado;
+import org.una.aerolinea.dto.EmpleadoDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IEmpleadoService {
-    public Optional<List<Empleado>> findAll();
+    public Optional<List<EmpleadoDTO>> findAll();
 
-    public Optional<Empleado> findById(Long id);
+    public Optional<EmpleadoDTO> findById(Long id);
     
-    public Optional<Empleado> findByCedula(String cedula);
+    public Optional<EmpleadoDTO> findByCedula(String cedula);
     
-    public Optional<List<Empleado>> findByCedulaContaining(String cedula);
+    public Optional<List<EmpleadoDTO>> findByCedulaContaining(String cedula);
 
-    public Optional<List<Empleado>> findByNombreContainingIgnoreCase(String nombre);
+    public Optional<List<EmpleadoDTO>> findByNombreContainingIgnoreCase(String nombre);
     
-    public Optional<List<Empleado>> findByEstado(boolean estado);
+    public Optional<List<EmpleadoDTO>> findByEstado(boolean estado);
 
-    public Empleado create(Empleado empleado);
+    public EmpleadoDTO create(EmpleadoDTO empleado);
 
-    public Optional<Empleado> update(Empleado empleado, Long id);
+    public Optional<EmpleadoDTO> update(EmpleadoDTO empleado, Long id);
     
 }

@@ -7,25 +7,25 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.ParametroAplicacion;
+import org.una.aerolinea.dto.ParametroAplicacionDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IParametroAplicacionService {
-    public Optional<List<ParametroAplicacion>> findAll();
+    public Optional<List<ParametroAplicacionDTO>> findAll();
 
-    public Optional<ParametroAplicacion> findById(Long id);
+    public Optional<ParametroAplicacionDTO> findById(Long id);
 
-    public Optional<List<ParametroAplicacion>> findByNombreContainingIgnoreCase(String nombre);
+    public Optional<List<ParametroAplicacionDTO>> findByNombreContainingIgnoreCase(String nombre);
     
-    public Optional<List<ParametroAplicacion>> findByDescripcionContainingIgnoreCase(String descripcion);
+    public Optional<List<ParametroAplicacionDTO>> findByDescripcionContainingIgnoreCase(String descripcion);
     
-    public Optional<List<ParametroAplicacion>> findByEstado(boolean estado);
+    public Optional<List<ParametroAplicacionDTO>> findByEstado(boolean estado);
 
-    public ParametroAplicacion create(ParametroAplicacion parametroAplicacion);
+    public ParametroAplicacionDTO create(ParametroAplicacionDTO parametroAplicacion);
 
-    public Optional<ParametroAplicacion> update(ParametroAplicacion parametroAplicacion, Long id);
+    public Optional<ParametroAplicacionDTO> update(ParametroAplicacionDTO parametroAplicacion, Long id);
     
 }
