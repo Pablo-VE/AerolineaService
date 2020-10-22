@@ -7,25 +7,25 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.Aerolinea;
+import org.una.aerolinea.dto.AerolineaDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IAerolineaService {
-    public Optional<List<Aerolinea>> findAll();
+    public Optional<List<AerolineaDTO>> findAll();
 
-    public Optional<Aerolinea> findById(Long id);
+    public Optional<AerolineaDTO> findById(Long id);
 
-    public Optional<List<Aerolinea>> findByNombreContainingIgnoreCase(String nombre);
+    public Optional<List<AerolineaDTO>> findByNombreContainingIgnoreCase(String nombre);
     
-    public Optional<List<Aerolinea>> findByResponsableContainingIgnoreCase(String responsable);
+    public Optional<List<AerolineaDTO>> findByResponsableContainingIgnoreCase(String responsable);
     
-    public Optional<List<Aerolinea>> findByEstado(boolean estado);
+    public Optional<List<AerolineaDTO>> findByEstado(boolean estado);
 
-    public Aerolinea create(Aerolinea aerolinea);
+    public AerolineaDTO create(AerolineaDTO aerolinea);
 
-    public Optional<Aerolinea> update(Aerolinea aerolinea, Long id);
+    public Optional<AerolineaDTO> update(AerolineaDTO aerolinea, Long id);
     
 }

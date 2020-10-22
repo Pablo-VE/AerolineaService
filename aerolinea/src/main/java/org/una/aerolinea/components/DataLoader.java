@@ -5,6 +5,7 @@
  */
 package org.una.aerolinea.components;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,9 @@ import org.una.aerolinea.loaders.Roles;
 import org.una.aerolinea.services.IEmpleadoService;
 import org.una.aerolinea.services.IRolService;
 import org.una.aerolinea.services.IUsuarioService;
-
+import org.una.aerolinea.dto.RolDTO;
+import org.una.aerolinea.dto.UsuarioDTO;
+import org.una.aerolinea.dto.EmpleadoDTO;
 /**
  *
  * @author Pablo-VE
@@ -42,42 +45,27 @@ public class DataLoader implements ApplicationRunner{
     private IRolService rolService;
 
     @Override
-    public void run(ApplicationArguments args) {
+   public void run(ApplicationArguments args) {
 
-        if (empleadoService.findByCedula(cedula).isEmpty()) {
-
-            Rol rol;
-            final String nombre = "Administrador"; 
-            Optional<Rol> rolBuscado = rolService.findByNombre(nombre);
-
-            if (rolBuscado.isEmpty()) { 
-                rol = new Rol();
-                rol.setEstado(true);
-                rol.setNombre(nombre);
-                rol.setDescripcion("Administrar la aplicacion");
-                rol = rolService.create(rol);
-
-            } else {
-                rol = rolBuscado.get();
-            }
+        if (usuarioService.findByCedula(cedula) == null) {
             
-            Empleado empleado = new Empleado();
-            empleado.setNombre("Usuario Admin");
+            crearRoles();
+            
+            RolDTO rol;
+            final String nombre = "gestor";
+            
+            Optional<List<RolDTO>> Rol = rolService.findByNombre(nombre);
+            rol = Rol.get().get(0);
+            
+            UsuarioDTO usuario = new UsuarioDTO();
+            EmpleadoDTO empleado = new EmpleadoDTO();
+            
+            empleado.setNombre("Usuario");
             empleado.setCedula(cedula);
-            empleado.setEstado(true);
-            empleado=empleadoService.create(empleado);
-            
-            Usuario usuario = new Usuario();
-            usuario.setEstado(true);
             usuario.setRol(rol);
             usuario.setPasswordEncriptado(password);
-            usuario.setCedula(empleado.getCedula());
             usuario.setEmpleado(empleado);
-            usuario = usuarioService.create(usuario);
-            
-            System.out.println(usuario.toString());
-            
-            
+            usuarioService.create(usuario);
 
             System.out.println("Se agrega el usuario inicial");
         } else {
@@ -85,13 +73,20 @@ public class DataLoader implements ApplicationRunner{
         }
 
     }
-        private void createPermisos() {
-        for (Roles rol : Roles.values()) {
-            Rol nuevoRol = new Rol();
-            nuevoRol.setNombre(rol.getNombre());
-           // nuevoPermiso.setDescripcion(rol.name());
-            rolService.create(nuevoRol);
-        } 
+   
+        private void crearRoles(){
+        for(Roles rol : Roles.values()){
+            RolDTO rolDto = new RolDTO();
+            rolDto.setNombre(rol.getNombre());
+            if(rolService.findByNombre(rol.getNombre()) == null){
+                rolService.create(rolDto);
+                System.out.println("Rol creado");
+            }else{
+                System.out.println("Rol encontrado");
+            }
+        }
     }
+
+    
 
 }

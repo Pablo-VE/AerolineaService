@@ -22,8 +22,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.una.aerolinea.dto.AuthenticationRequest;
-import org.una.aerolinea.dto.AuthenticationResponse;
 import org.una.aerolinea.dto.UsuarioDTO;
 import org.una.aerolinea.entities.Empleado;
 import org.una.aerolinea.entities.Rol;
@@ -33,6 +31,7 @@ import org.una.aerolinea.repositories.IEmpleadoRepository;
 import org.una.aerolinea.repositories.IRolRepository;
 import org.una.aerolinea.repositories.IUsuarioRepository;
 import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -43,6 +42,9 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     
     @Autowired
     private IUsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private IEmpleadoRepository empleadoRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -53,67 +55,78 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
      @Autowired
     private JwtProvider jwtProvider;
 
-    private void encriptarPassword(Usuario usuario) {
+     
+    private UsuarioDTO encriptarPassword(UsuarioDTO usuario) {
         String password = usuario.getPasswordEncriptado();
         if (!password.isBlank()) {
             usuario.setPasswordEncriptado(bCryptPasswordEncoder.encode(password));
         }
-    } 
+        return usuario;
+    }
+
 
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Usuario>> findAll() {
-        return Optional.ofNullable(usuarioRepository.findAll());
+    public Optional<List<UsuarioDTO>> findAll() {
+        return ServiceConvertionHelper.findList(usuarioRepository.findAll(), UsuarioDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Usuario>> findByEstado(boolean estado) {
-        return Optional.ofNullable(usuarioRepository.findByEstado(estado));
+    public Optional<List<UsuarioDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(usuarioRepository.findByEstado(estado), UsuarioDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Usuario>> findByRol(Long rol) {
-        return Optional.ofNullable(usuarioRepository.findByRol(rol));
+    public Optional<List<UsuarioDTO>> findByRol(Long rol) {
+        return ServiceConvertionHelper.findList(usuarioRepository.findByRol(rol), UsuarioDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Usuario> findById(Long id) {
-        return usuarioRepository.findById(id);
+    public Optional<UsuarioDTO> findById(Long id) {
+          return ServiceConvertionHelper.oneToOptionalDto(usuarioRepository.findById(id), UsuarioDTO.class);
     }
+
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<Usuario> findByCedula(String cedula) {
-        return usuarioRepository.findByCedula(cedula);
-    }
-
-    @Override
-    @Transactional 
-    public Usuario create(Usuario usuario) {
-        encriptarPassword(usuario);
-        return usuarioRepository.save(usuario);
+    public Optional<UsuarioDTO> findByCedula(String cedula) {
+        return ServiceConvertionHelper.oneToOptionalDto(usuarioRepository.findByCedula(cedula), UsuarioDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Usuario> update(Usuario usuario, Long id) {
+    public UsuarioDTO create(UsuarioDTO usuarioDTO) {
+        usuarioDTO = encriptarPassword(usuarioDTO);
+        Usuario usuario = MapperUtils.EntityFromDto(usuarioDTO, Usuario.class);
+        usuario = usuarioRepository.save(usuario);
+        return MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class);
+    }
+
+
+    @Override
+    @Transactional
+    public Optional<UsuarioDTO> update(UsuarioDTO usuarioDTO, Long id) {
         if (usuarioRepository.findById(id).isPresent()) {
-            
-            return Optional.ofNullable(usuarioRepository.save(usuario));
+            usuarioDTO = encriptarPassword(usuarioDTO);
+            Usuario usuario = MapperUtils.EntityFromDto(usuarioDTO, Usuario.class);
+            usuario = usuarioRepository.save(usuario);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(usuario, UsuarioDTO.class));
         } else {
             return null;
-        }
+        } 
     }
+
     
     @Autowired
     private IRolRepository rolRepository;
-    
+        
+
     @Override
-    @Transactional 
+    @Transactional(readOnly = true) 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<Rol> roless = rolRepository.findByEstado(true);
         Optional<Usuario> usuarioBuscado = usuarioRepository.findByCedula(username);

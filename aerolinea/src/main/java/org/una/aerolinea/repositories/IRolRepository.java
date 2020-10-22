@@ -8,6 +8,7 @@ package org.una.aerolinea.repositories;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.una.aerolinea.entities.Rol;
+import org.una.aerolinea.dto.RolDTO;
 
 /**
  *
@@ -17,5 +18,5 @@ public interface IRolRepository extends JpaRepository<Rol, Long>{
     public List<Rol> findByNombreContainingIgnoreCase(String nombre);
     public List<Rol> findByDescripcionContainingIgnoreCase(String descripcion);
     public List<Rol> findByEstado(boolean estado);
-    public Rol findByNombre(String nombre); 
+    public List<RolDTO> findByNombre(String nombre); 
 }

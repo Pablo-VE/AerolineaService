@@ -12,6 +12,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,52 +38,38 @@ import org.una.aerolinea.utils.MapperUtils;
 public class RolController {
     @Autowired
     private IRolService rolService;
-    
+        
+    final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
+
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @PreAuthorize("hasAuthority('gestor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<Rol>> resultadoFound = rolService.findAll();
-            if (resultadoFound.isPresent()) {
-                List<RolDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RolDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(rolService.findAll(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un rol por su id", response = RolDTO.class, tags = "Roles")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
-
-            Optional<Rol> resultadoFound = rolService.findById(id);
-            if (resultadoFound.isPresent()) {
-                RolDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), RolDTO.class);
-                return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(rolService.findById(id), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por nombre", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<Rol>> resultadoFound = rolService.findByNombreContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<RolDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RolDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(rolService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -89,33 +77,24 @@ public class RolController {
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por descripcion", response = RolDTO.class, responseContainer = "List", tags = "Roles")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<Rol>> resultadoFound = rolService.findByDescripcionContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<RolDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RolDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity(rolService.findByDescripcionContainingIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            Optional<List<Rol>> resultadoFound = rolService.findByEstado(term);
-            if (resultadoFound.isPresent()) {
-                List<RolDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), RolDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(rolService.findByEstado(estado), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -123,35 +102,38 @@ public class RolController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un rol", response = RolDTO.class, tags = "Roles")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody Rol rol) {
-        try {
-            Rol entityCreated = rolService.create(rol);
-            RolDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, RolDTO.class);
-            return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> create(@RequestBody RolDTO tramites,  BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity(rolService.create(tramites), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+        return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
-    
-    
     
     
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un rol", response = RolDTO.class, tags = "Roles")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody Rol entityModified) {
-        try {
-            Optional<Rol> entityUpdated = rolService.update(entityModified, id);
-            if (entityUpdated.isPresent()) {
-                RolDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), RolDTO.class);
-                return new ResponseEntity<>(resultDto, HttpStatus.OK);
-
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody RolDTO tramitesModified, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                Optional<RolDTO> tramiteRegUpdated = rolService.update(tramitesModified, id);
+                if (tramiteRegUpdated.isPresent()) {
+                    return new ResponseEntity(tramiteRegUpdated, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                }
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
     

@@ -7,28 +7,25 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.dto.AuthenticationRequest;
-import org.una.aerolinea.dto.AuthenticationResponse;
-import org.una.aerolinea.entities.Usuario;
-
+import org.una.aerolinea.dto.UsuarioDTO;
 /**
  *
  * @author Pablo-VE
  */
 public interface IUsuarioService {
-    public Optional<List<Usuario>> findAll();
+    public Optional<List<UsuarioDTO>> findAll();
     
-    public Optional<List<Usuario>> findByEstado(boolean estado);
+    public Optional<List<UsuarioDTO>> findByEstado(boolean estado);
     
-    public Optional<Usuario> findByCedula(String cedula);
+    public Optional<UsuarioDTO> findByCedula(String cedula);
     
-    public Optional<List<Usuario>> findByRol(Long rol);
+    public Optional<List<UsuarioDTO>> findByRol(Long rol);
 
-    public Optional<Usuario> findById(Long id);
+    public Optional<UsuarioDTO> findById(Long id);
 
-    public Usuario create(Usuario usuario);
+    public UsuarioDTO create(UsuarioDTO usuario);
 
-    public Optional<Usuario> update(Usuario usuario, Long id);
+    public Optional<UsuarioDTO> update(UsuarioDTO usuario, Long id);
     
     
 }

@@ -8,25 +8,26 @@ package org.una.aerolinea.services;
 import java.util.List;
 import java.util.Optional;
 import org.una.aerolinea.entities.Rol;
+import org.una.aerolinea.dto.RolDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IRolService {
-    public Optional<List<Rol>> findAll();
+    public Optional<List<RolDTO>> findAll();
 
-    public Optional<Rol> findById(Long id);
+    public Optional<RolDTO> findById(Long id);
     
-    public Optional<Rol> findByNombre(String nombre);
+    public Optional<List<RolDTO>> findByNombre(String nombre);
 
-    public Optional<List<Rol>> findByNombreContainingIgnoreCase(String nombre);
+    public Optional<List<RolDTO>> findByNombreContainingIgnoreCase(String nombre);
     
-    public Optional<List<Rol>> findByDescripcionContainingIgnoreCase(String descripcion);
+    public Optional<List<RolDTO>> findByDescripcionContainingIgnoreCase(String descripcion);
     
-    public Optional<List<Rol>> findByEstado(boolean estado);
+    public Optional<List<RolDTO>> findByEstado(boolean estado);
 
-    public Rol create(Rol rol);
+    public RolDTO create(RolDTO rol);
 
-    public Optional<Rol> update(Rol rol, Long id);
+    public Optional<RolDTO> update(RolDTO rol, Long id);
 }

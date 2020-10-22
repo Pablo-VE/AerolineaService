@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.Aerolinea;
+import org.una.aerolinea.dto.AerolineaDTO;
 import org.una.aerolinea.repositories.IAerolineaRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,48 +27,52 @@ public class AerolineaServiceImplementation implements IAerolineaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Aerolinea>> findAll() {
-        return Optional.ofNullable(aerolineaRepository.findAll());
+    public Optional<List<AerolineaDTO>> findAll() {
+        return ServiceConvertionHelper.findList(aerolineaRepository.findAll(), AerolineaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Aerolinea> findById(Long id) {
-        return aerolineaRepository.findById(id);
+    public Optional<AerolineaDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(aerolineaRepository.findById(id), AerolineaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Aerolinea>> findByNombreContainingIgnoreCase(String nombre) {
-        return Optional.ofNullable(aerolineaRepository.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<AerolineaDTO>> findByNombreContainingIgnoreCase(String nombre) {
+        return ServiceConvertionHelper.findList(aerolineaRepository.findByNombreContainingIgnoreCase(nombre), AerolineaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Aerolinea>> findByResponsableContainingIgnoreCase(String responsable) {
-        return Optional.ofNullable(aerolineaRepository.findByResponsableContainingIgnoreCase(responsable));
+    public Optional<List<AerolineaDTO>> findByResponsableContainingIgnoreCase(String responsable) {
+        return ServiceConvertionHelper.findList(aerolineaRepository.findByResponsableContainingIgnoreCase(responsable), AerolineaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Aerolinea>> findByEstado(boolean estado) {
-        return Optional.ofNullable(aerolineaRepository.findByEstado(estado));
+    public Optional<List<AerolineaDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(aerolineaRepository.findByEstado(estado), AerolineaDTO.class);
     }
 
     @Override
     @Transactional
-    public Aerolinea create(Aerolinea aerolinea) {
-        return aerolineaRepository.save(aerolinea);
+    public AerolineaDTO create(AerolineaDTO aerolinea) {
+        Aerolinea aeroline = MapperUtils.EntityFromDto(aerolinea, Aerolinea.class);
+        aeroline = aerolineaRepository.save(aeroline);
+        return MapperUtils.DtoFromEntity(aeroline, AerolineaDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Aerolinea> update(Aerolinea aerolinea, Long id) {
-        if(aerolineaRepository.findById(id).isPresent()){
-            return Optional.ofNullable(aerolineaRepository.save(aerolinea));
-        }else{
+    public Optional<AerolineaDTO> update(AerolineaDTO aerolinea, Long id) {
+        if (aerolineaRepository.findById(id).isPresent()) {
+            Aerolinea aeroline = MapperUtils.EntityFromDto(aerolinea, Aerolinea.class);
+            aeroline = aerolineaRepository.save(aeroline);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(aeroline, AerolineaDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
     
 }

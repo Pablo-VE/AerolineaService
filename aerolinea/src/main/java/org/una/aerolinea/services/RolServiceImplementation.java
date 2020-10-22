@@ -10,8 +10,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.una.aerolinea.dto.RolDTO;
 import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.repositories.IRolRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,55 +27,58 @@ public class RolServiceImplementation implements IRolService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Rol>> findAll() {
-        return Optional.ofNullable(rolRepositoy.findAll());
+    public Optional<List<RolDTO>> findAll() {
+        return ServiceConvertionHelper.findList(rolRepositoy.findAll(), RolDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Rol> findById(Long id) {
-        return rolRepositoy.findById(id);
+    public Optional<RolDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(rolRepositoy.findById(id), RolDTO.class);
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<Rol> findByNombre(String nombre) {
-        return Optional.ofNullable(rolRepositoy.findByNombre(nombre));
+    public Optional<List<RolDTO>> findByNombre(String nombre) {
+        return ServiceConvertionHelper.findList(rolRepositoy.findByNombre(nombre), RolDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Rol>> findByNombreContainingIgnoreCase(String nombre) {
-        return Optional.ofNullable(rolRepositoy.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<RolDTO>> findByNombreContainingIgnoreCase(String nombre) {
+        return ServiceConvertionHelper.findList(rolRepositoy.findByNombreContainingIgnoreCase(nombre), RolDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Rol>> findByDescripcionContainingIgnoreCase(String descripcion) {
-        return Optional.ofNullable(rolRepositoy.findByDescripcionContainingIgnoreCase(descripcion));
+    public Optional<List<RolDTO>> findByDescripcionContainingIgnoreCase(String descripcion) {
+         return ServiceConvertionHelper.findList(rolRepositoy.findByDescripcionContainingIgnoreCase(descripcion), RolDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Rol>> findByEstado(boolean estado) {
-        return Optional.ofNullable(rolRepositoy.findByEstado(estado));
+    public Optional<List<RolDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(rolRepositoy.findByEstado(estado), RolDTO.class);
     }
 
     @Override
     @Transactional
-    public Rol create(Rol rol) {
-        return rolRepositoy.save(rol);
+    public RolDTO create(RolDTO rol) {
+        Rol ro = MapperUtils.EntityFromDto(rol, Rol.class);
+        ro = rolRepositoy.save(ro);
+        return MapperUtils.DtoFromEntity(ro, RolDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Rol> update(Rol rol, Long id) {
+    public Optional<RolDTO> update(RolDTO rol, Long id) {
         if (rolRepositoy.findById(id).isPresent()) {
-            
-            return Optional.ofNullable(rolRepositoy.save(rol));
+            Rol user = MapperUtils.EntityFromDto(rol, Rol.class);
+            user = rolRepositoy.save(user);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(user, RolDTO.class));
         } else {
             return null;
-        }
+        } 
     }
     
 }
