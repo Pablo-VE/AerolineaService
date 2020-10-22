@@ -6,8 +6,10 @@
 package org.una.aerolinea.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.una.aerolinea.entities.Empleado;
+import org.una.aerolinea.dto.EmpleadoDTO;
 
 /**
  *
@@ -18,6 +20,6 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Long>{
     public List<Empleado> findByCedulaContaining(String cedula);
     public List<Empleado> findByNombreContainingIgnoreCase(String nombreCompleto);
     public List<Empleado> findByEstado(boolean estado);
-    public Empleado findByCedula(String cedula);
+    public Optional<EmpleadoDTO> findByCedula(String cedula);
     
 }

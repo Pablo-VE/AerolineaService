@@ -11,7 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.Empleado;
+import org.una.aerolinea.dto.EmpleadoDTO;
+import org.una.aerolinea.dto.RolDTO;
+import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.repositories.IEmpleadoRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -26,55 +31,58 @@ public class EmpleadoServiceImplementation implements IEmpleadoService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Empleado>> findAll() {
-        return Optional.ofNullable(empleadoRepositoy.findAll());
+    public Optional<List<EmpleadoDTO>> findAll() {
+        return ServiceConvertionHelper.findList(empleadoRepositoy.findAll(), EmpleadoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Empleado> findById(Long id) {
-        return empleadoRepositoy.findById(id);
+    public Optional<EmpleadoDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(empleadoRepositoy.findById(id), EmpleadoDTO.class);
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<Empleado> findByCedula(String cedula) {
-        return Optional.ofNullable(empleadoRepositoy.findByCedula(cedula));
+    public Optional<EmpleadoDTO> findByCedula(String cedula) {
+          return ServiceConvertionHelper.oneToOptionalDto(empleadoRepositoy.findByCedula(cedula), EmpleadoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Empleado>> findByCedulaContaining(String cedula) {
-        return Optional.ofNullable(empleadoRepositoy.findByCedulaContaining(cedula));
+    public Optional<List<EmpleadoDTO>> findByCedulaContaining(String cedula) {
+       return ServiceConvertionHelper.findList(empleadoRepositoy.findByCedulaContaining(cedula), EmpleadoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Empleado>> findByNombreContainingIgnoreCase(String nombre) {
-        return Optional.ofNullable(empleadoRepositoy.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<EmpleadoDTO>> findByNombreContainingIgnoreCase(String nombre) {
+       return ServiceConvertionHelper.findList(empleadoRepositoy.findByNombreContainingIgnoreCase(nombre), EmpleadoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Empleado>> findByEstado(boolean estado) {
-        return Optional.ofNullable(empleadoRepositoy.findByEstado(estado));
+    public Optional<List<EmpleadoDTO>> findByEstado(boolean estado) {
+       return ServiceConvertionHelper.findList(empleadoRepositoy.findByEstado(estado), EmpleadoDTO.class);
     }
 
     @Override
     @Transactional
-    public Empleado create(Empleado empleado) {
-        return empleadoRepositoy.save(empleado);
+    public EmpleadoDTO create(EmpleadoDTO empleado) {
+        Empleado emple = MapperUtils.EntityFromDto(empleado, Empleado.class);
+        emple = empleadoRepositoy.save(emple);
+        return MapperUtils.DtoFromEntity(emple, EmpleadoDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Empleado> update(Empleado empleado, Long id) {
+    public Optional<EmpleadoDTO> update(EmpleadoDTO empleado, Long id) {
         if (empleadoRepositoy.findById(id).isPresent()) {
-            
-            return Optional.ofNullable(empleadoRepositoy.save(empleado));
+            Empleado emple = MapperUtils.EntityFromDto(empleado, Empleado.class);
+            emple = empleadoRepositoy.save(emple);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(emple, EmpleadoDTO.class));
         } else {
             return null;
-        }
+        } 
     }
     
 }

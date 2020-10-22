@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.ParametroAplicacion;
+import org.una.aerolinea.dto.ParametroAplicacionDTO;
 import org.una.aerolinea.repositories.IParametroAplicacionRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,49 +27,52 @@ public class ParametroAplicacionServiceImplementation implements IParametroAplic
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ParametroAplicacion>> findAll() {
-        return Optional.ofNullable(paramentroRepository.findAll());
+    public Optional<List<ParametroAplicacionDTO>> findAll() {
+        return ServiceConvertionHelper.findList(paramentroRepository.findAll(), ParametroAplicacionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ParametroAplicacion> findById(Long id) {
-        return paramentroRepository.findById(id);
+    public Optional<ParametroAplicacionDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(paramentroRepository.findById(id), ParametroAplicacionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ParametroAplicacion>> findByNombreContainingIgnoreCase(String nombre) {
-        return Optional.ofNullable(paramentroRepository.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<ParametroAplicacionDTO>> findByNombreContainingIgnoreCase(String nombre) {
+        return ServiceConvertionHelper.findList(paramentroRepository.findByNombreContainingIgnoreCase(nombre), ParametroAplicacionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ParametroAplicacion>> findByDescripcionContainingIgnoreCase(String descripcion) {
-        return Optional.ofNullable(paramentroRepository.findByDescripcionContainingIgnoreCase(descripcion));
+    public Optional<List<ParametroAplicacionDTO>> findByDescripcionContainingIgnoreCase(String descripcion) {
+        return ServiceConvertionHelper.findList(paramentroRepository.findByDescripcionContainingIgnoreCase(descripcion), ParametroAplicacionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ParametroAplicacion>> findByEstado(boolean estado) {
-        return Optional.ofNullable(paramentroRepository.findByEstado(estado));
+    public Optional<List<ParametroAplicacionDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(paramentroRepository.findByEstado(estado), ParametroAplicacionDTO.class);
     }
 
     @Override
     @Transactional
-    public ParametroAplicacion create(ParametroAplicacion parametroAplicacion) {
-        return paramentroRepository.save(parametroAplicacion);
+    public ParametroAplicacionDTO create(ParametroAplicacionDTO parametroAplicacion) {
+        ParametroAplicacion parametro = MapperUtils.EntityFromDto(parametroAplicacion, ParametroAplicacion.class);
+        parametro = paramentroRepository.save(parametro);
+        return MapperUtils.DtoFromEntity(parametro, ParametroAplicacionDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<ParametroAplicacion> update(ParametroAplicacion parametroAplicacion, Long id) {
+    public Optional<ParametroAplicacionDTO> update(ParametroAplicacionDTO parametroAplicacion, Long id) {
         if (paramentroRepository.findById(id).isPresent()) {
-            
-            return Optional.ofNullable(paramentroRepository.save(parametroAplicacion));
+            ParametroAplicacion parametro = MapperUtils.EntityFromDto(parametroAplicacion, ParametroAplicacion.class);
+            parametro = paramentroRepository.save(parametro);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(parametro, ParametroAplicacionDTO.class));
         } else {
             return null;
-        }
+        } 
     }
     
 }

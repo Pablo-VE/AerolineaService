@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.ServicioRegistrado;
+import org.una.aerolinea.dto.ServicioRegistradoDTO;
 import org.una.aerolinea.repositories.IServicioRegistradoRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,54 +27,58 @@ public class ServicioRegistradoServiceImplementation implements IServicioRegistr
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioRegistrado>> findAll() {
-        return Optional.ofNullable(servicioRepository.findAll());
+    public Optional<List<ServicioRegistradoDTO>> findAll() {
+        return ServiceConvertionHelper.findList(servicioRepository.findAll(), ServicioRegistradoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ServicioRegistrado> findById(Long id) {
-        return servicioRepository.findById(id);
+    public Optional<ServicioRegistradoDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(servicioRepository.findById(id), ServicioRegistradoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioRegistrado>> findByCobroRango(float cobroMas, float cobroMenos) {
-        return Optional.ofNullable(servicioRepository.findByCobroRango(cobroMas, cobroMenos));
+    public Optional<List<ServicioRegistradoDTO>> findByCobroRango(float cobroMas, float cobroMenos) {
+        return ServiceConvertionHelper.findList(servicioRepository.findByCobroRango(cobroMas, cobroMenos), ServicioRegistradoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioRegistrado>> findByTipoContainingIgnoreCase(String tipo) {
-        return Optional.ofNullable(servicioRepository.findByTipoContainingIgnoreCase(tipo));
+    public Optional<List<ServicioRegistradoDTO>> findByTipoContainingIgnoreCase(String tipo) {
+        return ServiceConvertionHelper.findList(servicioRepository.findByTipoContainingIgnoreCase(tipo), ServicioRegistradoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioRegistrado>> findByEstadoCobro(boolean estadoCobro) {
-        return Optional.ofNullable(servicioRepository.findByEstadoCobro(estadoCobro));
+    public Optional<List<ServicioRegistradoDTO>> findByEstadoCobro(boolean estadoCobro) {
+        return ServiceConvertionHelper.findList(servicioRepository.findByEstadoCobro(estadoCobro), ServicioRegistradoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioRegistrado>> findByEstado(boolean estado) {
-        return Optional.ofNullable(servicioRepository.findByEstado(estado));
+    public Optional<List<ServicioRegistradoDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(servicioRepository.findByEstado(estado), ServicioRegistradoDTO.class);
     }
 
     @Override
     @Transactional
-    public ServicioRegistrado create(ServicioRegistrado servicioAeropuerto) {
-        return servicioRepository.save(servicioAeropuerto);
+    public ServicioRegistradoDTO create(ServicioRegistradoDTO servicioAeropuerto) {
+        ServicioRegistrado servicios = MapperUtils.EntityFromDto(servicioAeropuerto, ServicioRegistrado.class);
+        servicios = servicioRepository.save(servicios);
+        return MapperUtils.DtoFromEntity(servicios, ServicioRegistradoDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<ServicioRegistrado> update(ServicioRegistrado servicioAeropuerto, Long id) {
-        if(servicioRepository.findById(id).isPresent()){
-            return Optional.ofNullable(servicioRepository.save(servicioAeropuerto));
-        }else{
+    public Optional<ServicioRegistradoDTO> update(ServicioRegistradoDTO servicioAeropuerto, Long id) {
+        if (servicioRepository.findById(id).isPresent()) {
+            ServicioRegistrado servicios = MapperUtils.EntityFromDto(servicioAeropuerto, ServicioRegistrado.class);
+            servicios = servicioRepository.save(servicios);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(servicios, ServicioRegistradoDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
     
 }

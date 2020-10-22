@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.Horario;
+import org.una.aerolinea.dto.HorarioDTO;
 import org.una.aerolinea.repositories.IHorarioRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,48 +27,52 @@ public class HorarioServiceImplementation implements IHorarioService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Horario>> findAll() {
-        return Optional.ofNullable(horarioRepository.findAll());
+    public Optional<List<HorarioDTO>> findAll() {
+        return ServiceConvertionHelper.findList(horarioRepository.findAll(), HorarioDTO.class);
+    }
+        
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<HorarioDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(horarioRepository.findById(id), HorarioDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Horario>> findByEstado(boolean estado) {
-        return Optional.ofNullable(horarioRepository.findByEstado(estado));
+    public Optional<List<HorarioDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(horarioRepository.findByEstado(estado), HorarioDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Horario>> findByEmpleado(Long empleado) {
-        return Optional.ofNullable(horarioRepository.findByEmpleado(empleado));
+    public Optional<List<HorarioDTO>> findByEmpleado(Long empleado) {
+        return ServiceConvertionHelper.findList(horarioRepository.findByEmpleado(empleado), HorarioDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Horario>> findByEmpleadoAndEstado(Long empleado, boolean estado) {
-        return Optional.ofNullable(horarioRepository.findByEmpleadoAndEstado(empleado, estado));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Horario> findById(Long id) {
-        return horarioRepository.findById(id);
+    public Optional<List<HorarioDTO>> findByEmpleadoAndEstado(Long empleado, boolean estado) {
+        return ServiceConvertionHelper.findList(horarioRepository.findByEmpleadoAndEstado(empleado, estado), HorarioDTO.class);
     }
 
     @Override
     @Transactional
-    public Horario create(Horario horario) {
-        return horarioRepository.save(horario);
+    public HorarioDTO create(HorarioDTO horario) {
+        Horario hora = MapperUtils.EntityFromDto(horario, Horario.class);
+        hora = horarioRepository.save(hora);
+        return MapperUtils.DtoFromEntity(hora, HorarioDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Horario> update(Horario horario, Long id) {
-        if(horarioRepository.findById(id).isPresent()){
-            return Optional.ofNullable(horarioRepository.save(horario));
-        }else{
+    public Optional<HorarioDTO> update(HorarioDTO horario, Long id) {
+        if (horarioRepository.findById(id).isPresent()) {
+            Horario hora = MapperUtils.EntityFromDto(horario, Horario.class);
+            hora = horarioRepository.save(hora);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(hora, HorarioDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
     
 }

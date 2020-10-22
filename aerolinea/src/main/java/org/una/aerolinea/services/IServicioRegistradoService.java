@@ -7,27 +7,27 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.ServicioRegistrado;
+import org.una.aerolinea.dto.ServicioRegistradoDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IServicioRegistradoService {
-    public Optional<List<ServicioRegistrado>> findAll();
+    public Optional<List<ServicioRegistradoDTO>> findAll();
 
-    public Optional<ServicioRegistrado> findById(Long id);
+    public Optional<ServicioRegistradoDTO> findById(Long id);
     
-    public Optional<List<ServicioRegistrado>> findByCobroRango(float cobroMas, float cobroMenos);
+    public Optional<List<ServicioRegistradoDTO>> findByCobroRango(float cobroMas, float cobroMenos);
 
-    public Optional<List<ServicioRegistrado>> findByTipoContainingIgnoreCase(String tipo);
+    public Optional<List<ServicioRegistradoDTO>> findByTipoContainingIgnoreCase(String tipo);
     
-    public Optional<List<ServicioRegistrado>> findByEstadoCobro(boolean estadoCobro);
+    public Optional<List<ServicioRegistradoDTO>> findByEstadoCobro(boolean estadoCobro);
     
-    public Optional<List<ServicioRegistrado>> findByEstado(boolean estado);
+    public Optional<List<ServicioRegistradoDTO>> findByEstado(boolean estado);
     
-    public ServicioRegistrado create(ServicioRegistrado servicioAeropuerto);
+    public ServicioRegistradoDTO create(ServicioRegistradoDTO servicioAeropuerto);
     
-    public Optional<ServicioRegistrado> update(ServicioRegistrado servicioAeropuerto, Long id);
+    public Optional<ServicioRegistradoDTO> update(ServicioRegistradoDTO servicioAeropuerto, Long id);
     
 }

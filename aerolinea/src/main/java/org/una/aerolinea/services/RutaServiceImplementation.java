@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.Ruta;
+import org.una.aerolinea.dto.RutaDTO;
 import org.una.aerolinea.repositories.IRutaRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,54 +27,58 @@ public class RutaServiceImplementation implements IRutaService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Ruta>> findAll() {
-        return Optional.ofNullable(rutaRepository.findAll());
+    public Optional<List<RutaDTO>> findAll() {
+        return ServiceConvertionHelper.findList(rutaRepository.findAll(), RutaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Ruta> findById(Long id) {
-         return rutaRepository.findById(id);
+    public Optional<RutaDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(rutaRepository.findById(id), RutaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Ruta>> findByOrigenContainingIgnoreCase(String origen) {
-        return Optional.ofNullable(rutaRepository.findByOrigenContainingIgnoreCase(origen));
+    public Optional<List<RutaDTO>> findByOrigenContainingIgnoreCase(String origen) {
+        return ServiceConvertionHelper.findList(rutaRepository.findByOrigenContainingIgnoreCase(origen), RutaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Ruta>> findByDestinoContainingIgnoreCase(String destino) {
-        return Optional.ofNullable(rutaRepository.findByDestinoContainingIgnoreCase(destino));
+    public Optional<List<RutaDTO>> findByDestinoContainingIgnoreCase(String destino) {
+        return ServiceConvertionHelper.findList(rutaRepository.findByDestinoContainingIgnoreCase(destino), RutaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Ruta>> findByEstado(boolean estado) {
-        return Optional.ofNullable(rutaRepository.findByEstado(estado));
+    public Optional<List<RutaDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(rutaRepository.findByEstado(estado), RutaDTO.class);
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Ruta>> findByDistanciaRango(float distanciaMaxima, float distanciaMinima) {
-        return Optional.ofNullable(rutaRepository.findByDistanciaRango(distanciaMaxima, distanciaMinima));
+    public Optional<List<RutaDTO>> findByDistanciaRango(float distanciaMaxima, float distanciaMinima) {
+        return ServiceConvertionHelper.findList(rutaRepository.findByDistanciaRango(distanciaMaxima, distanciaMinima), RutaDTO.class);
     }
 
     @Override
     @Transactional
-    public Ruta create(Ruta ruta) {
-        return rutaRepository.save(ruta);
+    public RutaDTO create(RutaDTO ruta) {
+        Ruta rut = MapperUtils.EntityFromDto(ruta, Ruta.class);
+        rut = rutaRepository.save(rut);
+        return MapperUtils.DtoFromEntity(rut, RutaDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Ruta> update(Ruta ruta, Long id) {
-        if(rutaRepository.findById(id).isPresent()){
-            return Optional.ofNullable(rutaRepository.save(ruta));
-        }else{
+    public Optional<RutaDTO> update(RutaDTO ruta, Long id) {
+        if (rutaRepository.findById(id).isPresent()) {
+            Ruta rut = MapperUtils.EntityFromDto(ruta, Ruta.class);
+            rut = rutaRepository.save(rut);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(rut, RutaDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
 
     
