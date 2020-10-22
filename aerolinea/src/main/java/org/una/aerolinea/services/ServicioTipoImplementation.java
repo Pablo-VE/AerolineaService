@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.ServicioTipo;
+import org.una.aerolinea.dto.ServicioTipoDTO;
 import org.una.aerolinea.repositories.IServicioTipoRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -25,47 +28,51 @@ public class ServicioTipoImplementation implements IServicioTipoService{
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioTipo>> findAll() {
-        return Optional.ofNullable(tipoServicioRepository.findAll());
+    public Optional<List<ServicioTipoDTO>> findAll() {
+        return ServiceConvertionHelper.findList(tipoServicioRepository.findAll(), ServicioTipoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ServicioTipo> findById(Long id) {
-        return tipoServicioRepository.findById(id);
+    public Optional<ServicioTipoDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(tipoServicioRepository.findById(id), ServicioTipoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioTipo>> findByNombreContainingIgnoreCase(String nombre) {
-        return Optional.ofNullable(tipoServicioRepository.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<ServicioTipoDTO>> findByNombreContainingIgnoreCase(String nombre) {
+        return ServiceConvertionHelper.findList(tipoServicioRepository.findByNombreContainingIgnoreCase(nombre), ServicioTipoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioTipo>> findByEstado(boolean estado) {
-        return Optional.ofNullable(tipoServicioRepository.findByEstado(estado));
+    public Optional<List<ServicioTipoDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(tipoServicioRepository.findByEstado(estado), ServicioTipoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioTipo>> findByDescripcion(String descripcion) {
-        return Optional.ofNullable(tipoServicioRepository.findByDescripcion(descripcion));
+    public Optional<List<ServicioTipoDTO>> findByDescripcion(String descripcion) {
+        return ServiceConvertionHelper.findList(tipoServicioRepository.findByDescripcion(descripcion), ServicioTipoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ServicioTipo create(ServicioTipo tipoServicioAeropuerto) {
-		return tipoServicioRepository.save(tipoServicioAeropuerto);
+    public ServicioTipoDTO create(ServicioTipoDTO tipoServicioAeropuerto) {
+        ServicioTipo tipoServicio = MapperUtils.EntityFromDto(tipoServicioAeropuerto, ServicioTipo.class);
+        tipoServicio = tipoServicioRepository.save(tipoServicio);
+        return MapperUtils.DtoFromEntity(tipoServicio, ServicioTipoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ServicioTipo> update(ServicioTipo tipoServicioAeropuerto, Long id) {
-		if(tipoServicioRepository.findById(id).isPresent()){
-            return Optional.ofNullable(tipoServicioRepository.save(tipoServicioAeropuerto));
-        }else{
+    public Optional<ServicioTipoDTO> update(ServicioTipoDTO tipoServicioAeropuerto, Long id) {
+        if (tipoServicioRepository.findById(id).isPresent()) {
+            ServicioTipo tipoServicio = MapperUtils.EntityFromDto(tipoServicioAeropuerto, ServicioTipo.class);
+            tipoServicio = tipoServicioRepository.save(tipoServicio);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(tipoServicio, ServicioTipoDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
 }

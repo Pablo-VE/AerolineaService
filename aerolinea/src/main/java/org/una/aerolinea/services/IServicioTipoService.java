@@ -7,25 +7,25 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.ServicioTipo;
+import org.una.aerolinea.dto.ServicioTipoDTO;
 /**
  *
  * @author Luis
  */
 public interface IServicioTipoService {
     
-    public Optional<List<ServicioTipo>> findAll();
+    public Optional<List<ServicioTipoDTO>> findAll();
 
-    public Optional<ServicioTipo> findById(Long id);
+    public Optional<ServicioTipoDTO> findById(Long id);
 
-    public Optional<List<ServicioTipo>> findByNombreContainingIgnoreCase(String nombre);
+    public Optional<List<ServicioTipoDTO>> findByNombreContainingIgnoreCase(String nombre);
     
-    public Optional<List<ServicioTipo>> findByEstado(boolean estado);
+    public Optional<List<ServicioTipoDTO>> findByEstado(boolean estado);
     
-    public Optional<List<ServicioTipo>> findByDescripcion(String descripcion);
+    public Optional<List<ServicioTipoDTO>> findByDescripcion(String descripcion);
 
-    public ServicioTipo create(ServicioTipo tipoServicioAeropuerto);
+    public ServicioTipoDTO create(ServicioTipoDTO tipoServicioAeropuerto);
 
-    public Optional<ServicioTipo> update(ServicioTipo tipoServicioAeropuerto, Long id);
+    public Optional<ServicioTipoDTO> update(ServicioTipoDTO tipoServicioAeropuerto, Long id);
    
 }

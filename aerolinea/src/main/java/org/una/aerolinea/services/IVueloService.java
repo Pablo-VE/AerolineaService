@@ -9,27 +9,27 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.json.bind.annotation.JsonbDateFormat;
-import org.una.aerolinea.entities.Vuelo;
+import org.una.aerolinea.dto.VueloDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface IVueloService {
-    public Optional<List<Vuelo>> findAll();
+    public Optional<List<VueloDTO>> findAll();
 
-    public Optional<Vuelo> findById(Long id);
+    public Optional<VueloDTO> findById(Long id);
     
-    public Optional<List<Vuelo>>findByFecha(@JsonbDateFormat(value = "yyyy-MM-dd")Date fecha);
+    public Optional<List<VueloDTO>>findByFecha(@JsonbDateFormat(value = "yyyy-MM-dd")Date fecha);
     
-    public Optional<List<Vuelo>> findByEstado(boolean estado);
+    public Optional<List<VueloDTO>> findByEstado(boolean estado);
     
-    public Optional<List<Vuelo>> findByAvion(Long avion);
+    public Optional<List<VueloDTO>> findByAvion(Long avion);
     
-    public Optional<List<Vuelo>> findByRuta(Long ruta);
+    public Optional<List<VueloDTO>> findByRuta(Long ruta);
 
-    public Vuelo create(Vuelo vuelo);
+    public VueloDTO create(VueloDTO vuelo);
 
-    public Optional<Vuelo> update(Vuelo vuelo, Long id);
+    public Optional<VueloDTO> update(VueloDTO vuelo, Long id);
     
 }

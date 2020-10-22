@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.TrabajoEmpleado;
+import org.una.aerolinea.dto.TrabajoEmpleadoDTO;
 import org.una.aerolinea.repositories.ITrabajoEmpleadoRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,49 +27,52 @@ public class TrabajoEmpleadoServiceImplementation implements ITrabajoEmpleadoSer
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TrabajoEmpleado>> findAll() {
-        return Optional.ofNullable(trabajoRepository.findAll());
+    public Optional<List<TrabajoEmpleadoDTO>> findAll() {
+        return ServiceConvertionHelper.findList(trabajoRepository.findAll(), TrabajoEmpleadoDTO.class);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<TrabajoEmpleadoDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(trabajoRepository.findById(id), TrabajoEmpleadoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TrabajoEmpleado>> findByEstado(boolean estado) {
-        return Optional.ofNullable(trabajoRepository.findByEstado(estado));
+    public Optional<List<TrabajoEmpleadoDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(trabajoRepository.findByEstado(estado), TrabajoEmpleadoDTO.class);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<TrabajoEmpleadoDTO>> findByEmpleado(Long empleado) {
+        return ServiceConvertionHelper.findList(trabajoRepository.findByEmpleado(empleado), TrabajoEmpleadoDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TrabajoEmpleado>> findByEmpleado(Long empleado) {
-        return Optional.ofNullable(trabajoRepository.findByEmpleado(empleado));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<List<TrabajoEmpleado>> findByAreaTrabajo(Long areaTrabajo) {
-        return Optional.ofNullable(trabajoRepository.findByAreaTrabajo(areaTrabajo));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<TrabajoEmpleado> findById(Long id) {
-        return trabajoRepository.findById(id);
+    public Optional<List<TrabajoEmpleadoDTO>> findByAreaTrabajo(Long areaTrabajo) {
+        return ServiceConvertionHelper.findList(trabajoRepository.findByAreaTrabajo(areaTrabajo), TrabajoEmpleadoDTO.class);
     }
 
     @Override
     @Transactional
-    public TrabajoEmpleado create(TrabajoEmpleado trabajoEmpleado) {
-        return trabajoRepository.save(trabajoEmpleado);
+    public TrabajoEmpleadoDTO create(TrabajoEmpleadoDTO trabajoEmpleado) {
+        TrabajoEmpleado trabajoEm = MapperUtils.EntityFromDto(trabajoEmpleado, TrabajoEmpleado.class);
+        trabajoEm = trabajoRepository.save(trabajoEm);
+        return MapperUtils.DtoFromEntity(trabajoEm, TrabajoEmpleadoDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<TrabajoEmpleado> update(TrabajoEmpleado trabajoEmpleado, Long id) {
+    public Optional<TrabajoEmpleadoDTO> update(TrabajoEmpleadoDTO trabajoEmpleado, Long id) {
         if (trabajoRepository.findById(id).isPresent()) {
-            
-            return Optional.ofNullable(trabajoRepository.save(trabajoEmpleado));
+            TrabajoEmpleado trabajoEm = MapperUtils.EntityFromDto(trabajoEmpleado, TrabajoEmpleado.class);
+            trabajoEm = trabajoRepository.save(trabajoEm);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(trabajoEm, TrabajoEmpleadoDTO.class));
         } else {
             return null;
-        }
+        } 
     }
     
     

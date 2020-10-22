@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.Vuelo;
+import org.una.aerolinea.dto.VueloDTO;
 import org.una.aerolinea.repositories.IVueloRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -26,53 +29,59 @@ public class VueloServiceImplementation implements IVueloService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findAll() {
-        return Optional.ofNullable(vueloRepository.findAll());
+    public Optional<List<VueloDTO>> findAll() {
+        return ServiceConvertionHelper.findList(vueloRepository.findAll(), VueloDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Vuelo> findById(Long id) {
-        return vueloRepository.findById(id);
+    public Optional<VueloDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(vueloRepository.findById(id), VueloDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findByFecha(@JsonbDateFormat(value = "yyyy-MM-dd")Date fecha) {
-        return Optional.ofNullable(vueloRepository.findByFecha(fecha));
+    public Optional<List<VueloDTO>> findByFecha(@JsonbDateFormat(value = "yyyy-MM-dd")Date fecha) {
+        return ServiceConvertionHelper.findList(vueloRepository.findByFecha(fecha), VueloDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findByEstado(boolean estado) {
-        return Optional.ofNullable(vueloRepository.findByEstado(estado));
+    public Optional<List<VueloDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(vueloRepository.findByEstado(estado), VueloDTO.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<VueloDTO>> findByAvion(Long avion) {
+        return ServiceConvertionHelper.findList(vueloRepository.findByAvion(avion), VueloDTO.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<VueloDTO>> findByRuta(Long ruta) {
+        return ServiceConvertionHelper.findList(vueloRepository.findByRuta(ruta), VueloDTO.class);
+    }
+
+
+    @Override
+    @Transactional
+    public VueloDTO create(VueloDTO vuelo) {
+        Vuelo vuel = MapperUtils.EntityFromDto(vuelo, Vuelo.class);
+        vuel = vueloRepository.save(vuel);
+        return MapperUtils.DtoFromEntity(vuel, VueloDTO.class);
     }
 
     @Override
     @Transactional
-    public Vuelo create(Vuelo vuelo) {
-        return vueloRepository.save(vuelo);
-    }
-
-    @Override
-    @Transactional
-    public Optional<Vuelo> update(Vuelo vuelo, Long id) {
-        if(vueloRepository.findById(id).isPresent()){
-            return Optional.ofNullable(vueloRepository.save(vuelo));
-        }else{
+    public Optional<VueloDTO> update(VueloDTO vuelo, Long id) {
+        if (vueloRepository.findById(id).isPresent()) {
+            Vuelo vuel = MapperUtils.EntityFromDto(vuelo, Vuelo.class);
+            vuel = vueloRepository.save(vuel);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(vuel, VueloDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findByAvion(Long avion) {
-        return Optional.ofNullable(vueloRepository.findByAvion(avion));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<List<Vuelo>> findByRuta(Long ruta) {
-        return Optional.ofNullable(vueloRepository.findByRuta(ruta));
-    }
 }

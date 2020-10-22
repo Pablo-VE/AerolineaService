@@ -7,25 +7,25 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.TipoAvion;
+import org.una.aerolinea.dto.TipoAvionDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface ITipoAvionService {
-    public Optional<List<TipoAvion>> findAll();
+    public Optional<List<TipoAvionDTO>> findAll();
 
-    public Optional<TipoAvion> findById(Long id);
+    public Optional<TipoAvionDTO> findById(Long id);
 
-    public Optional<List<TipoAvion>> findByNombreContainingIgnoreCase(String nombre);
+    public Optional<List<TipoAvionDTO>> findByNombreContainingIgnoreCase(String nombre);
     
-    public Optional<List<TipoAvion>> findByEstado(boolean estado);
+    public Optional<List<TipoAvionDTO>> findByEstado(boolean estado);
     
-    public Optional<List<TipoAvion>> findByDistanciaRango(float distanciaMaxima, float distanciaMinima);
+    public Optional<List<TipoAvionDTO>> findByDistanciaRango(float distanciaMaxima, float distanciaMinima);
 
-    public TipoAvion create(TipoAvion tipoAvion);
+    public TipoAvionDTO create(TipoAvionDTO tipoAvion);
 
-    public Optional<TipoAvion> update(TipoAvion tipoAvion, Long id);
+    public Optional<TipoAvionDTO> update(TipoAvionDTO tipoAvion, Long id);
     
 }

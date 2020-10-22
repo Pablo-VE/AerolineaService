@@ -7,23 +7,23 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.TipoAlerta;
+import org.una.aerolinea.dto.TipoAlertaDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface ITipoAlertaService {
-    public Optional<List<TipoAlerta>> findAll();
+    public Optional<List<TipoAlertaDTO>> findAll();
 
-    public Optional<TipoAlerta> findById(Long id);
+    public Optional<TipoAlertaDTO> findById(Long id);
     
-    public Optional<List<TipoAlerta>> findByDescripcionContainingIgnoreCase(String descripcion);
+    public Optional<List<TipoAlertaDTO>> findByDescripcionContainingIgnoreCase(String descripcion);
     
-    public Optional<List<TipoAlerta>> findByEstado(boolean estado);
+    public Optional<List<TipoAlertaDTO>> findByEstado(boolean estado);
 
-    public TipoAlerta create(TipoAlerta alerta);
+    public TipoAlertaDTO create(TipoAlertaDTO alerta);
 
-    public Optional<TipoAlerta> update(TipoAlerta alerta, Long id);
+    public Optional<TipoAlertaDTO> update(TipoAlertaDTO alerta, Long id);
     
 }
