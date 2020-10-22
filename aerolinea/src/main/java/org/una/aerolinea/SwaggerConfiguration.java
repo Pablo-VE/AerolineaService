@@ -65,7 +65,7 @@ public class SwaggerConfiguration {
                         new Tag("Parametros_Aplicacion", "Manejo de parametros de la aplicacion"),
                         new Tag("Horarios", "Manejo de horarios de los empleados"),
                         new Tag("Horas_Marcajes", "Manejo de las horas de marcaje de los empleados"),
-                        new Tag("Servicios_Aeropuerto", "Manejo de los servicios que ofrece el aeropuerto"),
+                        new Tag("Servicios_Registrados", "Manejo de los servicios que ofrece el aeropuerto"),
                         new Tag("Aviones", "Manejo de los aviones"),
                         new Tag("Aerolineas", "Manejo de las aerolineas del aeropuerto"),
                         new Tag("Tipos_Aviones", "Manejo de los tipos de aviones"),
