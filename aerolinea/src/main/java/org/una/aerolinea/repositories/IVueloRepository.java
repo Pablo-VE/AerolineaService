@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import javax.json.bind.annotation.JsonbDateFormat;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.una.aerolinea.entities.Vuelo;
 
 /**
@@ -20,7 +22,11 @@ public interface IVueloRepository extends JpaRepository<Vuelo, Long>{
     
     public List<Vuelo> findByEstado(boolean estado);
     public List<Vuelo> findByFecha(@JsonbDateFormat(value = "yyyy-MM-dd")Date fecha);
-    public List<Vuelo> findByAvion(Long avion);
-    public List<Vuelo> findByRuta(Long ruta);
+    
+    @Query("SELECT v FROM Vuelo v LEFT JOIN v.avion a WHERE a.id = :avionID")
+    public List<Vuelo> findByAvion(@Param("avionID")Long avion);
+    
+    @Query("SELECT v FROM Vuelo v LEFT JOIN v.ruta r WHERE r.id = :rutaID")
+    public List<Vuelo> findByRuta(@Param("rutaID")Long ruta);
     
 }
