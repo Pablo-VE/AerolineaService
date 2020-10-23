@@ -90,7 +90,7 @@ public class RolController {
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean estado) {
         try {
             return new ResponseEntity<>(rolService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception ex) {

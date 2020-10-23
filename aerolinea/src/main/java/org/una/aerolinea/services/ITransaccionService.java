@@ -7,27 +7,27 @@ package org.una.aerolinea.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.una.aerolinea.entities.Transaccion;
+import org.una.aerolinea.dto.TransaccionDTO;
 
 /**
  *
  * @author Pablo-VE
  */
 public interface ITransaccionService {
-    public Optional<List<Transaccion>> findAll();
+    public Optional<List<TransaccionDTO>> findAll();
 
-    public Optional<Transaccion> findById(Long id);
+    public Optional<TransaccionDTO> findById(Long id);
 
-    public Optional<List<Transaccion>> findByLugarContainingIgnoreCase(String lugar);
+    public Optional<List<TransaccionDTO>> findByLugarContainingIgnoreCase(String lugar);
     
-    public Optional<List<Transaccion>> findByDescripcionContainingIgnoreCase(String descripcion);
+    public Optional<List<TransaccionDTO>> findByDescripcionContainingIgnoreCase(String descripcion);
     
-    public Optional<List<Transaccion>> findByEstado(boolean estado);
+    public Optional<List<TransaccionDTO>> findByEstado(boolean estado);
     
-    public Optional<List<Transaccion>> findByRol(String rol);
+    public Optional<List<TransaccionDTO>> findByRol(String rol);
 
-    public Transaccion create(Transaccion transaccion);
+    public TransaccionDTO create(TransaccionDTO transaccion);
 
-    public Optional<Transaccion> update(Transaccion transaccion, Long id);
+    public Optional<TransaccionDTO> update(TransaccionDTO transaccion, Long id);
     
 }

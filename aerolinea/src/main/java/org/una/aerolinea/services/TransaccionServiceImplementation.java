@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.Transaccion;
+import org.una.aerolinea.dto.TransaccionDTO;
 import org.una.aerolinea.repositories.ITransaccionRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,54 +27,58 @@ public class TransaccionServiceImplementation implements ITransaccionService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Transaccion>> findAll() {
-        return Optional.ofNullable(transaccionRepository.findAll());
+    public Optional<List<TransaccionDTO>> findAll() {
+        return ServiceConvertionHelper.findList(transaccionRepository.findAll(), TransaccionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Transaccion> findById(Long id) {
-        return transaccionRepository.findById(id);
+    public Optional<TransaccionDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(transaccionRepository.findById(id), TransaccionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Transaccion>> findByLugarContainingIgnoreCase(String lugar) {
-        return Optional.ofNullable(transaccionRepository.findByLugarContainingIgnoreCase(lugar));
+    public Optional<List<TransaccionDTO>> findByLugarContainingIgnoreCase(String lugar) {
+        return ServiceConvertionHelper.findList(transaccionRepository.findByLugarContainingIgnoreCase(lugar), TransaccionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Transaccion>> findByDescripcionContainingIgnoreCase(String descripcion) {
-        return Optional.ofNullable(transaccionRepository.findByDescripcionContainingIgnoreCase(descripcion));
+    public Optional<List<TransaccionDTO>> findByDescripcionContainingIgnoreCase(String descripcion) {
+        return ServiceConvertionHelper.findList(transaccionRepository.findByDescripcionContainingIgnoreCase(descripcion), TransaccionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Transaccion>> findByEstado(boolean estado) {
-        return Optional.ofNullable(transaccionRepository.findByEstado(estado));
+    public Optional<List<TransaccionDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(transaccionRepository.findByEstado(estado), TransaccionDTO.class);
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Transaccion>> findByRol(String rol) {
-        return Optional.ofNullable(transaccionRepository.findByRolContainingIgnoreCase(rol));
+    public Optional<List<TransaccionDTO>> findByRol(String rol) {
+        return ServiceConvertionHelper.findList(transaccionRepository.findByRolContainingIgnoreCase(rol), TransaccionDTO.class);
     }
 
     @Override
     @Transactional
-    public Transaccion create(Transaccion transaccion) {
-        return transaccionRepository.save(transaccion);
+    public TransaccionDTO create(TransaccionDTO transaccion) {
+        Transaccion trans = MapperUtils.EntityFromDto(transaccion, Transaccion.class);
+        trans = transaccionRepository.save(trans);
+        return MapperUtils.DtoFromEntity(trans, TransaccionDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<Transaccion> update(Transaccion transaccion, Long id) {
+    public Optional<TransaccionDTO> update(TransaccionDTO transaccion, Long id) {
         if (transaccionRepository.findById(id).isPresent()) {
-            return Optional.ofNullable(transaccionRepository.save(transaccion));
+            Transaccion trans = MapperUtils.EntityFromDto(transaccion, Transaccion.class);
+            trans = transaccionRepository.save(trans);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(trans, TransaccionDTO.class));
         } else {
             return null;
-        }
+        } 
     }
     
 }

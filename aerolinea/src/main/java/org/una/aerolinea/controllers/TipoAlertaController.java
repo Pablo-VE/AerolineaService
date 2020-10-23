@@ -12,6 +12,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,70 +39,51 @@ public class TipoAlertaController {
     @Autowired
     private ITipoAlertaService alertaService;
     
+    final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
+ 
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las alertas", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @PreAuthorize("hasAuthority('gestor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
-            Optional<List<TipoAlerta>> resultadoFound = alertaService.findAll();
-            if (resultadoFound.isPresent()) {
-                List<TipoAlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoAlertaDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(alertaService.findAll(), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una alerta por su id", response = TipoAlertaDTO.class, tags = "Alertas")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
-
-            Optional<TipoAlerta> resultadoFound = alertaService.findById(id);
-            if (resultadoFound.isPresent()) {
-                TipoAlertaDTO resultadoDto = MapperUtils.DtoFromEntity(resultadoFound.get(), TipoAlertaDTO.class);
-                return new ResponseEntity<>(resultadoDto, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(alertaService.findById(id), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de alertas por estado", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            Optional<List<TipoAlerta>> resultadoFound = alertaService.findByEstado(term);
-            if (resultadoFound.isPresent()) {
-                List<TipoAlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoAlertaDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(alertaService.findByEstado(term), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de alertas por descripcion", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
+    @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
-            Optional<List<TipoAlerta>> resultadoFound = alertaService.findByDescripcionContainingIgnoreCase(term);
-            if (resultadoFound.isPresent()) {
-                List<TipoAlertaDTO> resultadoDTO = MapperUtils.DtoListFromEntityList(resultadoFound.get(), TipoAlertaDTO.class);
-                return new ResponseEntity<>(resultadoDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(alertaService.findByDescripcionContainingIgnoreCase(term), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -108,37 +91,41 @@ public class TipoAlertaController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una alerta", response = TipoAlertaDTO.class, tags = "Alertas")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody TipoAlerta alerta) {
-        try {
-            TipoAlerta entityCreated = alertaService.create(alerta);
-            TipoAlertaDTO resultDto = MapperUtils.DtoFromEntity(entityCreated, TipoAlertaDTO.class);
-            return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> create(@RequestBody TipoAlertaDTO alerta,  BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity(alertaService.create(alerta), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+        return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
-
-
 
 
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica una alerta", response = TipoAlertaDTO.class, tags = "Alertas")
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoAlerta entityModified) {
-        try {
-            Optional<TipoAlerta> entityUpdated = alertaService.update(entityModified, id);
-            if (entityUpdated.isPresent()) {
-                TipoAlertaDTO resultDto = MapperUtils.DtoFromEntity(entityUpdated.get(), TipoAlertaDTO.class);
-                return new ResponseEntity<>(resultDto, HttpStatus.OK);
-
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoAlertaDTO alertaModified, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                Optional<TipoAlertaDTO> alertaUpdated = alertaService.update(alertaModified, id);
+                if (alertaUpdated.isPresent()) {
+                    return new ResponseEntity(alertaUpdated, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                }
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
+    
     
     
 }

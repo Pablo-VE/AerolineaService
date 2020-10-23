@@ -33,8 +33,8 @@ import org.una.aerolinea.services.IServicioRegistradoService;
  * @author Pablo-VE
  */
 @RestController
-@RequestMapping("/servicios_aeropuerto") 
-@Api(tags = {"Servicios_Aeropuerto"})
+@RequestMapping("/servicios_registrados") 
+@Api(tags = {"Servicios_Registrados"})
 public class ServicioRegistradoController {
     @Autowired
     private IServicioRegistradoService servicioService;
@@ -42,7 +42,7 @@ public class ServicioRegistradoController {
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
     
     @GetMapping("/") 
-    @ApiOperation(value = "Obtiene una lista de todos los servicios del aeropuerto", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de todos los servicios del aeropuerto", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
     @PreAuthorize("hasAuthority('gestor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
@@ -54,7 +54,7 @@ public class ServicioRegistradoController {
     }
 
     @GetMapping("/{id}") 
-    @ApiOperation(value = "Obtiene un servicio del aeropuerto por su id", response = ServicioRegistradoDTO.class, tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene un servicio del aeropuerto por su id", response = ServicioRegistradoDTO.class, tags = "Servicios_Registrados")
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
@@ -65,7 +65,7 @@ public class ServicioRegistradoController {
     }
     
     @GetMapping("/list/estado/{term}") 
-    @ApiOperation(value = "Obtiene una lista de los servicios del aeropuerto por estado", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de los servicios del aeropuerto por estado", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
@@ -76,7 +76,7 @@ public class ServicioRegistradoController {
     }
     
     @GetMapping("/list/estadoCobro/{term}") 
-    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por estado de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por estado de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByEstadoCobro(@PathVariable(value = "term") boolean term) {
         try {
@@ -87,7 +87,7 @@ public class ServicioRegistradoController {
     }
     
     @GetMapping("/list/cobroRango/{mas}/{menos}") 
-    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por un rango de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por un rango de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByCobroRango(@PathVariable(value = "mas") float mas, @PathVariable(value = "menos") float menos) {
         try {
@@ -98,7 +98,7 @@ public class ServicioRegistradoController {
     }
     
     @GetMapping("/list/tipo/{term}") 
-    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por el tipo", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por el tipo", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByTipoAproximate(@PathVariable(value = "term") String term) {
         try {
@@ -110,7 +110,7 @@ public class ServicioRegistradoController {
     
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un servicio del aeropuerto", response = ServicioRegistradoDTO.class, tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Crea un servicio del aeropuerto", response = ServicioRegistradoDTO.class, tags = "Servicios_Registrados")
     @ResponseBody
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> create(@RequestBody ServicioRegistradoDTO servicio,  BindingResult bindingResult) {
@@ -127,7 +127,7 @@ public class ServicioRegistradoController {
     
     
     @PutMapping("/modificar/{id}") 
-    @ApiOperation(value = "Modifica un servicio del aeropuerto", response = ServicioRegistradoDTO.class, tags = "Servicios_Aeropuerto")
+    @ApiOperation(value = "Modifica un servicio del aeropuerto", response = ServicioRegistradoDTO.class, tags = "Servicios_Registrados")
     @ResponseBody
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ServicioRegistradoDTO servicioModified, BindingResult bindingResult) {

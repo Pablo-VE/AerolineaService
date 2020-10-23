@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.TipoAlerta;
+import org.una.aerolinea.dto.TipoAlertaDTO;
 import org.una.aerolinea.repositories.ITipoAlertaRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,42 +27,44 @@ public class TipoAlertaServiceImplementation implements ITipoAlertaService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoAlerta>> findAll() {
-        return Optional.ofNullable(alertaRepository.findAll());
+    public Optional<List<TipoAlertaDTO>> findAll() {
+        return ServiceConvertionHelper.findList(alertaRepository.findAll(), TipoAlertaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<TipoAlerta> findById(Long id) {
-        return alertaRepository.findById(id);
+    public Optional<TipoAlertaDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(alertaRepository.findById(id), TipoAlertaDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoAlerta>> findByDescripcionContainingIgnoreCase(String descripcion) {
-        return Optional.ofNullable(alertaRepository.findByDescripcionContainingIgnoreCase(descripcion));
+    public Optional<List<TipoAlertaDTO>> findByDescripcionContainingIgnoreCase(String descripcion) {
+        return ServiceConvertionHelper.findList(alertaRepository.findByDescripcionContainingIgnoreCase(descripcion), TipoAlertaDTO.class);
     }
-
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoAlerta>> findByEstado(boolean estado) {
-        return Optional.ofNullable(alertaRepository.findByEstado(estado));
+    public Optional<List<TipoAlertaDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(alertaRepository.findByEstado(estado), TipoAlertaDTO.class);
+    }
+    @Override
+    @Transactional
+    public TipoAlertaDTO create(TipoAlertaDTO alerta) {
+        TipoAlerta ro = MapperUtils.EntityFromDto(alerta, TipoAlerta.class);
+        ro = alertaRepository.save(ro);
+        return MapperUtils.DtoFromEntity(ro, TipoAlertaDTO.class);
     }
 
     @Override
     @Transactional
-    public TipoAlerta create(TipoAlerta alerta) {
-        return alertaRepository.save(alerta);
-    }
-
-    @Override
-    @Transactional
-    public Optional<TipoAlerta> update(TipoAlerta alerta, Long id) {
-        if(alertaRepository.findById(id).isPresent()){
-            return Optional.ofNullable(alertaRepository.save(alerta));
-        }else{
+    public Optional<TipoAlertaDTO> update(TipoAlertaDTO alerta, Long id) {
+        if (alertaRepository.findById(id).isPresent()) {
+            TipoAlerta alert = MapperUtils.EntityFromDto(alerta, TipoAlerta.class);
+            alert = alertaRepository.save(alert);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(alert, TipoAlertaDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
     
 }

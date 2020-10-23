@@ -27,5 +27,8 @@ public interface IUsuarioService {
 
     public Optional<UsuarioDTO> update(UsuarioDTO usuario, Long id);
     
+    public Optional<List<UsuarioDTO>> findByCedulaEmpleado(String cedulaEmpleado);
+    
+    public Optional<List<UsuarioDTO>> findByNombreEmpleado(String nombreEmpleado);
     
 }

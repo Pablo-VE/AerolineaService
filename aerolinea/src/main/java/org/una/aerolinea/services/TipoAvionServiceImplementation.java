@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.TipoAvion;
+import org.una.aerolinea.dto.TipoAvionDTO;
 import org.una.aerolinea.repositories.ITipoAvionRepository;
+import org.una.aerolinea.utils.MapperUtils;
+import org.una.aerolinea.utils.ServiceConvertionHelper;
 
 /**
  *
@@ -24,48 +27,52 @@ public class TipoAvionServiceImplementation implements ITipoAvionService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoAvion>> findAll() {
-        return Optional.ofNullable(tipoAvionRepository.findAll());
+    public Optional<List<TipoAvionDTO>> findAll() {
+        return ServiceConvertionHelper.findList(tipoAvionRepository.findAll(), TipoAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<TipoAvion> findById(Long id) {
-        return tipoAvionRepository.findById(id);
+    public Optional<TipoAvionDTO> findById(Long id) {
+        return ServiceConvertionHelper.oneToOptionalDto(tipoAvionRepository.findById(id), TipoAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoAvion>> findByNombreContainingIgnoreCase(String nombre) {
-        return Optional.ofNullable(tipoAvionRepository.findByNombreContainingIgnoreCase(nombre));
+    public Optional<List<TipoAvionDTO>> findByNombreContainingIgnoreCase(String nombre) {
+        return ServiceConvertionHelper.findList(tipoAvionRepository.findByNombreContainingIgnoreCase(nombre), TipoAvionDTO.class);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoAvion>> findByEstado(boolean estado) {
-        return Optional.ofNullable(tipoAvionRepository.findByEstado(estado));
+    public Optional<List<TipoAvionDTO>> findByEstado(boolean estado) {
+        return ServiceConvertionHelper.findList(tipoAvionRepository.findByEstado(estado), TipoAvionDTO.class);
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<TipoAvion>> findByDistanciaRango(float distanciaMaxima, float distanciaMinima) {
-        return Optional.ofNullable(tipoAvionRepository.findByDistanciaRango(distanciaMaxima, distanciaMinima));
+    public Optional<List<TipoAvionDTO>> findByDistanciaRango(float distanciaMaxima, float distanciaMinima) {
+        return ServiceConvertionHelper.findList(tipoAvionRepository.findByDistanciaRango(distanciaMaxima, distanciaMinima), TipoAvionDTO.class);
     }
 
     @Override
     @Transactional
-    public TipoAvion create(TipoAvion tipoAvion) {
-        return tipoAvionRepository.save(tipoAvion);
+    public TipoAvionDTO create(TipoAvionDTO tipoAvion) {
+        TipoAvion avion = MapperUtils.EntityFromDto(tipoAvion, TipoAvion.class);
+        avion = tipoAvionRepository.save(avion);
+        return MapperUtils.DtoFromEntity(avion, TipoAvionDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<TipoAvion> update(TipoAvion tipoAvion, Long id) {
-        if(tipoAvionRepository.findById(id).isPresent()){
-            return Optional.ofNullable(tipoAvionRepository.save(tipoAvion));
-        }else{
+    public Optional<TipoAvionDTO> update(TipoAvionDTO tipoAvion, Long id) {
+        if (tipoAvionRepository.findById(id).isPresent()) {
+            TipoAvion avion = MapperUtils.EntityFromDto(tipoAvion, TipoAvion.class);
+            avion = tipoAvionRepository.save(avion);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(avion, TipoAvionDTO.class));
+        } else {
             return null;
-        }
+        } 
     }
 
     
