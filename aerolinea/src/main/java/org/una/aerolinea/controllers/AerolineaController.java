@@ -82,7 +82,7 @@ public class AerolineaController {
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByResponsableAproximate(@PathVariable(value = "term") String term) {
         try {
-            return new ResponseEntity(aerolineaService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
+            return new ResponseEntity(aerolineaService.findByResponsableContainingIgnoreCase(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -91,11 +91,11 @@ public class AerolineaController {
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por estado", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            return new ResponseEntity<>(aerolineaService.findByEstado(estado), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(aerolineaService.findByEstado(term), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
