@@ -91,10 +91,9 @@ public class AerolineaController {
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por estado", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
     @PreAuthorize("hasAuthority('gestor')")
-	
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean estado) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            return new ResponseEntity(aerolineaService.findByEstado(estado), HttpStatus.OK);
+            return new ResponseEntity(aerolineaService.findByEstado(term), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
