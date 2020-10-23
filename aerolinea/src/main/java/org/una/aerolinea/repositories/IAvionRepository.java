@@ -20,7 +20,7 @@ public interface IAvionRepository extends JpaRepository<Avion, Long>{
     public List<Avion> findByMatriculaContainingIgnoreCase(String matricula);
     public List<Avion> findByEstado(boolean estado);
     
-    @Query("SELECT a FROM Avion a LEFT JOIN a.aerolinea ae WHERE ae.id = :aerolineaID")
+    @Query("SELECT a FROM Avion a LEFT JOIN a.aerolinea e WHERE e.id = :aerolineaID")
     public List<Avion> findByAerolinea(@Param("aerolineaID")Long aerolinea);
     
     @Query("SELECT a FROM Avion a LEFT JOIN a.tipoAvion t WHERE t.id = :tipoAvionID")
