@@ -26,5 +26,10 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long>{
     @Query("SELECT u FROM Usuario u LEFT JOIN u.rol r WHERE r.id = :rolID")
     public List<Usuario> findByRol(@Param("rolID")Long rol);
     
+    @Query("SELECT u FROM Usuario u WHERE UPPER(u.empleado.cedula) like CONCAT('%', UPPER(:cedula), '%')")
+    public List<Usuario> findByCedulaEmpleado(@Param("cedula")String cedula);
+    
+    @Query("SELECT u FROM Usuario u WHERE UPPER(u.empleado.nombre) like CONCAT('%', UPPER(:nombre), '%')")
+    public List<Usuario> findByNombreEmpleado(@Param("nombre")String nombre);
     
 }
