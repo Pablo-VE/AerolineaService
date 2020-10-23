@@ -95,7 +95,7 @@ public class UsuarioController {
     }
     
     @GetMapping("/list/nombre/{term}") 
-    @ApiOperation(value = "Obtiene una lista de usuarios por su rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+    @ApiOperation(value = "Obtiene una lista de usuarios por nombre de empleado", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByNombreEmpleado(@PathVariable(value = "term") String term) {
             try {
@@ -107,7 +107,7 @@ public class UsuarioController {
     }
     
     @GetMapping("/list/cedula/{term}") 
-    @ApiOperation(value = "Obtiene una lista de usuarios por su rol", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
+    @ApiOperation(value = "Obtiene una lista de usuarios por cedula de empleado", response = UsuarioDTO.class, responseContainer = "List", tags = "Usuarios")
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByCedulaEmpleado(@PathVariable(value = "term") String term) {
             try {
