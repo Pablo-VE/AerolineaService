@@ -48,23 +48,24 @@ public class DataLoader implements ApplicationRunner{
    public void run(ApplicationArguments args) {
 
         if (usuarioService.findByCedula(cedula) == null) {
-            
+
             crearRoles();
             
             RolDTO rol;
-            final String nombre = "gestor";
             
-            Optional<List<RolDTO>> Rol = rolService.findByNombre(nombre);
-            rol = Rol.get().get(0);
+            Optional<RolDTO> Rol1 = rolService.findById(Long.valueOf(1));
+            rol = Rol1.get();
             
             UsuarioDTO usuario = new UsuarioDTO();
             EmpleadoDTO empleado = new EmpleadoDTO();
             
             empleado.setNombre("Usuario");
             empleado.setCedula(cedula);
+            
+            EmpleadoDTO emp = empleadoService.create(empleado);
             usuario.setRol(rol);
             usuario.setPasswordEncriptado(password);
-            usuario.setEmpleado(empleado);
+            usuario.setEmpleado(emp);
             usuarioService.create(usuario);
 
             System.out.println("Se agrega el usuario inicial");
@@ -78,7 +79,7 @@ public class DataLoader implements ApplicationRunner{
         for(Roles rol : Roles.values()){
             RolDTO rolDto = new RolDTO();
             rolDto.setNombre(rol.getNombre());
-            if(rolService.findByNombre(rol.getNombre()) == null){
+            if(!rolService.findAll().isPresent()){
                 rolService.create(rolDto);
                 System.out.println("Rol creado");
             }else{

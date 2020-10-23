@@ -49,9 +49,6 @@ public class Usuario implements Serializable{
     
     @Column(length = 100, name = "password_encriptado")
     private String passwordEncriptado;
-    
-    @Column(length = 25, unique = true, nullable = false)
-    private String cedula;
         
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "empleados_id", referencedColumnName = "id")

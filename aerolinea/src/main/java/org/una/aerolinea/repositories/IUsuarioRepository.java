@@ -18,10 +18,14 @@ import org.una.aerolinea.entities.Usuario;
  */
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long>{
     
+    @Query("SELECT u FROM Usuario u LEFT JOIN u.empleado e WHERE e.cedula = :cedula AND u.passwordEncriptado = :password")
+    public Usuario findByCedulaAndPasswordEncriptado(@Param("cedula")String cedula, @Param("password")String passwordEncriptado);
     
-    public Usuario findByCedulaAndPasswordEncriptado(String cedula, String passwordEncriptado);
-    public Optional<Usuario> findByCedula(String cedula);
+    @Query("SELECT u FROM Usuario u LEFT JOIN u.empleado e WHERE e.cedula = :cedula")
+    public Optional<Usuario> findByCedula(@Param("cedula")String cedula);
+    
     public List<Usuario> findByEstado(boolean estado);
+    
     
     @Query("SELECT u FROM Usuario u LEFT JOIN u.rol r WHERE r.id = :rolID")
     public List<Usuario> findByRol(@Param("rolID")Long rol);

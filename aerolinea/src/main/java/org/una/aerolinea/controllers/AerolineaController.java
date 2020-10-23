@@ -94,7 +94,7 @@ public class AerolineaController {
 	
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean estado) {
         try {
-            return new ResponseEntity(aerolineaService.findByEstado(term), HttpStatus.OK);
+            return new ResponseEntity(aerolineaService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
