@@ -10,11 +10,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.dto.UsuarioDTO;
-import org.una.aerolinea.entities.Empleado;
 import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.entities.Usuario;
 import org.una.aerolinea.jwt.JwtProvider;
@@ -92,6 +88,17 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
 
     
     @Override
+    public Optional<List<UsuarioDTO>> findByCedulaEmpleado(String cedulaEmpleado) {
+        return ServiceConvertionHelper.findList(usuarioRepository.findByCedulaEmpleado(cedulaEmpleado), UsuarioDTO.class);
+    }
+
+    @Override
+    public Optional<List<UsuarioDTO>> findByNombreEmpleado(String nombreEmpleado) {
+        return ServiceConvertionHelper.findList(usuarioRepository.findByNombreEmpleado(nombreEmpleado), UsuarioDTO.class);
+    }
+    
+    
+    @Override
     @Transactional(readOnly = true)
     public Optional<UsuarioDTO> findByCedula(String cedula) {
         return ServiceConvertionHelper.oneToOptionalDto(usuarioRepository.findByCedula(cedula), UsuarioDTO.class);
@@ -143,5 +150,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         }
 
     }
+
+
     
 }
