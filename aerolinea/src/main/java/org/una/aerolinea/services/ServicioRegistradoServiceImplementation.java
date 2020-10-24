@@ -46,7 +46,7 @@ public class ServicioRegistradoServiceImplementation implements IServicioRegistr
     @Override
     @Transactional(readOnly = true)
     public Optional<List<ServicioRegistradoDTO>> findByTipoContainingIgnoreCase(String tipo) {
-        return ServiceConvertionHelper.findList(servicioRepository.findByTipoContainingIgnoreCase(tipo), ServicioRegistradoDTO.class);
+        return ServiceConvertionHelper.findList(servicioRepository.findByTipo(tipo), ServicioRegistradoDTO.class);
     }
 
     @Override

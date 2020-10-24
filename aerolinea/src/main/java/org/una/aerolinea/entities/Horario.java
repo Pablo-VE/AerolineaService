@@ -44,7 +44,7 @@ public class Horario implements Serializable{
     
     
     @Column(name = "hora_inicio", nullable = false)
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.NONE)
     private Date horaInicio;
     
@@ -55,7 +55,7 @@ public class Horario implements Serializable{
     
     
     @Column(name = "hora_final", nullable = false)
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.NONE)
     private Date horaFinal;
     

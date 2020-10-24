@@ -20,7 +20,10 @@ public interface IServicioRegistradoRepository extends JpaRepository<ServicioReg
     
     @Query("SELECT s FROM ServicioRegistrado s WHERE s.cobro <= :cobroMas AND s.cobro >= :cobroMenos")
     public List<ServicioRegistrado> findByCobroRango(@Param("cobroMas")float cobroMas, @Param("cobroMenos")float cobroMenos);
-    public List<ServicioRegistrado> findByTipoContainingIgnoreCase(String nombreCompleto);
+    
+    @Query("SELECT s FROM ServicioRegistrado s WHERE UPPER(s.servicioTipo.nombre) like CONCAT('%', UPPER(:tipo), '%')")
+    public List<ServicioRegistrado> findByTipo(@Param("tipo")String tipo);
+    
     public List<ServicioRegistrado> findByEstadoCobro(boolean estadoCobro);
     public List<ServicioRegistrado> findByEstado(boolean estado);
 }
