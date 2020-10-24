@@ -91,11 +91,11 @@ public class AreaTrabajoController {
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de areas de trabajo por estado", response = AreaTrabajoDTO.class, responseContainer = "List", tags = "Areas_Trabajos")
     @PreAuthorize("hasAuthority('gestor')")
-     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
-            return new ResponseEntity<>(areaService.findByEstado(estado), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(areaService.findByEstado(term), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
