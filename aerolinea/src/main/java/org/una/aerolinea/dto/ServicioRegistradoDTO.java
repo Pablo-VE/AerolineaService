@@ -29,7 +29,7 @@ public class ServicioRegistradoDTO {
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private java.util.Date fechaModificacion;
     private float cobro;
-    private float estadoCobro;
+    private boolean estadoCobro;
     private float duracion;
     private String observaciones;
     private boolean estado;

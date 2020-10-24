@@ -110,7 +110,7 @@ public class ServicioRegistradoController {
     
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
-    @ApiOperation(value = "Crea un servicio del aeropuerto", response = ServicioRegistradoDTO.class, tags = "Servicios_Registrados")
+    @ApiOperation(value = "Crea un servicio del avion", response = ServicioRegistradoDTO.class, tags = "Servicios_Registrados")
     @ResponseBody
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> create(@RequestBody ServicioRegistradoDTO servicio,  BindingResult bindingResult) {
