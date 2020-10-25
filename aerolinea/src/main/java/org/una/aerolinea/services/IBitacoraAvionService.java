@@ -33,4 +33,8 @@ public interface IBitacoraAvionService {
 
     public Optional<BitacoraAvionDTO> update(BitacoraAvionDTO avionEstado, Long id);
 
+    public Optional<List<BitacoraAvionDTO>> findByAvion(String tipo);
+    public Optional<List<BitacoraAvionDTO>> findByDistanciaRecorridaRango(int distanciaMax, int distanciaMin);
+    public Optional<List<BitacoraAvionDTO>> findByCombustibleRango(int combustibleMax, int combustibleMin);
+    public Optional<List<BitacoraAvionDTO>> findByTiempoTierraRango(int timpoMa, int tiempoMin);
 }

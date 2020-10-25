@@ -92,5 +92,26 @@ public class BitacoraAvionServiceImplementation implements IBitacoraAvionService
             return null;
         } 
     }
-    
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByAvion(String tipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByDistanciaRecorridaRango(int distanciaMax, int distanciaMin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByCombustibleRango(int combustibleMax, int combustibleMin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByTiempoTierraRango(int timpoMa, int tiempoMin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 }
