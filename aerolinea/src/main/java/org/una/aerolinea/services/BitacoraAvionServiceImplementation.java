@@ -113,4 +113,5 @@ public class BitacoraAvionServiceImplementation implements IBitacoraAvionService
         return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByTiempoTierraRango(tiempoMaximo, tiempoMinimo), BitacoraAvionDTO.class);
     }
     
+
 }
