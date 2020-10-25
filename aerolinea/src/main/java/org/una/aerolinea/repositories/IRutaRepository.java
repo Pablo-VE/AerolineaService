@@ -19,6 +19,8 @@ public interface IRutaRepository extends JpaRepository<Ruta, Long>{
     public List<Ruta> findByOrigenContainingIgnoreCase(String origen);
     public List<Ruta> findByDestinoContainingIgnoreCase(String destino);
     public List<Ruta> findByEstado(boolean estado);
+    
+    
     @Query("SELECT t FROM Ruta t WHERE t.distancia <= :distanciaMaxima AND t.distancia >= :distanciaMinima")
     public List<Ruta> findByDistanciaRango(@Param("distanciaMaxima")float distanciaMaxima, @Param("distanciaMinima")float distanciaMinima);
     
