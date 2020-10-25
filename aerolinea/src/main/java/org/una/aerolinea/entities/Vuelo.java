@@ -47,7 +47,6 @@ public class Vuelo implements Serializable{
     
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @Setter(AccessLevel.NONE)
     private Date fecha;
     
     @ManyToOne 
@@ -64,14 +63,6 @@ public class Vuelo implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vuelo") 
     private List<AlertaGenerada> alertasGeneradas = new ArrayList<>();
     
-    @PrePersist
-    public void prePersist() {
-        fecha= new Date();
-    }
     
-    @PreUpdate
-    public void preUpdate() {
-        fecha = new Date();   
-    }  
     
 }
