@@ -52,10 +52,14 @@ public class ServicioTipoImplementation implements IServicioTipoService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioTipoDTO>> findByDescripcion(String descripcion) {
-        return ServiceConvertionHelper.findList(tipoServicioRepository.findByDescripcion(descripcion), ServicioTipoDTO.class);
+    public Optional<List<ServicioTipoDTO>> findByDescripcionContainingIgnoreCase(String descripcion) {
+        return ServiceConvertionHelper.findList(tipoServicioRepository.findByDescripcionContainingIgnoreCase(descripcion), ServicioTipoDTO.class);
     }
-
+    @Override
+    public Optional<List<ServicioTipoDTO>> findByAreaTrabajo(Long areaTrabajo) {
+        return ServiceConvertionHelper.findList(tipoServicioRepository.findByAreaTrabajo(areaTrabajo), ServicioTipoDTO.class);
+    }
+    
     @Override
     @Transactional(readOnly = true)
     public ServicioTipoDTO create(ServicioTipoDTO tipoServicioAeropuerto) {
@@ -75,4 +79,6 @@ public class ServicioTipoImplementation implements IServicioTipoService{
             return null;
         } 
     }
+
+    
 }

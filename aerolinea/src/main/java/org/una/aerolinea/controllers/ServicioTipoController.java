@@ -76,12 +76,12 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
         }
     }
     
-    @GetMapping("/list/descripcion/{descripcion}") 
+    @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de tipos de servicios del aeropuerto por su descripcion", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "descripcion") String descripcion) {
+    public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String descripcion) {
         try {
-            return new ResponseEntity<>(tipoServiAeroService.findByDescripcion(descripcion), HttpStatus.OK);
+            return new ResponseEntity<>(tipoServiAeroService.findByDescripcionContainingIgnoreCase(descripcion), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -93,6 +93,17 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(tipoServiAeroService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/list/areaTrabajo/{term}") 
+    @ApiOperation(value = "Obtiene una lista de los tipos de servicios por area de trabajo", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> findByAreaTrabajo(@PathVariable(value = "term") Long term) {
+        try {
+            return new ResponseEntity<>(tipoServiAeroService.findByAreaTrabajo(term), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }

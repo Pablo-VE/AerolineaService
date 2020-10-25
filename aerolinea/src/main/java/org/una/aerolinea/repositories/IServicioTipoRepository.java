@@ -7,6 +7,8 @@ package org.una.aerolinea.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.una.aerolinea.entities.ServicioTipo;
 
 /**
@@ -15,6 +17,9 @@ import org.una.aerolinea.entities.ServicioTipo;
  */
 public interface IServicioTipoRepository extends JpaRepository<ServicioTipo, Long> {
     public List<ServicioTipo> findByNombreContainingIgnoreCase(String nombre);
-    public List<ServicioTipo> findByDescripcion(String descripcion);   
-    public List<ServicioTipo> findByEstado(boolean estado);   
+    public List<ServicioTipo> findByDescripcionContainingIgnoreCase(String descripcion);   
+    public List<ServicioTipo> findByEstado(boolean estado);  
+   
+    @Query("SELECT u FROM ServicioTipo u LEFT JOIN u.areaTrabajo r WHERE r.id = :areaTrabajoID")
+    public List<ServicioTipo> findByAreaTrabajo(@Param("areaTrabajoID")Long areaTrabajo);
 }

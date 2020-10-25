@@ -22,10 +22,11 @@ public interface IServicioTipoService {
     
     public Optional<List<ServicioTipoDTO>> findByEstado(boolean estado);
     
-    public Optional<List<ServicioTipoDTO>> findByDescripcion(String descripcion);
+    public Optional<List<ServicioTipoDTO>> findByDescripcionContainingIgnoreCase(String descripcion);
 
     public ServicioTipoDTO create(ServicioTipoDTO tipoServicioAeropuerto);
 
     public Optional<ServicioTipoDTO> update(ServicioTipoDTO tipoServicioAeropuerto, Long id);
    
+    public Optional<List<ServicioTipoDTO>> findByAreaTrabajo(Long areaTrabajo);
 }
