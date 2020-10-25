@@ -32,5 +32,18 @@ public interface IBitacoraAvionService {
     public BitacoraAvionDTO create(BitacoraAvionDTO avionEstado);
 
     public Optional<BitacoraAvionDTO> update(BitacoraAvionDTO avionEstado, Long id);
+    
+    public Optional<List<BitacoraAvionDTO>> findByAvion(Long avion);
+    
+    public Optional<List<BitacoraAvionDTO>> findByDistanciaRecorridaRango(float distanciaMaxima, float distanciaMinima);
 
+    public Optional<List<BitacoraAvionDTO>> findByCombustibleRango(int conbustibleMaximo, int conbustibleMinimo);
+    
+    public Optional<List<BitacoraAvionDTO>> findByTiempoTierraRango(int tiempoMaximo, int tiempoMinimo);
+
+    
+    
+    
+    
+    
 }

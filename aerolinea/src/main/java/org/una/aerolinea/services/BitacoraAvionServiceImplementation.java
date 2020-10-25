@@ -92,5 +92,25 @@ public class BitacoraAvionServiceImplementation implements IBitacoraAvionService
             return null;
         } 
     }
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByAvion(Long avion) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByAvion(avion), BitacoraAvionDTO.class);
+    }
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByDistanciaRecorridaRango(float distanciaMaxima, float distanciaMinima) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByDistanciaRecorridaRango(distanciaMaxima, distanciaMinima), BitacoraAvionDTO.class);
+    }
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByCombustibleRango(int conbustibleMaximo, int conbustibleMinimo) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByCombustibleRango(conbustibleMaximo, conbustibleMinimo), BitacoraAvionDTO.class);
+    }
+
+    @Override
+    public Optional<List<BitacoraAvionDTO>> findByTiempoTierraRango(int tiempoMaximo, int tiempoMinimo) {
+        return ServiceConvertionHelper.findList(bitacoraAvionRepository.findByTiempoTierraRango(tiempoMaximo, tiempoMinimo), BitacoraAvionDTO.class);
+    }
     
 }

@@ -22,10 +22,10 @@ public interface IBitacoraAvionRepository extends JpaRepository<BitacoraAvion, L
     public List<BitacoraAvion> findByUbicacionContainingIgnoreCase(String ubicacion); 
     
     @Query("SELECT b FROM BitacoraAvion b LEFT JOIN b.avion a WHERE a.id = :avionId")
-    public List<BitacoraAvion> findByAvion(@Param("avionId")String tipo);
+    public List<BitacoraAvion> findByAvion(@Param("avionId")Long avion);
     
     @Query("SELECT b FROM BitacoraAvion b WHERE b.distanciaRecorrida <= :distanciaMaxima AND b.distanciaRecorrida >= :distanciaMinima")
-    public List<BitacoraAvion> findByDistanciaRecorridaRango(@Param("distanciaMaxima")int distanciaMaxima, @Param("distanciaMinima")int distanciaMinima);
+    public List<BitacoraAvion> findByDistanciaRecorridaRango(@Param("distanciaMaxima")float distanciaMaxima, @Param("distanciaMinima")float distanciaMinima);
     
     
     @Query("SELECT b FROM BitacoraAvion b WHERE b.combustible <= :conbustibleMaximo AND b.combustible >= :conbustibleMinimo")
