@@ -108,6 +108,17 @@ public class ServicioRegistradoController {
         }
     }
     
+    @GetMapping("/list/avion/{term}") 
+    @ApiOperation(value = "Obtiene una lista de servicios registrados por avion", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> findByAvion(@PathVariable(value = "term") Long term) {
+        try {
+            return new ResponseEntity(servicioService.findByAvion(term), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un servicio del avion", response = ServicioRegistradoDTO.class, tags = "Servicios_Registrados")

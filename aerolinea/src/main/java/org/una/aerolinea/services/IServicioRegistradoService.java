@@ -30,4 +30,6 @@ public interface IServicioRegistradoService {
     
     public Optional<ServicioRegistradoDTO> update(ServicioRegistradoDTO servicioAeropuerto, Long id);
     
+    public Optional<List<ServicioRegistradoDTO>> findByAvion(Long avion);
+    
 }

@@ -60,6 +60,11 @@ public class ServicioRegistradoServiceImplementation implements IServicioRegistr
     public Optional<List<ServicioRegistradoDTO>> findByEstado(boolean estado) {
         return ServiceConvertionHelper.findList(servicioRepository.findByEstado(estado), ServicioRegistradoDTO.class);
     }
+    
+    @Override
+    public Optional<List<ServicioRegistradoDTO>> findByAvion(Long avion) {
+        return ServiceConvertionHelper.findList(servicioRepository.findByAvion(avion), ServicioRegistradoDTO.class);
+    }
 
     @Override
     @Transactional

@@ -24,6 +24,9 @@ public interface IServicioRegistradoRepository extends JpaRepository<ServicioReg
     @Query("SELECT s FROM ServicioRegistrado s WHERE UPPER(s.servicioTipo.nombre) like CONCAT('%', UPPER(:tipo), '%')")
     public List<ServicioRegistrado> findByTipo(@Param("tipo")String tipo);
     
+    @Query("SELECT b FROM ServicioRegistrado b LEFT JOIN b.avion a WHERE a.id = :avionId")
+    public List<ServicioRegistrado> findByAvion(@Param("avionId")Long avion);
+    
     public List<ServicioRegistrado> findByEstadoCobro(boolean estadoCobro);
     public List<ServicioRegistrado> findByEstado(boolean estado);
 }
