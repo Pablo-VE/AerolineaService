@@ -18,7 +18,7 @@ public interface IServicioRegistradoService {
 
     public Optional<ServicioRegistradoDTO> findById(Long id);
     
-    public Optional<List<ServicioRegistradoDTO>> findByCobroRango(float cobroMas, float cobroMenos);
+    public Optional<List<ServicioRegistradoDTO>> findByCobroRango(float mas, float menos);
 
     public Optional<List<ServicioRegistradoDTO>> findByTipoContainingIgnoreCase(String tipo);
     

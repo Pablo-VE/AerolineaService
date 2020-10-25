@@ -86,10 +86,10 @@ public class ServicioRegistradoController {
         }
     }
     
-    @GetMapping("/list/cobroRango/{mas}/{menos}") 
+    @GetMapping("/list/cobroRango/{cobroMas}/{cobroMenos}") 
     @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por un rango de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> findByCobroRango(@PathVariable(value = "mas") float mas, @PathVariable(value = "menos") float menos) {
+    public ResponseEntity<?> findByCobroRango(@PathVariable(value = "cobroMas") float mas, @PathVariable(value = "cobroMenos") float menos) {
         try {
             return new ResponseEntity<>(servicioService.findByCobroRango(mas, menos), HttpStatus.OK);
         } catch (Exception ex) {

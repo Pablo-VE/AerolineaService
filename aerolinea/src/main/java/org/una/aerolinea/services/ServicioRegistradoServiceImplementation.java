@@ -39,8 +39,8 @@ public class ServicioRegistradoServiceImplementation implements IServicioRegistr
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<ServicioRegistradoDTO>> findByCobroRango(float cobroMas, float cobroMenos) {
-        return ServiceConvertionHelper.findList(servicioRepository.findByCobroRango(cobroMas, cobroMenos), ServicioRegistradoDTO.class);
+    public Optional<List<ServicioRegistradoDTO>> findByCobroRango(float mas, float menos) {
+        return ServiceConvertionHelper.findList(servicioRepository.findByCobroRango(mas, menos), ServicioRegistradoDTO.class);
     }
 
     @Override
