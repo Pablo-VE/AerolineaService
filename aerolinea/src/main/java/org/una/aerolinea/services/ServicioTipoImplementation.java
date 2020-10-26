@@ -56,6 +56,7 @@ public class ServicioTipoImplementation implements IServicioTipoService{
         return ServiceConvertionHelper.findList(tipoServicioRepository.findByDescripcionContainingIgnoreCase(descripcion), ServicioTipoDTO.class);
     }
     @Override
+    @Transactional(readOnly = true)
     public Optional<List<ServicioTipoDTO>> findByAreaTrabajo(Long areaTrabajo) {
         return ServiceConvertionHelper.findList(tipoServicioRepository.findByAreaTrabajo(areaTrabajo), ServicioTipoDTO.class);
     }

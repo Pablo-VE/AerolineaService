@@ -33,7 +33,7 @@ import org.una.aerolinea.services.IServicioTipoService;
  * @author Luis
  */
 @RestController
-@RequestMapping("/tipos_servicios_aeropuerto") 
+@RequestMapping("/servicios_tipos") 
 @Api(tags = {"Tipos_Servicios_Aeropuerto"})
 public class ServicioTipoController {
       
