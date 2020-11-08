@@ -25,7 +25,7 @@ public class VueloDTO {
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private Date fecha;
     private AvionDTO avion;
-    private boolean estado;
+    private int estado;
     private RutaDTO ruta;
     
 }

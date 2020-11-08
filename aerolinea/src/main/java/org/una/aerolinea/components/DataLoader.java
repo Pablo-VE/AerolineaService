@@ -61,9 +61,11 @@ public class DataLoader implements ApplicationRunner{
             
             empleado.setNombre("Usuario");
             empleado.setCedula(cedula);
+            empleado.setEstado(true);
             
             EmpleadoDTO emp = empleadoService.create(empleado);
             usuario.setRol(rol);
+            usuario.setEstado(true);
             usuario.setPasswordEncriptado(password);
             usuario.setEmpleado(emp);
             usuarioService.create(usuario);

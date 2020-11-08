@@ -58,7 +58,7 @@ public class Vuelo implements Serializable{
     private Ruta ruta;
     
     @Column
-    private boolean estado;
+    private int estado;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vuelo") 
     private List<AlertaGenerada> alertasGeneradas = new ArrayList<>();

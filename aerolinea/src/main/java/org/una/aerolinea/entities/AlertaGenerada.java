@@ -54,7 +54,7 @@ public class AlertaGenerada implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
     
-    @Column(length = 100)
+    @Column(length = 200)
     private String autorizacion;
     
     @PrePersist

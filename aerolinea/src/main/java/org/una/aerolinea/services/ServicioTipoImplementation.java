@@ -62,7 +62,7 @@ public class ServicioTipoImplementation implements IServicioTipoService{
     }
     
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public ServicioTipoDTO create(ServicioTipoDTO tipoServicioAeropuerto) {
         ServicioTipo tipoServicio = MapperUtils.EntityFromDto(tipoServicioAeropuerto, ServicioTipo.class);
         tipoServicio = tipoServicioRepository.save(tipoServicio);
@@ -70,7 +70,7 @@ public class ServicioTipoImplementation implements IServicioTipoService{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public Optional<ServicioTipoDTO> update(ServicioTipoDTO tipoServicioAeropuerto, Long id) {
         if (tipoServicioRepository.findById(id).isPresent()) {
             ServicioTipo tipoServicio = MapperUtils.EntityFromDto(tipoServicioAeropuerto, ServicioTipo.class);
