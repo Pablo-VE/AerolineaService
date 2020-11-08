@@ -105,7 +105,7 @@ public class AlertaGeneradaController {
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de los vuelos por estado", response = AlertaGeneradaDTO.class, responseContainer = "List", tags = "Alertas_Generadas")
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean estado) {
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "term") int estado) {
         try {
             return new ResponseEntity<>(alertaGeneradaService.findByEstado(estado), HttpStatus.OK);
         } catch (Exception ex) {

@@ -24,6 +24,7 @@ public class TipoAvionDTO {
     private Long id;
     private String nombre;
     private float distanciaRecomendada;
+    private float distanciaMaxima;
     private boolean estado;
     
 }

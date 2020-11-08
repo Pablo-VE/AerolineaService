@@ -16,7 +16,7 @@ import org.springframework.data.repository.query.Param;
  * @author Pablo-VE
  */
 public interface IAlertaGeneradaRepository extends JpaRepository<AlertaGenerada, Long> {
-    public List<AlertaGenerada> findByEstado(boolean estado);
+    public List<AlertaGenerada> findByEstado(int estado);
     public List<AlertaGenerada> findByAutorizacion(String autorizacion);
     
     @Query("SELECT ag FROM AlertaGenerada ag LEFT JOIN ag.tipoAlerta ta WHERE ta.id = :tipoAlertaID")

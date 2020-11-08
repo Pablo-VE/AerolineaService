@@ -22,7 +22,7 @@ public interface IVueloService {
     
     public Optional<List<VueloDTO>>findByFecha(@JsonbDateFormat(value = "yyyy-MM-dd")Date fecha);
     
-    public Optional<List<VueloDTO>> findByEstado(boolean estado);
+    public Optional<List<VueloDTO>> findByEstado(int estado);
     
     public Optional<List<VueloDTO>> findByAvion(Long avion);
     

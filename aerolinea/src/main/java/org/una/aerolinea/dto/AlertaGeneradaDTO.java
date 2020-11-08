@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 public class AlertaGeneradaDTO {
     private Long id;
-    private boolean estado;
+    private int estado;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private java.util.Date fechaRegistro;
     @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")

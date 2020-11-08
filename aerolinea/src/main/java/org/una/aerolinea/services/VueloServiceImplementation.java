@@ -47,7 +47,7 @@ public class VueloServiceImplementation implements IVueloService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<VueloDTO>> findByEstado(boolean estado) {
+    public Optional<List<VueloDTO>> findByEstado(int estado) {
         return ServiceConvertionHelper.findList(vueloRepository.findByEstado(estado), VueloDTO.class);
     }
 

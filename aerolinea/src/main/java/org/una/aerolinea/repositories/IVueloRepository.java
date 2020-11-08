@@ -20,7 +20,7 @@ import org.una.aerolinea.entities.Vuelo;
 public interface IVueloRepository extends JpaRepository<Vuelo, Long>{
     
     
-    public List<Vuelo> findByEstado(boolean estado);
+    public List<Vuelo> findByEstado(int estado);
     public List<Vuelo> findByFecha(@JsonbDateFormat(value = "yyyy-MM-dd")Date fecha);
     
     @Query("SELECT v FROM Vuelo v LEFT JOIN v.avion a WHERE a.id = :avionID")

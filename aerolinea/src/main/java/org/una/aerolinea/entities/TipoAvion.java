@@ -42,6 +42,9 @@ public class TipoAvion implements Serializable{
     @Column(name = "distancia_recomendada")
     private float distanciaRecomendada;
     
+    @Column(name = "distancia_maxima")
+    private float distanciaMaxima;
+    
     @Column
     private boolean estado;
     

@@ -21,7 +21,7 @@ public interface IAlertaGeneradaService {
 
     public Optional<List<AlertaGeneradaDTO>> findByAutorizacion(String autorizacion);
     
-    public Optional<List<AlertaGeneradaDTO>> findByEstado(boolean estado);
+    public Optional<List<AlertaGeneradaDTO>> findByEstado(int estado);
         
     public Optional<List<AlertaGeneradaDTO>> findByTipoAlerta(Long tipoAlerta);
     

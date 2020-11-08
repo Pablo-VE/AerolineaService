@@ -48,7 +48,7 @@ public class AlertaGeneradaServiceImplementation implements IAlertaGeneradaServi
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<AlertaGeneradaDTO>> findByEstado(boolean estado) {
+    public Optional<List<AlertaGeneradaDTO>> findByEstado(int estado) {
          return ServiceConvertionHelper.findList(alertaGeneradaRepository.findByEstado(estado), AlertaGeneradaDTO.class);
     }
 

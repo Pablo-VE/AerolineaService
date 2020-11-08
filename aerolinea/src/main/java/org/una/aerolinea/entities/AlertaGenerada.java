@@ -42,7 +42,7 @@ public class AlertaGenerada implements Serializable{
     private Long id;
     
     @Column
-    private boolean estado;
+    private int estado;
     
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
