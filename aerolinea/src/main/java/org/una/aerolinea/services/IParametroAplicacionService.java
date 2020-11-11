@@ -15,6 +15,8 @@ import org.una.aerolinea.dto.ParametroAplicacionDTO;
  */
 public interface IParametroAplicacionService {
     public Optional<List<ParametroAplicacionDTO>> findAll();
+    
+    public Optional<ParametroAplicacionDTO> findByNombreAndValor(String nombre, String valor);
 
     public Optional<ParametroAplicacionDTO> findById(Long id);
 
@@ -28,7 +30,7 @@ public interface IParametroAplicacionService {
     
     public ParametroAplicacionDTO createPasswordAutorizacion(ParametroAplicacionDTO parametroAplicacion);
     
-    public Optional<ParametroAplicacionDTO> updatePasswordAutorizacion(String nombre, String valor, ParametroAplicacionDTO parametroAplicacion);
+    public Optional<ParametroAplicacionDTO> updatePasswordAutorizacion(ParametroAplicacionDTO parametroAplicacion, Long id);
 
     public Optional<ParametroAplicacionDTO> update(ParametroAplicacionDTO parametroAplicacion, Long id);
     

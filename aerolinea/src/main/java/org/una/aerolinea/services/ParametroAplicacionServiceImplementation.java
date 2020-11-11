@@ -46,6 +46,12 @@ public class ParametroAplicacionServiceImplementation implements IParametroAplic
     public Optional<List<ParametroAplicacionDTO>> findByNombreContainingIgnoreCase(String nombre) {
         return ServiceConvertionHelper.findList(paramentroRepository.findByNombreContainingIgnoreCase(nombre), ParametroAplicacionDTO.class);
     }
+    
+    @Override
+    @Transactional
+    public Optional<ParametroAplicacionDTO> findByNombreAndValor(String nombre, String valor){
+            return ServiceConvertionHelper.oneToOptionalDto(paramentroRepository.findByNombreAndValor(nombre, valor), ParametroAplicacionDTO.class);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -79,9 +85,10 @@ public class ParametroAplicacionServiceImplementation implements IParametroAplic
     
     @Override
     @Transactional
-    public Optional<ParametroAplicacionDTO> updatePasswordAutorizacion(String nombre, String valor, ParametroAplicacionDTO parametroAplicacion){
-        if (paramentroRepository.findByNombreAndValor(nombre, valor).isPresent()) {            
+    public Optional<ParametroAplicacionDTO> updatePasswordAutorizacion(ParametroAplicacionDTO parametroAplicacion, Long id){
+        if (paramentroRepository.findById(id).isPresent()) {
             ParametroAplicacion parametro = MapperUtils.EntityFromDto(parametroAplicacion, ParametroAplicacion.class);
+            parametro.setValor(bCryptPasswordEncoder.encode(parametro.getValor()));
             parametro = paramentroRepository.save(parametro);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(parametro, ParametroAplicacionDTO.class));
         } else {

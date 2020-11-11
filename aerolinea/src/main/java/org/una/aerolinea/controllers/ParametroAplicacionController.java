@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,9 @@ import org.una.aerolinea.utils.MapperUtils;
 public class ParametroAplicacionController {
     @Autowired
     private IParametroAplicacionService parametroService;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la información de su solicitud con el formato esperado";
     
@@ -69,7 +73,19 @@ public class ParametroAplicacionController {
     @PreAuthorize("hasAuthority('gestor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
+            
             return new ResponseEntity<>(parametroService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/nombreValor/{nombre}/{valor}") 
+    @ApiOperation(value = "Obtiene un parametro por su nombre y valor", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> findByNombreAndValor(@PathVariable(value = "nombre") String nombre, @PathVariable(value = "valor") String valor) {
+        try {
+            return new ResponseEntity<>(parametroService.findByNombreAndValor(nombre, valor), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -131,14 +147,14 @@ public class ParametroAplicacionController {
         }
     }
     
-    @PutMapping("/modificarAutorizacion/{nombre}{valor}") 
+    @PutMapping("/modificarAutorizacion/{id}") 
     @ApiOperation(value = "Modifica un parametro de la aplicacion con contraseña sensible", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
     @PreAuthorize("hasAuthority('gestor')")
-    public ResponseEntity<?> update(@PathVariable(value = "nombre") String nombre, @PathVariable(value = "valor") String valor, @RequestBody ParametroAplicacionDTO parametrosModified, BindingResult bindingResult) {
+    public ResponseEntity<?> updatePasswordAutorizacion(@PathVariable(value = "id") Long id, @RequestBody ParametroAplicacionDTO parametrosModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
-                Optional<ParametroAplicacionDTO> parametrosUpdated = parametroService.updatePasswordAutorizacion(nombre, valor, parametrosModified);
+                Optional<ParametroAplicacionDTO> parametrosUpdated = parametroService.updatePasswordAutorizacion(parametrosModified, id);
                 if (parametrosUpdated.isPresent()) {
                     return new ResponseEntity(parametrosUpdated, HttpStatus.OK);
                 } else {
