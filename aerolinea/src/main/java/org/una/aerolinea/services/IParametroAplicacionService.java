@@ -25,6 +25,10 @@ public interface IParametroAplicacionService {
     public Optional<List<ParametroAplicacionDTO>> findByEstado(boolean estado);
 
     public ParametroAplicacionDTO create(ParametroAplicacionDTO parametroAplicacion);
+    
+    public ParametroAplicacionDTO createPasswordAutorizacion(ParametroAplicacionDTO parametroAplicacion);
+    
+    public Optional<ParametroAplicacionDTO> updatePasswordAutorizacion(String nombre, String valor, ParametroAplicacionDTO parametroAplicacion);
 
     public Optional<ParametroAplicacionDTO> update(ParametroAplicacionDTO parametroAplicacion, Long id);
     

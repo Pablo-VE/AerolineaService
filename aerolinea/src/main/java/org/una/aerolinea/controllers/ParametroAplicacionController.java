@@ -114,6 +114,44 @@ public class ParametroAplicacionController {
         }
     }
     
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/crearAutorizacion") 
+    @ApiOperation(value = "Crea un parametro de la aplicacion con contraseña sensible", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> createPasswordAutorizacion(@RequestBody ParametroAplicacionDTO parametros,  BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                return new ResponseEntity(parametroService.createPasswordAutorizacion(parametros), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+        return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @PutMapping("/modificarAutorizacion/{nombre}{valor}") 
+    @ApiOperation(value = "Modifica un parametro de la aplicacion con contraseña sensible", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('gestor')")
+    public ResponseEntity<?> update(@PathVariable(value = "nombre") String nombre, @PathVariable(value = "valor") String valor, @RequestBody ParametroAplicacionDTO parametrosModified, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                Optional<ParametroAplicacionDTO> parametrosUpdated = parametroService.updatePasswordAutorizacion(nombre, valor, parametrosModified);
+                if (parametrosUpdated.isPresent()) {
+                    return new ResponseEntity(parametrosUpdated, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                }
+            } catch (Exception e) {
+                return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un parametro de la aplicacion", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody

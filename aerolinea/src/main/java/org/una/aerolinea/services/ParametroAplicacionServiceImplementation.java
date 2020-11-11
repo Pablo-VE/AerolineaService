@@ -8,6 +8,7 @@ package org.una.aerolinea.services;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.aerolinea.entities.ParametroAplicacion;
@@ -24,6 +25,9 @@ import org.una.aerolinea.utils.ServiceConvertionHelper;
 public class ParametroAplicacionServiceImplementation implements IParametroAplicacionService{
     @Autowired
     private IParametroAplicacionRepository paramentroRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @Override
     @Transactional(readOnly = true)
@@ -63,6 +67,28 @@ public class ParametroAplicacionServiceImplementation implements IParametroAplic
         return MapperUtils.DtoFromEntity(parametro, ParametroAplicacionDTO.class);
     }
 
+    @Override
+    @Transactional
+    public ParametroAplicacionDTO createPasswordAutorizacion(ParametroAplicacionDTO parametroAplicacion){
+        parametroAplicacion.setValor(bCryptPasswordEncoder.encode(parametroAplicacion.getValor()));
+        ParametroAplicacion parametro = MapperUtils.EntityFromDto(parametroAplicacion, ParametroAplicacion.class);
+        parametro = paramentroRepository.save(parametro);
+        return MapperUtils.DtoFromEntity(parametro, ParametroAplicacionDTO.class);
+        
+    }
+    
+    @Override
+    @Transactional
+    public Optional<ParametroAplicacionDTO> updatePasswordAutorizacion(String nombre, String valor, ParametroAplicacionDTO parametroAplicacion){
+        if (paramentroRepository.findByNombreAndValor(nombre, valor).isPresent()) {            
+            ParametroAplicacion parametro = MapperUtils.EntityFromDto(parametroAplicacion, ParametroAplicacion.class);
+            parametro = paramentroRepository.save(parametro);
+            return Optional.ofNullable(MapperUtils.DtoFromEntity(parametro, ParametroAplicacionDTO.class));
+        } else {
+            return null;
+        } 
+    }
+    
     @Override
     @Transactional
     public Optional<ParametroAplicacionDTO> update(ParametroAplicacionDTO parametroAplicacion, Long id) {
