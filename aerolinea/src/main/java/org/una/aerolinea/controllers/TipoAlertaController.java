@@ -43,7 +43,7 @@ public class TipoAlertaController {
  
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las alertas", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class TipoAlertaController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una alerta por su id", response = TipoAlertaDTO.class, tags = "Alertas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasAuthority('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(alertaService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class TipoAlertaController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de alertas por estado", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(alertaService.findByEstado(term), HttpStatus.OK);
@@ -78,7 +78,7 @@ public class TipoAlertaController {
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de alertas por descripcion", response = TipoAlertaDTO.class, responseContainer = "List", tags = "Alertas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(alertaService.findByDescripcionContainingIgnoreCase(term), HttpStatus.OK);
@@ -91,7 +91,7 @@ public class TipoAlertaController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una alerta", response = TipoAlertaDTO.class, tags = "Alertas")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody TipoAlertaDTO alerta,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -108,7 +108,7 @@ public class TipoAlertaController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica una alerta", response = TipoAlertaDTO.class, tags = "Alertas")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoAlertaDTO alertaModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

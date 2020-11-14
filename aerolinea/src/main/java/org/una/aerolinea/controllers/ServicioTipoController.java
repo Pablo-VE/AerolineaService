@@ -44,7 +44,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
 
    @GetMapping("/") 
    @ApiOperation(value = "Obtiene una lista de todos los tipos de servicios del aeropuerto", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
-   @PreAuthorize("hasAuthority('gestor')")
+   @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
    public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -56,7 +56,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un tipo de servicio del aeropuerto por su id", response = ServicioTipoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(tipoServiAeroService.findById(id), HttpStatus.OK);
@@ -67,7 +67,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de los tipos de servicios del aeropuerto por estado", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(tipoServiAeroService.findByEstado(term), HttpStatus.OK);
@@ -78,7 +78,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de tipos de servicios del aeropuerto por su descripcion", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String descripcion) {
         try {
             return new ResponseEntity<>(tipoServiAeroService.findByDescripcionContainingIgnoreCase(descripcion), HttpStatus.OK);
@@ -89,7 +89,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de tipos de aviones por su nombre", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(tipoServiAeroService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
@@ -100,7 +100,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
     
     @GetMapping("/list/areaTrabajo/{term}") 
     @ApiOperation(value = "Obtiene una lista de los tipos de servicios por area de trabajo", response = ServicioTipoDTO.class, responseContainer = "List", tags = "Tipos_Servicios_Aeropuerto")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByAreaTrabajo(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(tipoServiAeroService.findByAreaTrabajo(term), HttpStatus.OK);
@@ -114,7 +114,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un tipo de servicio del aeropuerto", response = ServicioTipoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody ServicioTipoDTO servicioT,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -130,7 +130,7 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un tipo de servicio del aeropuerto", response = ServicioTipoDTO.class, tags = "Tipos_Servicios_Aeropuerto")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ServicioTipoDTO servicioModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
