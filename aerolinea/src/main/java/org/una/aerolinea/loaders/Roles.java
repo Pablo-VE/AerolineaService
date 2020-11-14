@@ -14,6 +14,7 @@ public enum Roles {
     Gerente("gerente"),
     Administrador("administrador"),
     Auditor("auditor");
+    
 
     
     private String nombre;
