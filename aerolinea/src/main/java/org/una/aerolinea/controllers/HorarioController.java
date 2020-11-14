@@ -43,7 +43,7 @@ public class HorarioController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los horarios", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class HorarioController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un horario por su id", response = HorarioDTO.class, tags = "Horarios")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(horarioService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class HorarioController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por estado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(horarioService.findByEstado(term), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class HorarioController {
     
     @GetMapping("/list/empleado/{term}") 
     @ApiOperation(value = "Obtiene una lista de horarios por empleado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEmpleado(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(horarioService.findByEmpleado(term), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class HorarioController {
     
     @GetMapping("/list/empleadohorario/{term1}/{term2}") 
     @ApiOperation(value = "Obtiene una lista de horarios por empleado y estado", response = HorarioDTO.class, responseContainer = "List", tags = "Horarios")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEmpleadoAndEstado(@PathVariable(value = "term1") Long term1, @PathVariable(value = "term2") boolean term2) {
         try {
             return new ResponseEntity<>(horarioService.findByEmpleadoAndEstado(term1, term2), HttpStatus.OK);
@@ -101,7 +101,7 @@ public class HorarioController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un horario", response = HorarioDTO.class, tags = "Horarios")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody HorarioDTO horario,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -118,7 +118,7 @@ public class HorarioController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un horario", response = HorarioDTO.class, tags = "Horarios")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody HorarioDTO horarioModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

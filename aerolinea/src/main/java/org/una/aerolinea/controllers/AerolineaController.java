@@ -53,7 +53,7 @@ public class AerolineaController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una aerolinea por su id", response = AerolineaDTO.class, tags = "Aerolineas")
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(aerolineaService.findById(id), HttpStatus.OK);
@@ -65,7 +65,7 @@ public class AerolineaController {
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por nombre", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(aerolineaService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
@@ -76,7 +76,7 @@ public class AerolineaController {
     
     @GetMapping("/list/responsable/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por responsable", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByResponsableAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(aerolineaService.findByResponsableContainingIgnoreCase(term), HttpStatus.OK);
@@ -87,7 +87,7 @@ public class AerolineaController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por estado", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity(aerolineaService.findByEstado(term), HttpStatus.OK);

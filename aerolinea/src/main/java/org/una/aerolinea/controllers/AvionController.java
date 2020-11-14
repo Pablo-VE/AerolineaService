@@ -44,7 +44,7 @@ public class AvionController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los aviones", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -56,7 +56,7 @@ public class AvionController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un avion por su id", response = AvionDTO.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(avionService.findById(id), HttpStatus.OK);
@@ -67,7 +67,7 @@ public class AvionController {
     
     @GetMapping("/matricula/{term}") 
     @ApiOperation(value = "Obtiene un avion por su matricula", response = AvionDTO.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByMatricula(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(avionService.findByMatricula(term), HttpStatus.OK);
@@ -79,7 +79,7 @@ public class AvionController {
     
     @GetMapping("/list/matricula/{term}") 
     @ApiOperation(value = "Obtiene una lista de aviones por matricula", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByMatriculaAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(avionService.findByMatriculaContainingIgnoreCase(term), HttpStatus.OK);
@@ -91,7 +91,7 @@ public class AvionController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de aviones por estado", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(avionService.findByEstado(term), HttpStatus.OK);
@@ -102,7 +102,7 @@ public class AvionController {
     
     @GetMapping("/list/aerolinea/{term}") 
     @ApiOperation(value = "Obtiene una lista de aviones por aerolinea", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByAerolinea(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(avionService.findByAerolinea(term), HttpStatus.OK);
@@ -113,7 +113,7 @@ public class AvionController {
     
     @GetMapping("/list/tipoAvion/{term}") 
     @ApiOperation(value = "Obtiene una lista de aviones por tipo de avion", response = AvionDTO.class, responseContainer = "List", tags = "Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByTipoAvion(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(avionService.findByTipoAvion(term), HttpStatus.OK);
@@ -126,7 +126,7 @@ public class AvionController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un avion", response = AvionDTO.class, tags = "Aviones")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody AvionDTO avion,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -143,7 +143,7 @@ public class AvionController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un avion", response = AvionDTO.class, tags = "Aviones")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody AvionDTO entityModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

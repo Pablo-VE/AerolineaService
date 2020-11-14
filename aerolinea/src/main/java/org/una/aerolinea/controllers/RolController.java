@@ -7,7 +7,6 @@ package org.una.aerolinea.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.aerolinea.dto.RolDTO;
-import org.una.aerolinea.entities.Rol;
 import org.una.aerolinea.services.IRolService;
-import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
@@ -43,7 +40,7 @@ public class RolController {
 
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +52,7 @@ public class RolController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un rol por su id", response = RolDTO.class, tags = "Roles")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(rolService.findById(id), HttpStatus.OK);
@@ -66,7 +63,7 @@ public class RolController {
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por nombre", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(rolService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
@@ -77,7 +74,7 @@ public class RolController {
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por descripcion", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(rolService.findByDescripcionContainingIgnoreCase(term), HttpStatus.OK);
@@ -89,7 +86,7 @@ public class RolController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por estado", response = RolDTO.class, responseContainer = "List", tags = "Roles")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean estado) {
         try {
             return new ResponseEntity<>(rolService.findByEstado(estado), HttpStatus.OK);
@@ -102,7 +99,7 @@ public class RolController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un rol", response = RolDTO.class, tags = "Roles")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody RolDTO roles,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -119,7 +116,7 @@ public class RolController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un rol", response = RolDTO.class, tags = "Roles")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody RolDTO rolModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

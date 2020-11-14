@@ -44,10 +44,10 @@ final String MENSAJE_VERIFICAR_INFORMACION = "Debe verifiar el formato y la info
 @Autowired
 private IBitacoraAvionService avionEstadoService;
     
-   @GetMapping("/") 
-   @ApiOperation(value = "Obtiene una lista de todos estados de los aviones", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-   public @ResponseBody
-   @PreAuthorize("hasAuthority('gestor')")
+    @GetMapping("/") 
+    @ApiOperation(value = "Obtiene una lista de todos estados de los aviones", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
+    public @ResponseBody
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(avionEstadoService.findAll(), HttpStatus.OK);
@@ -59,7 +59,7 @@ private IBitacoraAvionService avionEstadoService;
    
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un estado de avion por su id", response = BitacoraAvionDTO.class, tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(avionEstadoService.findById(id), HttpStatus.OK);
@@ -70,7 +70,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/combustible/{term}") 
     @ApiOperation(value = "Obtiene una lista de los estados de los aviones", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByCombustible(@PathVariable(value = "term") int term) {
         try {
             return new ResponseEntity(avionEstadoService.findByCombustible(term), HttpStatus.OK);
@@ -81,7 +81,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/distancia/{term}") 
     @ApiOperation(value = "Obtiene una lista de los estados de aviones por su distancia recorrida", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDistanciaRecorrida(@PathVariable(value = "term") int term) {
         try {
             return new ResponseEntity(avionEstadoService.findByDistanciaRecorrida(term), HttpStatus.OK);
@@ -92,7 +92,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de los estados de los aviones por estado", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity(avionEstadoService.findByEstado(term), HttpStatus.OK);
@@ -104,7 +104,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/tiempo/{term}") 
     @ApiOperation(value = "Obtiene una lista de los estados de aviones por su tiempo en tierra", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByTiempoTierra(@PathVariable(value = "term") int term) {
         try {
             return new ResponseEntity(avionEstadoService.findByTiempoTierra(term), HttpStatus.OK);
@@ -115,7 +115,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/ubicacion/{term}") 
     @ApiOperation(value = "Obtiene una lista de los estados de aviones por su ubicacion", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByUbicacion(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(avionEstadoService.findByUbicacionContainingIgnoreCase(term), HttpStatus.OK);
@@ -126,7 +126,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/avion/{term}") 
     @ApiOperation(value = "Obtiene una lista de bitacora por avion", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByAvion(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity(avionEstadoService.findByAvion(term), HttpStatus.OK);
@@ -137,7 +137,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/distanciaRango/{mas}/{menos}") 
     @ApiOperation(value = "Obtiene una lista de bitacoras de aviones por rango de distancia", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDistanciaRango(@PathVariable(value = "mas") float mas, @PathVariable(value = "menos") float menos) {
           try {
             return new ResponseEntity<>(avionEstadoService.findByDistanciaRecorridaRango(mas, menos), HttpStatus.OK);
@@ -148,7 +148,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/combustibleRango/{mas}/{menos}") 
     @ApiOperation(value = "Obtiene una lista de bitacoras de aviones por rango de combustible", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByCombustibleRango(@PathVariable(value = "mas") int mas, @PathVariable(value = "menos") int menos) {
           try {
             return new ResponseEntity<>(avionEstadoService.findByCombustibleRango(mas, menos), HttpStatus.OK);
@@ -159,7 +159,7 @@ private IBitacoraAvionService avionEstadoService;
     
     @GetMapping("/list/tiempoRango/{mas}/{menos}") 
     @ApiOperation(value = "Obtiene una lista de bitacoras de aviones por rango de tiempo en tierra", response = BitacoraAvionDTO.class, responseContainer = "List", tags = "Bitacoras_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByTiempoRango(@PathVariable(value = "mas") int mas, @PathVariable(value = "menos") int menos) {
           try {
             return new ResponseEntity<>(avionEstadoService.findByTiempoTierraRango(mas, menos), HttpStatus.OK);
@@ -172,7 +172,7 @@ private IBitacoraAvionService avionEstadoService;
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una bitacora de un avion", response = BitacoraAvionDTO.class, tags = "Bitacoras_Aviones")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody BitacoraAvionDTO bitacora,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -188,7 +188,7 @@ private IBitacoraAvionService avionEstadoService;
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un tipo de servicio del aeropuerto", response = BitacoraAvionDTO.class, tags = "Bitacoras_Aviones")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody BitacoraAvionDTO bitacoraModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

@@ -43,7 +43,7 @@ public class RutaController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las rutas", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class RutaController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una ruta por su id", response = RutaDTO.class, tags = "Rutas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(rutaService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class RutaController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de rutas por estado", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(rutaService.findByEstado(term), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class RutaController {
     
     @GetMapping("/list/distanciaRango/{mas}/{menos}") 
     @ApiOperation(value = "Obtiene una lista de rutas por rango de distancia", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDistanciaRango(@PathVariable(value = "mas") float mas, @PathVariable(value = "menos") float menos) {
           try {
             return new ResponseEntity<>(rutaService.findByDistanciaRango(mas, menos), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class RutaController {
     
     @GetMapping("/list/origen/{term}") 
     @ApiOperation(value = "Obtiene una lista de rutas por su origen", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByOrigenAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(rutaService.findByOrigenContainingIgnoreCase(term), HttpStatus.OK);
@@ -99,7 +99,7 @@ public class RutaController {
     
     @GetMapping("/list/destino/{term}") 
     @ApiOperation(value = "Obtiene una lista de rutas por su destino", response = RutaDTO.class, responseContainer = "List", tags = "Rutas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDestinoAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(rutaService.findByDestinoContainingIgnoreCase(term), HttpStatus.OK);
@@ -113,7 +113,7 @@ public class RutaController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una ruta", response = RutaDTO.class, tags = "Rutas")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody RutaDTO ruta,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -129,7 +129,7 @@ public class RutaController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica una ruta", response = RutaDTO.class, tags = "Rutas")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody RutaDTO rutaModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

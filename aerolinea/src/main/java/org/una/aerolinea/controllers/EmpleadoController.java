@@ -45,7 +45,7 @@ public class EmpleadoController {
 
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los empleados", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -57,7 +57,7 @@ public class EmpleadoController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un empleado por su id", response = EmpleadoDTO.class, tags = "Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(empleadoService.findById(id), HttpStatus.OK);
@@ -69,7 +69,7 @@ public class EmpleadoController {
     
     @GetMapping("/list/cedula/{term}") 
     @ApiOperation(value = "Obtiene una lista de empleados por cedula", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByCedulaAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(empleadoService.findByCedulaContaining(term), HttpStatus.OK);
@@ -80,7 +80,7 @@ public class EmpleadoController {
     
     @GetMapping("/cedula/{term}") 
     @ApiOperation(value = "Obtiene un empleado por su cedula", response = EmpleadoDTO.class, tags = "Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByCedula(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(empleadoService.findByCedula(term), HttpStatus.OK);
@@ -92,7 +92,7 @@ public class EmpleadoController {
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de empleados por nombre", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
            try {
             return new ResponseEntity(empleadoService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
@@ -103,7 +103,7 @@ public class EmpleadoController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de empleados por estado", response = EmpleadoDTO.class, responseContainer = "List", tags = "Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity(empleadoService.findByEstado(term), HttpStatus.OK);
@@ -117,7 +117,7 @@ public class EmpleadoController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un empleado", response = EmpleadoDTO.class, tags = "Empleados")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody EmpleadoDTO empleado,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -129,14 +129,11 @@ public class EmpleadoController {
         return new ResponseEntity(MENSAJE_VERIFICAR_INFORMACION, HttpStatus.BAD_REQUEST);
         }
     }
-    
-    
-    
-    
+
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un empleado", response = EmpleadoDTO.class, tags = "Empleados")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody EmpleadoDTO empleModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

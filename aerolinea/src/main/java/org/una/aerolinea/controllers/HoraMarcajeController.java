@@ -43,7 +43,7 @@ public class HoraMarcajeController {
 
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos las horas de marcaje", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Horas_Marcajes")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class HoraMarcajeController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una hora de marcaje por su id", response = HoraMarcajeDTO.class, tags = "Horas_Marcajes")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(marcajeService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class HoraMarcajeController {
     
     @GetMapping("/list/tipo/{term}") 
     @ApiOperation(value = "Obtiene una lista de horas de marcaje por tipo", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Horas_Marcajes")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByTipoAproximate(@PathVariable(value = "term") int term) {
         try {
             return new ResponseEntity(marcajeService.findByTipo(term), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class HoraMarcajeController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de horas de marcaje por estado", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Horas_Marcajes")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity(marcajeService.findByEstado(term), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class HoraMarcajeController {
     
     @GetMapping("/list/empleado/{term}") 
     @ApiOperation(value = "Obtiene una lista de horas de marcaje por estado", response = HoraMarcajeDTO.class, responseContainer = "List", tags = "Horas_Marcajes")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEmpleado(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity(marcajeService.findByEmpleado(term), HttpStatus.OK);
@@ -101,7 +101,7 @@ public class HoraMarcajeController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una hora de marcaje", response = HoraMarcajeDTO.class, tags = "Horas_Marcajes")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody HoraMarcajeDTO hora,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -120,7 +120,7 @@ public class HoraMarcajeController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica una hora de marcaje", response = HoraMarcajeDTO.class, tags = "Horas_Marcajes")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody HoraMarcajeDTO horaModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

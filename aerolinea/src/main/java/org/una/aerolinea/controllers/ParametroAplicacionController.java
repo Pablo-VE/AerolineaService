@@ -7,7 +7,6 @@ package org.una.aerolinea.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.aerolinea.dto.ParametroAplicacionDTO;
-import org.una.aerolinea.entities.ParametroAplicacion;
 import org.una.aerolinea.services.IParametroAplicacionService;
-import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
@@ -47,7 +44,7 @@ public class ParametroAplicacionController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los parametros de la aplicacion", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -59,7 +56,7 @@ public class ParametroAplicacionController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un parametro de la aplicacion por su id", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(parametroService.findById(id), HttpStatus.OK);
@@ -70,7 +67,7 @@ public class ParametroAplicacionController {
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de los parametros de la aplicacion por nombre", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
             
@@ -82,7 +79,7 @@ public class ParametroAplicacionController {
     
     @GetMapping("/nombreValor/{nombre}/{valor}") 
     @ApiOperation(value = "Obtiene un parametro por su nombre y valor", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByNombreAndValor(@PathVariable(value = "nombre") String nombre, @PathVariable(value = "valor") String valor) {
         try {
             return new ResponseEntity<>(parametroService.findByNombreAndValor(nombre, valor), HttpStatus.OK);
@@ -93,7 +90,7 @@ public class ParametroAplicacionController {
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de los parametros de la aplicacion por descripcion", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(parametroService.findByDescripcionContainingIgnoreCase(term), HttpStatus.OK);
@@ -104,7 +101,7 @@ public class ParametroAplicacionController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de roles por estado", response = ParametroAplicacionDTO.class, responseContainer = "List", tags = "Parametros_Aplicacion")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(parametroService.findByEstado(term), HttpStatus.OK);
@@ -117,7 +114,7 @@ public class ParametroAplicacionController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un parametro de la aplicacion", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody ParametroAplicacionDTO parametros,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -134,7 +131,7 @@ public class ParametroAplicacionController {
     @PostMapping("/crearAutorizacion") 
     @ApiOperation(value = "Crea un parametro de la aplicacion con contraseña sensible", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> createPasswordAutorizacion(@RequestBody ParametroAplicacionDTO parametros,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -150,7 +147,7 @@ public class ParametroAplicacionController {
     @PutMapping("/modificarAutorizacion/{id}") 
     @ApiOperation(value = "Modifica un parametro de la aplicacion con contraseña sensible", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> updatePasswordAutorizacion(@PathVariable(value = "id") Long id, @RequestBody ParametroAplicacionDTO parametrosModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -171,7 +168,7 @@ public class ParametroAplicacionController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un parametro de la aplicacion", response = ParametroAplicacionDTO.class, tags = "Parametros_Aplicacion")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody ParametroAplicacionDTO parametrosModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
