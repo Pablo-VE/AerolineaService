@@ -44,7 +44,7 @@ public class TrabajoEmpleadoController {
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los trabajos de los empleados", response = TrabajoEmpleadoDTO.class, responseContainer = "List", tags = "Trabajos_Empleados")
     public @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(trabajoService.findAll(), HttpStatus.OK);
@@ -55,7 +55,7 @@ public class TrabajoEmpleadoController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un trabajo de un empleado por su id", response = TrabajoEmpleadoDTO.class, tags = "Trabajos_Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(trabajoService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class TrabajoEmpleadoController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de trabajos de empleados por estado", response = TrabajoEmpleadoDTO.class, responseContainer = "List", tags = "Trabajos_Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(trabajoService.findByEstado(term), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class TrabajoEmpleadoController {
     
     @GetMapping("/list/empleado/{term}") 
     @ApiOperation(value = "Obtiene una lista de trabajos de empleados por empleado", response = TrabajoEmpleadoDTO.class, responseContainer = "List", tags = "Trabajos_Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEmpleado(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(trabajoService.findByEmpleado(term), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class TrabajoEmpleadoController {
     
     @GetMapping("/list/areaTrabajo/{term}") 
     @ApiOperation(value = "Obtiene una lista de trabajos de empleados por area de trabajo", response = TrabajoEmpleadoDTO.class, responseContainer = "List", tags = "Trabajos_Empleados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByAreaTrabajo(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(trabajoService.findByAreaTrabajo(term), HttpStatus.OK);
@@ -101,7 +101,7 @@ public class TrabajoEmpleadoController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un trabajo de un empleado", response = TrabajoEmpleadoDTO.class, tags = "Trabajos_Empleados")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody TrabajoEmpleadoDTO roles,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -117,7 +117,7 @@ public class TrabajoEmpleadoController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un trabajo de un empleado", response = TrabajoEmpleadoDTO.class, tags = "Trabajos_Empleados")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TrabajoEmpleadoDTO trabajoEmpModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

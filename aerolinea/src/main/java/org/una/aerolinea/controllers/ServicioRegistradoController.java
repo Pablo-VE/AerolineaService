@@ -43,7 +43,7 @@ public class ServicioRegistradoController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los servicios del aeropuerto", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole()")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class ServicioRegistradoController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un servicio del aeropuerto por su id", response = ServicioRegistradoDTO.class, tags = "Servicios_Registrados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasAuthority('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(servicioService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class ServicioRegistradoController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de los servicios del aeropuerto por estado", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasAuthority('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(servicioService.findByEstado(term), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class ServicioRegistradoController {
     
     @GetMapping("/list/estadoCobro/{term}") 
     @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por estado de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasAuthority('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstadoCobro(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(servicioService.findByEstadoCobro(term), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class ServicioRegistradoController {
     
     @GetMapping("/list/cobroRango/{cobroMas}/{cobroMenos}") 
     @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por un rango de cobro", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasAuthority('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByCobroRango(@PathVariable(value = "cobroMas") float mas, @PathVariable(value = "cobroMenos") float menos) {
         try {
             return new ResponseEntity<>(servicioService.findByCobroRango(mas, menos), HttpStatus.OK);
@@ -99,7 +99,7 @@ public class ServicioRegistradoController {
     
     @GetMapping("/list/tipo/{term}") 
     @ApiOperation(value = "Obtiene una lista de servicios del aeropuerto por el tipo", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasAuthority('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByTipoAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(servicioService.findByTipoContainingIgnoreCase(term), HttpStatus.OK);
@@ -110,7 +110,7 @@ public class ServicioRegistradoController {
     
     @GetMapping("/list/avion/{term}") 
     @ApiOperation(value = "Obtiene una lista de servicios registrados por avion", response = ServicioRegistradoDTO.class, responseContainer = "List", tags = "Servicios_Registrados")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasAuthority('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByAvion(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity(servicioService.findByAvion(term), HttpStatus.OK);

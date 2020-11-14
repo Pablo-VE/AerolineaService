@@ -45,7 +45,7 @@ public class VueloController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los vuelos", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -57,7 +57,7 @@ public class VueloController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un vuelo por su id", response = VueloDTO.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(vueloService.findById(id), HttpStatus.OK);
@@ -68,7 +68,7 @@ public class VueloController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de los vuelos por estado", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") int term) {
         try {
             return new ResponseEntity<>(vueloService.findByEstado(term), HttpStatus.OK);
@@ -79,7 +79,7 @@ public class VueloController {
     
     @GetMapping("/list/avion/{term}") 
     @ApiOperation(value = "Obtiene una lista de los vuelos por avion", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByAvion(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(vueloService.findByAvion(term), HttpStatus.OK);
@@ -90,7 +90,7 @@ public class VueloController {
     
     @GetMapping("/list/ruta/{term}") 
     @ApiOperation(value = "Obtiene una lista de los vuelos por ruta", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByRuta(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity<>(vueloService.findByRuta(term), HttpStatus.OK);
@@ -101,7 +101,7 @@ public class VueloController {
     
     @GetMapping("/list/fecha/{term}") 
     @ApiOperation(value = "Obtiene una lista de los vuelos por fecha", response = VueloDTO.class, responseContainer = "List", tags = "Vuelos")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByFecha(@PathVariable(value = "term") @JsonbDateFormat(value = "yyyy-MM-dd") Date term) {
         try {
             return new ResponseEntity<>(vueloService.findByFecha(term), HttpStatus.OK);
@@ -115,7 +115,7 @@ public class VueloController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un vuelo", response = VueloDTO.class, tags = "Vuelos")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody VueloDTO roles,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -132,7 +132,7 @@ public class VueloController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un vuelo", response = VueloDTO.class, tags = "Vuelos")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody VueloDTO vueloModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

@@ -43,7 +43,7 @@ public class TipoAvionController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos los tipos de aviones", response = TipoAvionDTO.class, responseContainer = "List", tags = "Tipos_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class TipoAvionController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene un tipo de avion por su id", response = TipoAvionDTO.class, tags = "Tipos_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(tipoService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class TipoAvionController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de los tipos de aviones por estado", response = TipoAvionDTO.class, responseContainer = "List", tags = "Tipos_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(tipoService.findByEstado(term), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class TipoAvionController {
     
     @GetMapping("/list/distanciaRango/{mas}/{menos}") 
     @ApiOperation(value = "Obtiene una lista de tipos de aviones por rango de distancia recomendada", response = TipoAvionDTO.class, responseContainer = "List", tags = "Tipos_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByDistanciaRango(@PathVariable(value = "mas") float mas, @PathVariable(value = "menos") float menos) {
         try {
             return new ResponseEntity<>(tipoService.findByDistanciaRango(mas, menos), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class TipoAvionController {
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de tipos de aviones por su nombre", response = TipoAvionDTO.class, responseContainer = "List", tags = "Tipos_Aviones")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(tipoService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
@@ -101,7 +101,7 @@ public class TipoAvionController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un tipo de avion", response = TipoAvionDTO.class, tags = "Tipos_Aviones")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody TipoAvionDTO avion,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -117,7 +117,7 @@ public class TipoAvionController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un tipo de avion", response = TipoAvionDTO.class, tags = "Tipos_Aviones")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TipoAvionDTO avionModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
