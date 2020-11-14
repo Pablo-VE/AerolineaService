@@ -141,7 +141,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
             Usuario usuario = usuarioBuscado.get();
             List<GrantedAuthority> roles = new ArrayList<>();
             for(int i=0; i<roless.size(); i++){
-                roles.add(new SimpleGrantedAuthority(roless.get(i).getNombre()));
+                roles.add(new SimpleGrantedAuthority("ROLE_"+usuario.getRol().getNombre()));
             }
             UserDetails userDetails = new User(usuario.getEmpleado().getCedula(), usuario.getPasswordEncriptado(), roles);
             return userDetails;

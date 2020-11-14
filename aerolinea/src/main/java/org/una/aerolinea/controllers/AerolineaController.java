@@ -7,7 +7,6 @@ package org.una.aerolinea.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.aerolinea.dto.AerolineaDTO;
-import org.una.aerolinea.entities.Aerolinea;
 import org.una.aerolinea.services.IAerolineaService;
-import org.una.aerolinea.utils.MapperUtils;
 
 /**
  *
@@ -44,7 +41,7 @@ public class AerolineaController {
     
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las aerolineas", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -56,7 +53,7 @@ public class AerolineaController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una aerolinea por su id", response = AerolineaDTO.class, tags = "Aerolineas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(aerolineaService.findById(id), HttpStatus.OK);
@@ -68,7 +65,7 @@ public class AerolineaController {
     
     @GetMapping("/list/nombre/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por nombre", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> findByNombreAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(aerolineaService.findByNombreContainingIgnoreCase(term), HttpStatus.OK);
@@ -79,7 +76,7 @@ public class AerolineaController {
     
     @GetMapping("/list/responsable/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por responsable", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> findByResponsableAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(aerolineaService.findByResponsableContainingIgnoreCase(term), HttpStatus.OK);
@@ -90,7 +87,7 @@ public class AerolineaController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de aerolineas por estado", response = AerolineaDTO.class, responseContainer = "List", tags = "Aerolineas")
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity(aerolineaService.findByEstado(term), HttpStatus.OK);
@@ -103,7 +100,7 @@ public class AerolineaController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una aerolinea", response = AerolineaDTO.class, tags = "Aerolineas")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> create(@RequestBody AerolineaDTO tramites,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -120,7 +117,7 @@ public class AerolineaController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica una aerolinea", response = AerolineaDTO.class, tags = "Aerolineas")
     @ResponseBody
-    @PreAuthorize("hasAuthority('gestor')")
+    @PreAuthorize("hasRole('gestor')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody AerolineaDTO tramitesModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

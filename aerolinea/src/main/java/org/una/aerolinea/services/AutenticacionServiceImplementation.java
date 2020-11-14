@@ -39,7 +39,6 @@ public class AutenticacionServiceImplementation implements IAutenticacionService
     
 
     @Override
-    @Transactional(readOnly = true)
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -51,6 +50,7 @@ public class AutenticacionServiceImplementation implements IAutenticacionService
             authenticationResponse.setJwt(jwtProvider.generateToken(authenticationRequest));
             UsuarioDTO usuarioDto = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDTO.class);
             authenticationResponse.setUsuario(usuarioDto);
+            
 
             return authenticationResponse;
         } else {

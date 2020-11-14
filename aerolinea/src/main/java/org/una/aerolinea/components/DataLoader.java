@@ -70,6 +70,7 @@ public class DataLoader implements ApplicationRunner{
             for(Roles rol : Roles.values()){
                 RolDTO rolDto = new RolDTO();
                 rolDto.setNombre(rol.getNombre());
+                rolDto.setEstado(true);
                 if(rolService.findByNombre(rol.getNombre()).get().isEmpty()){
                     rolService.create(rolDto);
                     System.out.println("Rol creado");

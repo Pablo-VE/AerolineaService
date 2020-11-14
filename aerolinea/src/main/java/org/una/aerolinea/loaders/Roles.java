@@ -10,10 +10,10 @@ package org.una.aerolinea.loaders;
  * @author Luis
 */
 public enum Roles {
-    Gestor("gestor"),
-    Gerente("gerente"),
-    Administrador("administrador"),
-    Auditor("auditor");
+    ROLE_gestor("gestor"),
+    ROLE_gerente("gerente"),
+    ROLE_administrador("administrador"),
+    ROLE_auditor("auditor");
     
 
     
