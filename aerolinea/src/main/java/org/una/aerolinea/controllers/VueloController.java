@@ -132,7 +132,7 @@ public class VueloController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un vuelo", response = VueloDTO.class, tags = "Vuelos")
     @ResponseBody
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('gerente')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody VueloDTO vueloModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

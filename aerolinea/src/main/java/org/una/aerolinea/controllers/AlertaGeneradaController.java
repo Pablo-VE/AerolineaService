@@ -48,7 +48,7 @@ public class AlertaGeneradaController {
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todos las alertas generadas", response = AlertaGeneradaDTO.class, responseContainer = "List", tags = "Alertas_Generadas")
     public @ResponseBody
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(alertaGeneradaService.findAll(), HttpStatus.OK);
@@ -59,7 +59,7 @@ public class AlertaGeneradaController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una alerta generada por su id", response = AlertaGeneradaDTO.class, tags = "Alertas_Generadas")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(alertaGeneradaService.findById(id), HttpStatus.OK);
@@ -71,7 +71,7 @@ public class AlertaGeneradaController {
         
     @GetMapping("/list/autorizacion/{term}") 
     @ApiOperation(value = "Obtiene una lista de las alertas por su autorizacion", response = AlertaGeneradaDTO.class, responseContainer = "List", tags = "Alertas_Generadas")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByAutorizacion(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity(alertaGeneradaService.findByAutorizacion(term), HttpStatus.OK);
@@ -82,7 +82,7 @@ public class AlertaGeneradaController {
  
     @GetMapping("/list/tipoAlerta/{term}") 
     @ApiOperation(value = "Obtiene una lista de alertas por tipo", response = AlertaGeneradaDTO.class, responseContainer = "List", tags = "Alertas_Generadas")    
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByTipoAlerta(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity(alertaGeneradaService.findByTipoAlerta(term), HttpStatus.OK);
@@ -93,7 +93,7 @@ public class AlertaGeneradaController {
     
     @GetMapping("/list/vuelo/{term}") 
     @ApiOperation(value = "Obtiene una lista de las alertas por vuelos", response = AlertaGeneradaDTO.class, responseContainer = "List", tags = "Alertas_Generadas")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByVuelo(@PathVariable(value = "term") Long term) {
         try {
             return new ResponseEntity(alertaGeneradaService.findByVuelo(term), HttpStatus.OK);
@@ -104,7 +104,7 @@ public class AlertaGeneradaController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de los vuelos por estado", response = AlertaGeneradaDTO.class, responseContainer = "List", tags = "Alertas_Generadas")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") int estado) {
         try {
             return new ResponseEntity<>(alertaGeneradaService.findByEstado(estado), HttpStatus.OK);
@@ -117,7 +117,7 @@ public class AlertaGeneradaController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea un vuelo", response = AlertaGeneradaDTO.class, tags = "Alertas_Generadas")
     @ResponseBody
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> create(@RequestBody AlertaGeneradaDTO alerta,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -134,7 +134,7 @@ public class AlertaGeneradaController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica un vuelo", response = AlertaGeneradaDTO.class, tags = "Alertas_Generadas")
     @ResponseBody
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody AlertaGeneradaDTO alertaModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {

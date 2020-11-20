@@ -43,7 +43,7 @@ public class TransaccionController {
 
     @GetMapping("/") 
     @ApiOperation(value = "Obtiene una lista de todas las transacciones", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public @ResponseBody
     ResponseEntity<?> findAll() {
         try {
@@ -55,7 +55,7 @@ public class TransaccionController {
 
     @GetMapping("/{id}") 
     @ApiOperation(value = "Obtiene una transaccion por su id", response = TransaccionDTO.class, tags = "Transacciones")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(transaccionService.findById(id), HttpStatus.OK);
@@ -66,7 +66,7 @@ public class TransaccionController {
     
     @GetMapping("/list/descripcion/{term}") 
     @ApiOperation(value = "Obtiene una lista de transacciones por descripcion", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByDescripcionAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(transaccionService.findByDescripcionContainingIgnoreCase(term), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class TransaccionController {
     
     @GetMapping("/list/lugar/{term}") 
     @ApiOperation(value = "Obtiene una lista de transacciones por lugar", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByLugarAproximate(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(transaccionService.findByLugarContainingIgnoreCase(term), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class TransaccionController {
     
     @GetMapping("/list/estado/{term}") 
     @ApiOperation(value = "Obtiene una lista de transacciones por estado", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "term") boolean term) {
         try {
             return new ResponseEntity<>(transaccionService.findByEstado(term), HttpStatus.OK);
@@ -99,7 +99,7 @@ public class TransaccionController {
     
     @GetMapping("/list/rol/{term}") 
     @ApiOperation(value = "Obtiene una lista de transacciones por su rol", response = TransaccionDTO.class, responseContainer = "List", tags = "Transacciones")
-    @PreAuthorize("hasRole('gestor') or hasRole('auditor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> findByRol(@PathVariable(value = "term") String term) {
         try {
             return new ResponseEntity<>(transaccionService.findByRol(term), HttpStatus.OK);
@@ -112,7 +112,7 @@ public class TransaccionController {
     @PostMapping("/crear") 
     @ApiOperation(value = "Crea una transaccion", response = TransaccionDTO.class, tags = "Transacciones")
     @ResponseBody
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> create(@RequestBody TransaccionDTO transacciones,  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
@@ -129,7 +129,7 @@ public class TransaccionController {
     @PutMapping("/modificar/{id}") 
     @ApiOperation(value = "Modifica una transaccion", response = TransaccionDTO.class, tags = "Transacciones")
     @ResponseBody
-    @PreAuthorize("hasRole('gestor')")
+    @PreAuthorize("hasRole('gestor') or hasRole('auditor') or hasRole('gerente') or hasRole('administrador')")
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @RequestBody TransaccionDTO transModified, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
